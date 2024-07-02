@@ -1,0 +1,40 @@
+# Docker Compose file for ROSCon 2024 Deliberation Workshop
+#
+# Usage:
+#
+# To build the images:
+#   docker compose build
+#
+# To run a specific service by name:
+#   docker compose run <service_name>
+#
+# To open an interactive shell to a running container:
+#   docker exec -it <container_name> bash
+
+services:
+  base:
+    image: roscon_delib_ws_2024:main
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      target: roscon_delib_ws_2024
+    # Ensures signals are actually passed and reaped in the container for shutdowns.
+    # https://docs.docker.com/compose/compose-file/compose-file-v3/#init
+    init: true
+    # Interactive shell
+    stdin_open: true
+    tty: true
+    # Networking and IPC for ROS 2
+    network_mode: host
+    ipc: host
+    # Allows graphical programs in the container.
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+      - NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      # Mount the workshop source code
+      - ./src:/delib_ws/src/workshop_files:rw
+      # Allows graphical programs in the container.
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
