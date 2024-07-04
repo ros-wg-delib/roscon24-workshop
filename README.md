@@ -59,8 +59,10 @@ __Available Conditions__:
 
 __Goal__:
 Banana on table 2.
+
 __Initial State__:
 Banana on table 1.
+
 __Available Actions__:
 
 - Pick object
@@ -85,8 +87,10 @@ __Available Conditions__:
 
 __Goal__:
 Banana on table 2.
+
 __Initial State__:
 Banana on table 1.
+
 __Available Actions__:
 
 - Pick object
@@ -115,8 +119,10 @@ __Available Conditions__:
 __Goal__:
 Banana on table 2.
 Never run out of battery.
+
 __Initial State__:
 Banana on table 1.
+
 __Available Actions__:
 
 - Pick object
