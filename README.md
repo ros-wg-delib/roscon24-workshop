@@ -36,9 +36,9 @@ ros2 launch pyrobosim_ros demo.launch.py
 
 ### Task 1
 
-__Goal__: 
+__Goal__:
 Banana on table 2.
-__Initial State__: 
+__Initial State__:
 Banana on table 1.
 __Available Actions__:
 
