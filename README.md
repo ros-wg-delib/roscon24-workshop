@@ -38,8 +38,10 @@ ros2 launch pyrobosim_ros demo.launch.py
 
 __Goal__:
 Banana on table 2.
+
 __Initial State__:
 Banana on table 1.
+
 __Available Actions__:
 
 - Pick object
@@ -99,6 +101,7 @@ __Available Actions__:
 - Move robot
     Locations: table 1, table 2, door
     (will fail if door is closed)
+    (can also fail while moving with probability 0.1)
 - Open door
     (may fail with probability 0.5)
 - Close door
@@ -131,8 +134,12 @@ __Available Actions__:
 - Move robot
     Locations: table 1, table 2, door, charging station
     (will fail if door is closed)
+    (can also fail while moving with probability 0.1)
 - Open door
     (may fail with probability 0.5)
+    (returns reason for failure, slipped, locked)
+        - locked -> find different way
+        - slipped handle -> try again
 - Close door
 - Charge battery
     (can only be done at charging station)
