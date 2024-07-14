@@ -1,8 +1,27 @@
 #!/usr/bin/env python3
 
 """
-Example showing how to build a world and use it with pyrobosim,
-additionally starting up a ROS interface.
+__Goal__:
+Banana on table_sink.
+
+__Initial State__:
+Banana on table_source.
+
+__Available Actions__:
+
+- Pick object
+- Place object
+- Move robot
+
+__Available Conditions__:
+
+- Robot location
+    dining_room, banana_farm
+- Object location
+    table_sink, table_source
+- Object in hand
+    true, false
+
 """
 import os
 import rclpy
