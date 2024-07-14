@@ -42,14 +42,14 @@ def create_world():
 
     # Add locations
     table_source = world.add_location(
-        category="table_source",
+        category="table",
         parent="banana_farm",
         name="table_source",
         pose=Pose(x=-1.5, y=0.5)
     )
 
     table = world.add_location(
-        category="table_sink",
+        category="table",
         parent="dining_room",
         name="table_sink",
         pose=Pose(x=1.5, y=0.5)

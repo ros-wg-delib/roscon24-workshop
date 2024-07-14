@@ -2,7 +2,7 @@
 # Example location metadata #
 #############################
 
-table_source:
+table:
   footprint:
     type: box
     dims: [0.6, 0.6]
@@ -14,19 +14,5 @@ table_source:
       footprint:
         type: parent
         padding: 0.1
-  color: [0.2, 0, 0]
-
-table_sink:
-  footprint:
-    type: box
-    dims: [0.6, 0.6]
-    height: 0.5
-  nav_poses:
-    - [0, -0.4, 1.57]
-  locations:
-    - name: "tabletop"
-      footprint:
-        type: parent
-        padding: 0.1
-  color: [0, 0.2, 0]
+  color: [0.2, 0.2, 0.2]
 
