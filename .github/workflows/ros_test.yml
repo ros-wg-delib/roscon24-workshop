@@ -1,0 +1,62 @@
+name: Test
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  schedule:
+    # Run every week at 20:00 on Sunday
+    - cron: "0 20 * * 0"
+
+jobs:
+  build_and_test:
+    name: ${{ matrix.package }} on ${{ matrix.distro }}
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          [
+            delib_ws_p1,
+            pyrobosim_ros,
+          ]
+        include:
+          - distro: jazzy
+            os: ubuntu-24.04
+    runs-on: ${{ matrix.distro }}
+    steps:
+      - uses: ros-tooling/setup-ros@master
+      # - run: |
+      #     sudo pip install pydocstyle==6.1.1  # downgrade to fix https://github.com/ament/ament_lint/pull/428
+      #     sudo pip install pip --upgrade
+      #     sudo pip install pyopenssl --upgrade  # fix for AttributeError: module 'lib' has no attribute 'X509_V_FLAG_CB_ISSUER_CHECK'
+      - uses: ros-tooling/action-ros-ci@0.3.5
+        with:
+          target-ros2-distro: ${{ matrix.distro }}
+          package-name: ${{ matrix.package }}
+          # vcs-repo-file-url: |
+          #   https://raw.githubusercontent.com/ros2/ros2/master/ros2.repos
+      # - run: |
+      #     rosdep update
+      # - run: |
+      #     rm -rf *  # clean up the workspace
+      # - uses: actions/checkout@v2
+      #   with:
+      #     path: src/bt_playground
+      # - run: |
+      #     git clone https://github.com/boschresearch/bt_tools src/bt_tools
+      # - run: |
+      #     git clone https://github.com/ros-planning/navigation2 src/navigation2
+      # # remove everything except nav2_msgs
+      # - run: |
+      #     find src/navigation2 -mindepth 1 -maxdepth 1 -type d -not -name 'nav2_msgs' -exec rm -rf {} +
+      # # verify that ...
+      # - run: |
+      #     colcon list
+      # - run: |
+      #     rosdep install --from-paths src --ignore-src --rosdistro ${{ matrix.distro }} -y
+      # - run: |
+      #     colcon build --packages-up-to ${{ matrix.package }}
+      # - run: |
+      #     colcon test --packages-select ${{ matrix.package }}
+      # - run: |
+      #     colcon test-result --all
