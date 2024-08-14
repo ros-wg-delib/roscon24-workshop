@@ -29,7 +29,7 @@ COPY . /delib_ws/src/roscon24-workshop
 # Build the ROS workspace
 WORKDIR /delib_ws
 RUN . /opt/ros/jazzy/setup.bash && \
-    colcon build
+    colcon build --symlink-install
 
 # Remove MatPlotLib display warnings
 RUN mkdir /tmp/runtime-root
