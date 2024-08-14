@@ -29,7 +29,7 @@ docker compose run base
 Once you're in the container, check that you can run a demo.
 
 ```bash
-ros2 launch pyrobosim_ros demo.launch.py
+ros2 run delib_ws_p1 run
 ```
 
 ## Problem Descriptions
