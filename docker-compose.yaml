@@ -27,14 +27,14 @@ services:
     # Networking and IPC for ROS 2
     network_mode: host
     ipc: host
-    # Allows graphical programs in the container.
+    # Allows graphical programs in the container
     environment:
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
       - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
       # Mount the workshop source code
-      - ./src:/delib_ws/src/workshop_files:rw
-      # Allows graphical programs in the container.
+      - ./:/delib_ws/src/workshop_files:rw
+      # Allows graphical programs in the container
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
