@@ -16,7 +16,8 @@ logger = logging.getLogger(__name__)
 
 class WorldState():
     def __init__(self):
-        rclpy.init()
+        if not rclpy.ok():
+            rclpy.init()
         self.node = rclpy.create_node('world_state')
         self._client = self.node.create_client(
             RequestWorldState, '/request_world_state')
@@ -71,7 +72,7 @@ class WorldState():
             for key, value in self.expected_state:
                 obj = response.state
                 for k in key.split('.'):
-                    logger.info(f'k: {k}')
+                    # logger.info(f'k: {k}')
                     if isinstance(obj, list):
                         obj_of_name = [x for x in obj if x.name == k]
                         assert len(obj_of_name) == 1, \
@@ -81,7 +82,7 @@ class WorldState():
                     else:
                         assert hasattr(obj, k), f'{obj} has no attribute {k}'
                         obj = getattr(obj, k)
-                    logger.info(f'o: {obj}')
+                    # logger.info(f'o: {obj}')
                 atomic_results.append(obj == value)
 
             self.node.get_logger().info('Atomic results:')
