@@ -22,9 +22,6 @@ RUN cd pyrobosim && \
     pip3 install -e ./pyrobosim && \
     pip3 install -r test/python_test_requirements.txt
 
-# Include workshop code
-COPY . /delib_ws/src/roscon24-workshop
-
 # Build the ROS workspace
 WORKDIR /delib_ws
 RUN . /opt/ros/jazzy/setup.bash && \
