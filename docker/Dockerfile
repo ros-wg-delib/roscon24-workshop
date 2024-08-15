@@ -14,19 +14,13 @@ RUN apt-get install -y \
 # Create a ROS 2 workspace
 RUN mkdir -p /delib_ws/src/
 
-# Install pyrobosim
-# TODO: Should we clone it this way, or include it as a submodule in the repo?
+# Install pyrobosim and its dependencies
 WORKDIR /delib_ws/src
 RUN git clone -b main https://github.com/sea-bass/pyrobosim.git
 ENV PIP_BREAK_SYSTEM_PACKAGES=1
 RUN cd pyrobosim && \
     pip3 install -e ./pyrobosim && \
     pip3 install -r test/python_test_requirements.txt
-
-# Build the ROS workspace
-WORKDIR /delib_ws
-RUN . /opt/ros/jazzy/setup.bash && \
-    colcon build
 
 # Remove MatPlotLib display warnings
 RUN mkdir /tmp/runtime-root
@@ -35,6 +29,7 @@ RUN chmod -R 0700 /tmp/runtime-root
 ENV NO_AT_BRIDGE 1
 
 # Set up the entrypoint
+WORKDIR /delib_ws
 CMD /bin/bash
 COPY docker/entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
