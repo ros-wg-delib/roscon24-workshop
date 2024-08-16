@@ -16,7 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: docker/build-push-action@v2
+      - uses: hoverkraft-tech/compose-action@v2.0.1
         with:
-          push: false
-          file: /home/runner/work/roscon24-workshop/roscon24-workshop/docker/Dockerfile
+          compose-file: "/home/runner/work/roscon24-workshop/roscon24-workshop/docker-compose.yml"
+          services: base
+          
