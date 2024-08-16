@@ -22,11 +22,6 @@ RUN cd pyrobosim && \
     pip3 install -e ./pyrobosim && \
     pip3 install -r test/python_test_requirements.txt
 
-# Build the ROS workspace
-WORKDIR /delib_ws
-RUN . /opt/ros/jazzy/setup.bash && \
-    colcon build --symlink-install
-
 # Remove MatPlotLib display warnings
 RUN mkdir /tmp/runtime-root
 ENV XDG_RUNTIME_DIR "/tmp/runtime-root"
