@@ -51,62 +51,6 @@ def create_world():
         objects=os.path.join(data_folder, "object_data.yaml"),
     )
 
-    print(f'rooms {world.get_room_names()}')
-
-    # world.add_room(name="banana_farm")
-    # world.add_room(name="dining_room")
-
-    # # Add rooms
-    # farm_coords = [(-2, 1), (-1, 1), (-1, -1), (-2, -1)]
-    # world.add_room(name="banana_farm", footprint=farm_coords, color=[1, 0, 0])
-    # dining_coords = [(2, 1), (1, 1), (1, -1), (2, -1)]
-    # world.add_room(name="dining_room", footprint=dining_coords, color=[0, 1, 0])
-
-    # # Add hallways between the rooms
-    # world.add_hallway(
-    #     room_start="banana_farm", room_end="dining_room", width=0.3)
-
-    # Add locations
-    table_source = world.add_location(
-        category="table",
-        parent="banana_farm",
-        name="table_source",
-        pose=Pose(x=-1.5, y=0.5)
-    )
-
-    table = world.add_location(
-        category="table",
-        parent="dining_room",
-        name="table_sink",
-        pose=Pose(x=1.5, y=0.5)
-    )
-
-    # Add objects
-    world.add_object(
-        category="banana", parent=table_source, pose=Pose(x=-1.5, y=0.5, yaw=np.pi / 4.0)
-    )
-
-    # Add a robot
-    # Create path planner
-    planner_config = {
-        "world": world,
-        "bidirectional": True,
-        "rrt_connect": False,
-        "rrt_star": True,
-        "collision_check_step_dist": 0.025,
-        "max_connection_dist": 0.5,
-        "rewire_radius": 1.5,
-        "compress_path": False,
-    }
-    path_planner = PathPlanner("rrt", **planner_config)
-    robot = Robot(
-        name="robot",
-        radius=0.1,
-        path_executor=ConstantVelocityExecutor(),
-        path_planner=path_planner,
-    )
-    world.add_robot(robot, loc="dining_room")
-
     return world
 
 
