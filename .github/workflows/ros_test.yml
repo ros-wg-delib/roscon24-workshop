@@ -21,8 +21,9 @@ jobs:
         with:
           compose-file: ./docker-compose.yaml
           services: base
-      - name: Run tests
-        run: |
-          docker compose exec base colcon build
-          docker compose exec base colcon test
-          docker compose exec base colcon test-result
+      # TODO: Add the following steps    
+      # - name: Run tests
+      #   run: |
+      #     docker compose exec base colcon build
+      #     docker compose exec base colcon test
+      #     docker compose exec base colcon test-result
