@@ -17,7 +17,7 @@ def generate_launch_description():
     )
     # Solution node
     solution_node = Node(
-        package="delib_ws_p1_random",
+        package="delib_ws_p1_py",
         executable="run",
         name="run"
     )

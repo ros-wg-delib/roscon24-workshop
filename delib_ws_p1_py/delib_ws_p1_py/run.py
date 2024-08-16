@@ -13,7 +13,7 @@ import logging
 
 import time
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("delib_ws_p1_random")
+logger = logging.getLogger("delib_ws_p1_py")
 
 def main():
     ws = WorldState()

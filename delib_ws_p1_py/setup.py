@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 import os
 from glob import glob
 
-package_name = 'delib_ws_p1_random'
+package_name = 'delib_ws_p1_py'
 
 setup(
     name=package_name,
@@ -25,7 +25,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'run = delib_ws_p1_random.run:main'
+            'run = delib_ws_p1_py.run:main'
         ],
     },
 )
