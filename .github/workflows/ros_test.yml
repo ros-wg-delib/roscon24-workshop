@@ -19,4 +19,4 @@ jobs:
       - uses: docker/build-push-action@v2
         with:
           push: false
-          file: /home/runner/work/roscon24-workshop/roscon24-workshoproscon24-workshop/docker/Dockerfile
+          file: /home/runner/work/roscon24-workshop/roscon24-workshop/docker/Dockerfile
