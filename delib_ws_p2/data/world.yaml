@@ -1,0 +1,29 @@
+rooms:
+  - name: banana_farm
+    footprint:
+      type: polygon
+      coords:
+        - [-2, 1]
+        - [-1, 1]
+        - [-1, -1]
+        - [-2, -1]
+    wall_width: 0.2
+    color: [1, 0, 0]
+  - name: dining_room
+    footprint:
+      type: polygon
+      coords:
+        - [2, 1]
+        - [1, 1]
+        - [1, -1]
+        - [2, -1]
+    wall_width: 0.2
+    color: [0, 1, 0]
+
+hallways:
+  - room_start: banana_farm
+    room_end: dining_room
+    width: 0.3
+    conn_method: auto
+    is_open: false
+    is_locked: false

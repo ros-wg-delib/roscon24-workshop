@@ -13,7 +13,7 @@ from pyrobosim_msgs.msg import TaskAction
 import logging
 from enum import Enum
 
-ACTIONS = Enum('ACTIONS', 'PICK PLACE NAVIGATE')
+ACTIONS = Enum('ACTIONS', 'PICK PLACE NAVIGATE OPEN')
 ACTION_NAME = 'execute_action'
 
 class PerformAction():
@@ -43,7 +43,7 @@ class PerformAction():
         action = TaskAction()
         action.robot = 'robot'
         action.type = command.name.lower()
-        if command == ACTIONS.PICK or command == ACTIONS.PLACE:
+        if command == ACTIONS.PICK or command == ACTIONS.PLACE or command == ACTIONS.OPEN:
             action.object = target
         elif command == ACTIONS.NAVIGATE:
             action.target_location = target
