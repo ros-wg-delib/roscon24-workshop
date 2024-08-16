@@ -13,37 +13,10 @@ jobs:
     name: ${{ matrix.package }} on ${{ matrix.distro }}
     strategy:
       fail-fast: false
-      matrix:
-        package:
-          [
-            delib_ws_p1,
-            pyrobosim_ros,
-          ]
-        include:
-          - distro: jazzy
-            os: ubuntu-24.04
     runs-on: ubuntu-latest
     steps:
-      - uses: ros-tooling/setup-ros@master
-      - uses: ros-tooling/action-ros-ci@0.3.13
-        with:
-          target-ros2-distro: ${{ matrix.distro }}
-          package-name: ${{ matrix.package }}
-          # vcs-repo-file-url: |
-          #   https://raw.githubusercontent.com/ros2/ros2/master/ros2.repos
-      - run: |
-          rosdep update
-      - run: |
-          rm -rf *  # clean up the workspace
       - uses: actions/checkout@v2
-      # remove everything except nav2_msgs
-      - run: |
-          colcon list
-      - run: |
-          rosdep install --from-paths src --ignore-src --rosdistro ${{ matrix.distro }} -y
-      - run: |
-          colcon build --packages-up-to ${{ matrix.package }}
-      - run: |
-          colcon test --packages-select ${{ matrix.package }}
-      - run: |
-          colcon test-result --all
+      - uses: docker/build-push-action@v2
+        with:
+          push: false
+          file: roscon24-workshop/docker/Dockerfile
