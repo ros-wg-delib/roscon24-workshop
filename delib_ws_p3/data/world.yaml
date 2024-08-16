@@ -1,3 +1,7 @@
+metadata:
+   locations: $PWD/location_data.yaml
+   objects: $PWD/object_data.yaml
+
 robots:
   - name: robot
     radius: 0.1
@@ -51,13 +55,13 @@ locations:
   - name: table_source
     parent: banana_farm
     category: table
-    coords: [-1.5, 0.5]
+    pose: [-1.5, 0.5]
   - name: table_sink
     parent: dining_room
     category: table
-    coords: [1.5, 0.5]
+    pose: [1.5, 0.5]
 
 objects:
   - parent: table_source
     category: banana
-    coords: [-1.5, 0.5]
+    pose: [-1.5, 0.5]

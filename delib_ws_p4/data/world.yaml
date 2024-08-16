@@ -10,6 +10,16 @@ robots:
       type: constant_velocity
     path_planner:
       type: rrt
+    action_execution_options:
+      navigate:
+        success_probability: 0.9
+        rng_seed: 42
+        battery_usage: 1
+      pick:
+        success_probability: 0.5
+        battery_usage: 1
+      place:
+        battery_usage: 1
 
 rooms:
   - name: banana_farm
@@ -50,6 +60,11 @@ locations:
     parent: dining_room
     category: table
     pose: [1.5, 0.5]
+  - name: charging_station
+    parent: dining_room
+    category: charging_station
+    pose: [1.5, -0.5]
+    is_charger: true
 
 objects:
   - parent: table_source
