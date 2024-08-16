@@ -34,7 +34,9 @@ ros2 run delib_ws_p1 run
 
 ## Problem Descriptions
 
-### Task 1
+### Problem 1
+
+[package delib_ws_p1](delib_ws_p1)
 
 __Goal__:
 Banana on table 2.
@@ -57,7 +59,9 @@ __Available Conditions__:
 - Object in hand
     true, false
 
-### Task 2
+### Problem 2
+
+[package delib_ws_p2](delib_ws_p2)
 
 __Goal__:
 Banana on table 2.
@@ -85,7 +89,9 @@ __Available Conditions__:
 - Door state
     open, closed
 
-### Task 3
+### Problem 3
+
+[package delib_ws_p3](delib_ws_p3)
 
 __Goal__:
 Banana on table 2.
@@ -117,7 +123,9 @@ __Available Conditions__:
 - Door state
     open, closed
 
-### Task 4
+### Problem 4
+
+[package delib_ws_p4](delib_ws_p4)
 
 __Goal__:
 Banana on table 2.
