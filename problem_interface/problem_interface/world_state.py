@@ -24,6 +24,7 @@ class WorldState():
         while not self._client.wait_for_service(timeout_sec=1.0):
             self.node.get_logger().info('service not available, waiting again...')
         self.result: Optional[bool] = None
+        self.wait: bool = False
         self.expected_state: List[Tuple[str, str]] = []
 
     def get_state(self, expected_state) -> bool:
@@ -42,13 +43,13 @@ class WorldState():
         future = self._client.call_async(request)
         future.add_done_callback(self.callback)
         self.wait = True
+        self.result = None
 
         while rclpy.ok() and self.result is None and self.wait:
             rclpy.spin_once(self.node, timeout_sec=0.1)
         return self.result
 
     def callback(self, future):
-        self.got_response = True
         try:
             response = future.result()
             # self.node.get_logger().info(f'Response: {response}')
