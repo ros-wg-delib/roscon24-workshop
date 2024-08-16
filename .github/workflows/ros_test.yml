@@ -23,5 +23,5 @@ jobs:
           services: base
       - name: Run tests
         run: |
-          docker compose exec colcon test
-          docker compose exec colcon test-result
+          docker compose exec base colcon test
+          docker compose exec base colcon test-result
