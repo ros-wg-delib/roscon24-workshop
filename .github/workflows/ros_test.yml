@@ -22,7 +22,7 @@ jobs:
         include:
           - distro: jazzy
             os: ubuntu-24.04
-    runs-on: ${{ matrix.distro }}
+    runs-on: ubuntu-latest
     steps:
       - uses: ros-tooling/setup-ros@master
       # - run: |
