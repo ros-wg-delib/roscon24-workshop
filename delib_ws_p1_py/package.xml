@@ -2,9 +2,9 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>delib_ws_p1_py</name>
-  <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="christian.henkel2@de.bosch.com">hec2le</maintainer>
+  <version>1.0.0</version>
+  <description>Solution for problem 1 of the ROSCon24 Deliberation Workshop</description>
+  <maintainer email="christian.henkel2@de.bosch.com">Christian Henkel</maintainer>
   <license>Apache-2.0</license>
 
   <depend>rclpy</depend>
