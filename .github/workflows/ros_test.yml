@@ -10,7 +10,7 @@ on:
 
 jobs:
   build_and_test:
-    name: ${{ matrix.package }} on ${{ matrix.distro }}
+    name: Build and test
     strategy:
       fail-fast: false
     runs-on: ubuntu-latest
