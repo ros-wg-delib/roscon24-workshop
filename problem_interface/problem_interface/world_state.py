@@ -53,36 +53,35 @@ class WorldState:
         try:
             response = future.result()
             # self.node.get_logger().info(f'Response: {response}')
-
-            atomic_results = []
-            for key, value in self.expected_state:
-                obj = response.state
-                for k in key.split("."):
-                    # logger.info(f'k: {k}')
-                    if isinstance(obj, list):
-                        obj_of_name = [x for x in obj if x.name == k]
-                        assert len(obj_of_name) == 1, (
-                            f"Expected 1 object with name {k}, got "
-                            f"{len(obj_of_name)}"
-                        )
-                        obj = obj_of_name[0]
-                    else:
-                        assert hasattr(obj, k), f"{obj} has no attribute {k}"
-                        obj = getattr(obj, k)
-                    # logger.info(f'o: {obj}')
-                atomic_results.append(obj == value)
-
-            self.node.get_logger().info("Atomic results:")
-            for atomic_result, (key, value) in zip(atomic_results, self.expected_state):
-                self.node.get_logger().info(f"{key} == {value}: {atomic_result}")
-
-            self.result = all(atomic_results)
-            if len(atomic_results) > 1:
-                self.node.get_logger().info(f"Final result: {self.result}")
-
         except Exception as e:
             self.wait = False
             self.node.get_logger().info(f"World state evaluation failed: {e}")
+
+        atomic_results = []
+        for key, value in self.expected_state:
+            obj = response.state
+            for k in key.split("."):
+                # logger.info(f'k: {k}')
+                if isinstance(obj, list):
+                    obj_of_name = [x for x in obj if x.name == k]
+                    assert len(obj_of_name) == 1, (
+                        f"Expected 1 object with name {k}, got "
+                        f"{len(obj_of_name)}"
+                    )
+                    obj = obj_of_name[0]
+                else:
+                    assert hasattr(obj, k), f"{obj} has no attribute {k}"
+                    obj = getattr(obj, k)
+                # logger.info(f'o: {obj}')
+            atomic_results.append(obj == value)
+
+        self.node.get_logger().info("Atomic results:")
+        for atomic_result, (key, value) in zip(atomic_results, self.expected_state):
+            self.node.get_logger().info(f"{key} == {value}: {atomic_result}")
+
+        self.result = all(atomic_results)
+        if len(atomic_results) > 1:
+            self.node.get_logger().info(f"Final result: {self.result}")
 
 
 def main():
