@@ -65,8 +65,7 @@ class WorldState:
                 if isinstance(obj, list):
                     obj_of_name = [x for x in obj if x.name == k]
                     assert len(obj_of_name) == 1, (
-                        f"Expected 1 object with name {k}, got "
-                        f"{len(obj_of_name)}"
+                        f"Expected 1 object with name {k}, got " f"{len(obj_of_name)}"
                     )
                     obj = obj_of_name[0]
                 else:
