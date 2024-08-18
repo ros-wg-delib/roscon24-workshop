@@ -11,26 +11,26 @@ RUN apt-get install -y \
     libegl1 libgl1-mesa-dev libglu1-mesa-dev '^libxcb.*-dev' libx11-xcb-dev \
     libxi-dev libxkbcommon-dev libxkbcommon-x11-dev libxrender-dev
 
-# Create a ROS 2 workspace
+# Create a ROS 2 workspace.
 RUN mkdir -p /delib_ws/src/
 
-# Install pyrobosim and its dependencies
-WORKDIR /delib_ws/src
-RUN git clone -b main https://github.com/sea-bass/pyrobosim.git
+# Install external dependencies.
+WORKDIR /delib_ws
+COPY dependencies src/dependencies
+RUN source /opt/ros/jazzy/setup.bash && \
+    rosdep install --from-paths src -y --ignore-src
 ENV PIP_BREAK_SYSTEM_PACKAGES=1
-RUN cd pyrobosim && \
-    pip3 install -e ./pyrobosim && \
-    pip3 install -r test/python_test_requirements.txt
+RUN cd src/dependencies/pyrobosim && \
+    pip3 install -e ./pyrobosim
 
-# Remove MatPlotLib display warnings
+# Remove MatPlotLib display warnings.
 RUN mkdir /tmp/runtime-root
 ENV XDG_RUNTIME_DIR "/tmp/runtime-root"
 RUN chmod -R 0700 /tmp/runtime-root
 ENV NO_AT_BRIDGE 1
 
-# Set up the entrypoint
-WORKDIR /delib_ws
+# Set up the entrypoint.
 CMD /bin/bash
-COPY docker/entrypoint.sh /entrypoint.sh
+COPY .docker/entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 RUN echo "source /entrypoint.sh" >> ~/.bashrc
