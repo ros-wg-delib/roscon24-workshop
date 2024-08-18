@@ -1,0 +1,57 @@
+metadata:
+   locations: $PWD/location_data.yaml
+   objects: $PWD/object_data.yaml
+
+robots:
+  - name: robot
+    radius: 0.1
+    location: dining_room
+    path_executor:
+      type: constant_velocity
+    path_planner:
+      type: rrt
+
+rooms:
+  - name: banana_farm
+    footprint:
+      type: polygon
+      coords:
+        - [-2, 1]
+        - [-1, 1]
+        - [-1, -1]
+        - [-2, -1]
+    wall_width: 0.2
+    color: [1, 0, 0]
+  - name: dining_room
+    footprint:
+      type: polygon
+      coords:
+        - [2, 1]
+        - [1, 1]
+        - [1, -1]
+        - [2, -1]
+    wall_width: 0.2
+    color: [0, 1, 0]
+
+hallways:
+  - room_start: banana_farm
+    room_end: dining_room
+    width: 0.3
+    conn_method: auto
+    is_open: false
+    is_locked: false
+
+locations:
+  - name: table_source
+    parent: banana_farm
+    category: table
+    pose: [-1.5, 0.5]
+  - name: table_sink
+    parent: dining_room
+    category: table
+    pose: [1.5, 0.5]
+
+objects:
+  - parent: table_source
+    category: banana
+    pose: [-1.5, 0.5]

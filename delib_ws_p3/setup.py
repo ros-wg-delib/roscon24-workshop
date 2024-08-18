@@ -2,7 +2,7 @@ from glob import glob
 
 from setuptools import find_packages, setup
 
-package_name = "delib_ws_p1"
+package_name = "delib_ws_p3"
 
 setup(
     name=package_name,
@@ -22,8 +22,8 @@ setup(
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
-            "run = delib_ws_p1.run:main",
-            "is_at_goal = delib_ws_p1.is_at_goal:main",
+            "run = delib_ws_p3.run:main",
+            "is_at_goal = delib_ws_p3.is_at_goal:main",
         ],
     },
 )
