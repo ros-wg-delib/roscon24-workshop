@@ -32,7 +32,8 @@ Once you're in the container, check that you can run a demo.
 ros2 run delib_ws_p1 run
 ```
 
-**NOTE:** If you want to cleanup the colcon build artifacts across container usage, you can enter.
+**NOTE:** If you want to cleanup the colcon build artifacts across container usage,
+you can run this command:
 
 ```bash
 sudo rm -rf .colcon/build .colcon/install .colcon/log
