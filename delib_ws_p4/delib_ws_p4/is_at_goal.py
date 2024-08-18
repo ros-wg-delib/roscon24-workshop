@@ -2,10 +2,10 @@ from problem_interface.world_state import WorldState
 
 import sys
 
+
 def get_goal_state():
-    return [
-        ('objects.banana0.parent', 'table_sink_tabletop')
-    ]
+    return [("objects.banana0.parent", "table_sink_tabletop")]
+
 
 def main():
     ws = WorldState()

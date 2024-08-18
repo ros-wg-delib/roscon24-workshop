@@ -1,5 +1,3 @@
-
-
 import rclpy
 from rclpy.action import ActionClient
 
@@ -12,14 +10,17 @@ import random
 import logging
 
 import time
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("delib_ws_p1_py")
+
 
 def main():
     ws = WorldState()
     pa = PerformAction()
-    assert not ws.get_state(get_goal_state()), \
-        "Robot must not be at goal at the beginning"
+    assert not ws.get_state(
+        get_goal_state()
+    ), "Robot must not be at goal at the beginning"
     pa.do_action(ACTIONS.NAVIGATE, "table_source")
     pa.do_action(ACTIONS.PICK, "banana0")
     pa.do_action(ACTIONS.NAVIGATE, "table_sink")

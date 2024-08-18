@@ -1,6 +1,6 @@
 # Hands-On with ROS 2 Deliberation Technologies
 
-> [!WARNING]  
+> [!WARNING]
 > WORK IN PROGRESS!
 
 This repository contains materials for the ROSCon 2024 workshop on ROS 2

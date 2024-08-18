@@ -63,19 +63,21 @@ def create_world():
         category="table",
         parent="banana_farm",
         name="table_source",
-        pose=Pose(x=-1.5, y=0.5)
+        pose=Pose(x=-1.5, y=0.5),
     )
 
     table = world.add_location(
         category="table",
         parent="dining_room",
         name="table_sink",
-        pose=Pose(x=1.5, y=0.5)
+        pose=Pose(x=1.5, y=0.5),
     )
 
     # Add objects
     world.add_object(
-        category="banana", parent=table_source, pose=Pose(x=-1.5, y=0.5, yaw=np.pi / 4.0)
+        category="banana",
+        parent=table_source,
+        pose=Pose(x=-1.5, y=0.5, yaw=np.pi / 4.0),
     )
 
     # Add a robot
@@ -137,5 +139,5 @@ def main():
     start_gui(node.world)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

@@ -16,12 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Build and start docker 
+      - name: Build and start docker
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
           compose-file: ./docker-compose.yaml
           services: base
-      # TODO: Add the following steps    
+      # TODO: Add the following steps
       # - name: Run tests
       #   run: |
       #     docker compose exec base colcon build

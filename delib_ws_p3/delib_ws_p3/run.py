@@ -42,8 +42,7 @@ data_folder = os.path.join(get_package_share_directory("delib_ws_p3"), "data")
 def create_world():
     """Create a test world"""
     # world = World()
-    world = WorldYamlLoader().from_yaml(
-        os.path.join(data_folder, "world.yaml"))
+    world = WorldYamlLoader().from_yaml(os.path.join(data_folder, "world.yaml"))
 
     # Set the location and object metadata
     world.set_metadata(
@@ -89,5 +88,5 @@ def main():
     start_gui(node.world)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
