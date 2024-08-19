@@ -4,8 +4,8 @@
 source /opt/ros/jazzy/setup.bash
 if [ ! -f /delib_ws/install/setup.bash ]
 then
-  # TODO(matthias-mayr): Figure out how to more cleanly handle this.
-  colcon build --packages-ignore skiros2_task
+  # TODO(matthias-mayr): This ignored package is still being ported.
+  colcon build --symlink-install --packages-ignore skiros2_task
 fi
 source /delib_ws/install/setup.bash
 
