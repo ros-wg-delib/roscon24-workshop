@@ -38,3 +38,11 @@ services:
       # Allows graphical programs in the container
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+
+  skiros2:
+    image: roscon_delib_ws_2024:skiros2
+    depends_on:
+      - base
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.skiros2

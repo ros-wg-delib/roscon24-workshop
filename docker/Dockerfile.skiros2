@@ -1,0 +1,19 @@
+FROM roscon_delib_ws_2024:main
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+ENV WS="/delib_ws"
+WORKDIR "${WS}/src"
+
+# Clone SkiROS2
+RUN mkdir SkiROS2
+RUN git clone -b fix/ros2_jazzy_build https://github.com/RVMI/skiros2 SkiROS2/skiros2
+RUN git clone -b ros2 https://github.com/RVMI/skiros2_std_lib SkiROS2/skiros2_std_lib
+RUN touch SkiROS2/skiros2/skiros2_task/COLCON_IGNORE
+
+# Install dependencies
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update
+RUN apt-get install -y python3-wrapt python3-inflection
+RUN rosdep install --from-paths . --ignore-src --rosdistro=$ROS_DISTRO -y
+
+WORKDIR "${WS}"
