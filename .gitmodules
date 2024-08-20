@@ -10,3 +10,11 @@
 	path = dependencies/SkiROS2/skiros2_std_lib
 	url = https://github.com/RVMI/skiros2_std_lib
 	branch = ros2
+[submodule "dependencies/ros2_ros_bt_py"]
+	path = dependencies/ros2_ros_bt_py
+	url = https://github.com/fzi-forschungszentrum-informatik/ros2_ros_bt_py.git
+	branch = dev
+[submodule "dependencies/rosbridge_suite"]
+	path = dependencies/rosbridge_suite
+	url = https://github.com/RobotWebTools/rosbridge_suite.git
+	branch = ros2
