@@ -10,12 +10,14 @@ on:
 
 jobs:
   build_and_test:
-    name: ${{ matrix.package }} on ${{ matrix.distro }}
+    name: Build and test
     strategy:
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
       - name: Build and start docker
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
