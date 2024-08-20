@@ -3,10 +3,10 @@
 	url = https://github.com/sea-bass/pyrobosim.git
 	branch = main
 [submodule "dependencies/skiros2"]
-	path = SkiROS2/skiros2
+	path = dependencies/SkiROS2/skiros2
 	url = https://github.com/RVMI/skiros2
 	branch = fix/ros2_jazzy_build
 [submodule "dependencies/skiros2_std_lib"]
-	path = SkiROS2/skiros2_std_lib
+	path = dependencies/SkiROS2/skiros2_std_lib
 	url = https://github.com/RVMI/skiros2_std_lib
 	branch = ros2
