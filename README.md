@@ -8,10 +8,10 @@ Deliberation Technologies.
 
 ## Setup
 
-First, clone this repository.
+First, clone this repository and its submodules.
 
 ```bash
-git clone -b https://github.com/ros-wg-delib/roscon24-workshop.git
+git clone --recurse-submodules https://github.com/ros-wg-delib/roscon24-workshop.git
 ```
 
 Then, build the Docker image.
@@ -30,6 +30,13 @@ Once you're in the container, check that you can run a demo.
 
 ```bash
 ros2 run delib_ws_p1 run
+```
+
+**NOTE:** If you want to cleanup the colcon build artifacts across container usage,
+you can run this command:
+
+```bash
+sudo rm -rf .colcon/build .colcon/install .colcon/log
 ```
 
 ## Problem Descriptions

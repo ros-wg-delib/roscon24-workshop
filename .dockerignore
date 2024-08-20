@@ -1,0 +1,10 @@
+.colcon/
+.github/
+
+.gitignore
+.gitmodules
+.pre-commit-config.yaml
+
+docker-compose.yaml
+LICENSE
+README.md

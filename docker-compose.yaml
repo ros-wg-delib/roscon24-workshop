@@ -16,7 +16,7 @@ services:
     image: roscon_delib_ws_2024:main
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: .docker/Dockerfile
       target: roscon_delib_ws_2024
     # Ensures signals are actually passed and reaped in the container for shutdowns.
     # https://docs.docker.com/compose/compose-file/compose-file-v3/#init
@@ -34,7 +34,11 @@ services:
       - NVIDIA_DRIVER_CAPABILITIES=all
     volumes:
       # Mount the workshop source code
-      - ./:/delib_ws/src/workshop_files:rw
+      - ./:/delib_ws/src/:rw
+      # Mount the colcon build artifacts
+      - .colcon/build/:/delib_ws/build/:rw
+      - .colcon/install/:/delib_ws/install/:rw
+      - .colcon/log/:/delib_ws/log/:rw
       # Allows graphical programs in the container
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
