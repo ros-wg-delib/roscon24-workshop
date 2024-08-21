@@ -18,3 +18,7 @@
 	path = dependencies/rosbridge_suite
 	url = https://github.com/RobotWebTools/rosbridge_suite.git
 	branch = ros2
+[submodule "dependencies/SkiROS2/skiros2_pyrobosim_lib"]
+	path = dependencies/SkiROS2/skiros2_pyrobosim_lib
+	url = https://github.com/matthias-mayr/skiros2_pyrobosim_lib.git
+	branch = main
