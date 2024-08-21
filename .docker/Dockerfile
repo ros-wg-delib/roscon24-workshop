@@ -10,6 +10,8 @@ RUN apt-get install -y \
     apt-utils python3-pip python3-tk \
     libegl1 libgl1-mesa-dev libglu1-mesa-dev '^libxcb.*-dev' libx11-xcb-dev \
     libxi-dev libxkbcommon-dev libxkbcommon-x11-dev libxrender-dev
+# SkiROS2 dependencies
+RUN apt-get install -y python3-wrapt python3-inflection
 
 # Create a ROS 2 workspace.
 RUN mkdir -p /delib_ws/src/
