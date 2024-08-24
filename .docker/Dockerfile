@@ -5,8 +5,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Install dependencies
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y \
+RUN apt-get update && \ 
+    apt-get upgrade -y && \ 
+    apt-get install -y \
     apt-utils python3-pip python3-tk python3-wrapt python3-inflection \
     libegl1 libgl1-mesa-dev libglu1-mesa-dev '^libxcb.*-dev' libx11-xcb-dev \
     libxi-dev libxkbcommon-dev libxkbcommon-x11-dev libxrender-dev
