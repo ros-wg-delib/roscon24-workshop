@@ -10,6 +10,7 @@ robots:
       type: constant_velocity
     path_planner:
       type: rrt
+      rrt_star: true
     action_execution_options:
       navigate:
         success_probability: 0.9

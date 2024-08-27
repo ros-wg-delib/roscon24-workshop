@@ -19,9 +19,8 @@ WORKDIR /delib_ws
 COPY dependencies src/dependencies
 RUN source /opt/ros/jazzy/setup.bash && \
     rosdep install --from-paths src -y --ignore-src
-ENV PIP_BREAK_SYSTEM_PACKAGES=1
-RUN cd src/dependencies/pyrobosim && \
-    pip3 install -e ./pyrobosim
+COPY python-requirements.txt /delib_ws
+RUN pip3 install --break-system-packages -r python-requirements.txt
 
 # Remove MatPlotLib display warnings.
 RUN mkdir /tmp/runtime-root
