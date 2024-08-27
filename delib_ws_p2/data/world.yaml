@@ -10,6 +10,7 @@ robots:
       type: constant_velocity
     path_planner:
       type: rrt
+      rrt_star: true
 
 rooms:
   - name: banana_farm
