@@ -1,11 +1,14 @@
 adjustText
 astar
+fastAPI==0.89.1
 matplotlib
 numpy<2.1.0
 pycollada
-PySide6>=6.4.0
+pydantic>=1.10.13
+PySide6>=6.7.1
 PyYAML
 scipy
 shapely>=2.0.1
 transforms3d
 trimesh
+websockets>=10.3
