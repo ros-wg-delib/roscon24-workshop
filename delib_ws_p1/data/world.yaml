@@ -11,16 +11,6 @@ robots:
     path_planner:
       type: rrt
       rrt_star: true
-    action_execution_options:
-      navigate:
-        success_probability: 0.9
-        rng_seed: 42
-        battery_usage: 0
-      pick:
-        success_probability: 0.5
-        battery_usage: 0
-      place:
-        battery_usage: 0
 
 rooms:
   - name: banana_farm
@@ -49,7 +39,7 @@ hallways:
     room_end: dining_room
     width: 0.3
     conn_method: auto
-    is_open: false
+    is_open: true
     is_locked: false
 
 locations:
