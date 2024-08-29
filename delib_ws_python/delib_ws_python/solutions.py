@@ -29,9 +29,9 @@ def problem2():
 
 def problem3():
     """Gets the Problem 3 solution"""
-    return tuple()  # TODO: Implement solution
+    return ()  # TODO: Implement solution
 
 
 def problem4():
     """Gets the Problem 4 solution"""
-    return tuple()  # TODO: Implement solution
+    return ()  # TODO: Implement solution
