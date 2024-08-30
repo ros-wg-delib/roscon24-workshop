@@ -7,6 +7,7 @@ metadata:
 params:
   name: problem1
   inflation_radius: 0.01
+  object_radius: 0.01
 
 robots:
   - name: robot
