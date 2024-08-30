@@ -8,10 +8,10 @@ from delib_ws_problem_interface.perform_action import ACTIONS
 def problem1():
     """Gets the Problem 1 solution"""
     return (
-        (ACTIONS.NAVIGATE, "table_source"),
-        (ACTIONS.PICK, "banana0"),
-        (ACTIONS.NAVIGATE, "table_sink"),
-        (ACTIONS.PLACE, "banana0"),
+        (ACTIONS.NAVIGATE, "pantry_storage"),
+        (ACTIONS.PICK, "snacks0"),
+        (ACTIONS.NAVIGATE, "dining_table"),
+        (ACTIONS.PLACE, "snacks0"),
     )
 
 

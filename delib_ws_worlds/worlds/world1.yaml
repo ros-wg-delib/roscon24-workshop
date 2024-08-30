@@ -1,79 +1,169 @@
 # Problem 1 World
-#
-# __Goal__:
-# - Banana on table_sink.
-#
-# __Initial State__:
-# - Banana on table_source.
-#
-# __Available Actions__:
-# - Pick object
-# - Place object
-# - Move robot
-#
-# __Available Conditions__:
-# - Robot location
-#     dining_room, banana_farm
-# - Object location
-#     table_sink, table_source
-# - Object in hand
-#     true, false
 
 metadata:
    locations: $PWD/location_data.yaml
    objects: $PWD/object_data.yaml
 
+params:
+  name: problem1
+  inflation_radius: 0.01
+
 robots:
   - name: robot
     radius: 0.1
-    location: dining_room
+    location: office
     path_executor:
       type: constant_velocity
     path_planner:
       type: rrt
       rrt_star: true
+      max_connection_dist: 1.0
+      rewire_radius: 1.5
+      max_time: 3.0
 
 rooms:
-  - name: banana_farm
+  - name: kitchen
     footprint:
       type: polygon
       coords:
-        - [-2, 1]
-        - [-1, 1]
-        - [-1, -1]
-        - [-2, -1]
+        - [0, 0]
+        - [3, 0]
+        - [3, 2]
+        - [0, 2]
     wall_width: 0.2
     color: [1, 0, 0]
   - name: dining_room
     footprint:
       type: polygon
       coords:
-        - [2, 1]
-        - [1, 1]
-        - [1, -1]
-        - [2, -1]
+        - [4, 0]
+        - [7, 0]
+        - [7, 2]
+        - [4, 2]
     wall_width: 0.2
     color: [0, 1, 0]
+  - name: trash_room
+    footprint:
+      type: polygon
+      coords:
+        - [0, 3]
+        - [3, 3]
+        - [3, 5]
+        - [0, 5]
+    wall_width: 0.2
+    color: [0.5, 0.5, 0.5]
+  - name: closet
+    footprint:
+      type: polygon
+      coords:
+        - [4, 3]
+        - [4, 5]
+        - [7, 5]
+        - [7, 3]
+    wall_width: 0.2
+    color: [0.7, 0.4, 0.4]
+  - name: office
+    footprint:
+      type: polygon
+      coords:
+        - [8, 0]
+        - [10, 0]
+        - [10, 5]
+        - [8, 5]
+    wall_width: 0.2
+    color: [0.0, 0.0, 1.0]
 
 hallways:
-  - room_start: banana_farm
+  - room_start: kitchen
     room_end: dining_room
-    width: 0.3
+    width: 0.75
     conn_method: auto
     is_open: true
     is_locked: false
 
+  - room_start: kitchen
+    room_end: trash_room
+    width: 0.75
+    conn_method: auto
+    is_open: true
+    is_locked: false
+
+  - room_start: dining_room
+    room_end: closet
+    width: 0.75
+    conn_method: auto
+    is_open: false
+    is_locked: false
+
+  - room_start: dining_room
+    room_end: office
+    width: 0.75
+    conn_method: angle
+    conn_angle: 0.0
+    is_open: true
+    is_locked: false
+
+  - room_start: closet
+    room_end: office
+    width: 0.75
+    conn_method: angle
+    conn_angle: 0.0
+    is_open: false
+    is_locked: false
+
 locations:
-  - name: table_source
-    parent: banana_farm
-    category: table
-    pose: [-1.5, 0.5]
-  - name: table_sink
-    parent: dining_room
-    category: table
-    pose: [1.5, 0.5]
+    - name: dining_table
+      parent: dining_room
+      category: table
+      pose: [5.5, 0.75]
+
+    - name: office_desk
+      parent: office
+      category: desk
+      pose: [9.65, 3.0]
+
+    - name: fridge
+      parent: kitchen
+      category: storage
+      pose: [1.5, 0.4]
+      is_open: true
+
+    - name: pantry
+      parent: kitchen
+      category: storage
+      pose: [0.4, 1.25, 0.0, 1.57]
+      is_open: true
+
+    - name: office_trash
+      parent: office
+      category: trashcan_small
+      pose: [9.5, 0.5]
+
+    - name: dumpster
+      parent: trash_room
+      category: trashcan_large
+      pose: [2.4, 4.4]
+
+    - name: charger
+      parent: closet
+      category: charger
+      pose: [5.5, 4.75]
 
 objects:
-  - parent: table_source
-    category: banana
-    pose: [-1.5, 0.5]
+  - parent: pantry
+    category: bread
+
+  - parent: pantry
+    category: snacks
+
+  - parent: fridge
+    category: soda
+
+  - parent: fridge
+    category: butter
+
+  - parent: office_desk
+    category: garbage
+
+  - parent: office_desk
+    category: garbage

@@ -10,7 +10,7 @@ from delib_ws_problem_interface.world_state import WorldState
 def get_goal_state(problem_number):
     """Returns the goal state based on the problem number specified."""
     if problem_number in (1, 2, 3, 4):
-        return (("objects.banana0.parent", "table_sink_tabletop"),)
+        return (("objects.snacks0.parent", "dining_table_tabletop"),)
     else:
         raise ValueError(f"No goal state for problem number: {problem_number}")
 
