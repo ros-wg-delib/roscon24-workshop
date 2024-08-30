@@ -53,6 +53,7 @@ trashcan_small:
   footprint:
     type: circle
     radius: 0.25
+    height: 0.5
   nav_poses:
     - [0, 0.5, -1.57]  # above
     - [0, -0.5, 1.57]  # below
@@ -69,6 +70,7 @@ trashcan_large:
   footprint:
     type: circle
     radius: 0.525
+    height: 0.5
   nav_poses:
     - [0, 0.75, -1.57]  # above
     - [0, -0.75, 1.57]  # below
