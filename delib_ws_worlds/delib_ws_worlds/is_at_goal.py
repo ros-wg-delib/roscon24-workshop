@@ -9,8 +9,31 @@ from delib_ws_problem_interface.world_state import WorldState
 
 def get_goal_state(problem_number):
     """Returns the goal state based on the problem number specified."""
-    if problem_number in (1, 2, 3, 4):
+    if problem_number == 1:
         return (("objects.snacks0.parent", "table_tabletop"),)
+    elif problem_number == 2:
+        return (
+            ("objects.waste0.parent", "dumpster_disposal"),
+            ("objects.waste1.parent", "dumpster_disposal"),
+            ("locations.dumpster.is_open", False),
+        )
+    elif problem_number == 3:
+        return (
+            ("objects.bread0.parent", "table_tabletop"),
+            ("objects.butter0.parent", "table_tabletop"),
+            ("locations.fridge.is_open", False),
+            ("locations.pantry.is_open", False),
+        )
+    elif problem_number == 4:
+        return (
+            ("objects.bread0.parent", "table_tabletop"),
+            ("objects.butter0.parent", "table_tabletop"),
+            ("locations.fridge.is_open", False),
+            ("locations.pantry.is_open", False),
+            ("objects.waste0.parent", "dumpster_disposal"),
+            ("objects.waste1.parent", "dumpster_disposal"),
+            ("locations.dumpster.is_open", False),
+        )
     else:
         raise ValueError(f"No goal state for problem number: {problem_number}")
 

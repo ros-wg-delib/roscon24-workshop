@@ -47,7 +47,7 @@ rooms:
     wall_width: 0.2
     color: [1, 0, 0]
 
-  - name: trash_room
+  - name: trash
     footprint:
       type: polygon
       coords:
@@ -102,16 +102,16 @@ hallways:
     conn_method: angle
     conn_angle: 1.57
     offset: -1.1
-    is_open: false
+    is_open: true
     is_locked: false
 
   - room_start: dining
-    room_end: trash_room
+    room_end: trash
     width: 0.6
     conn_method: angle
     conn_angle: 1.57
     offset: 1.1
-    is_open: false
+    is_open: true
     is_locked: false
 
   - room_start: dining
@@ -124,7 +124,7 @@ hallways:
     is_locked: false
 
   - room_start: kitchen
-    room_end: trash_room
+    room_end: trash
     width: 0.8
     conn_method: angle
     conn_angle: 1.57
@@ -138,16 +138,16 @@ hallways:
     conn_method: angle
     conn_angle: 0.0
     offset: -0.5
-    is_open: false
+    is_open: true
     is_locked: false
 
   - room_start: closet
-    room_end: trash_room
+    room_end: trash
     width: 0.8
     conn_method: angle
     conn_angle: 3.14
     offset: -0.5
-    is_open: false
+    is_open: true
     is_locked: false
 
   - room_start: closet
@@ -156,7 +156,7 @@ hallways:
     conn_method: angle
     conn_angle: -1.57
     offset: 0.6
-    is_open: false
+    is_open: true
     is_locked: false
 
 locations:
@@ -188,7 +188,7 @@ locations:
       pose: [2.6, -0.85]
 
     - name: dumpster
-      parent: trash_room
+      parent: trash
       category: trashcan_large
       pose: [-3.4, 2.4]
 
@@ -211,7 +211,7 @@ objects:
     category: butter
 
   - parent: desk
-    category: garbage
+    category: waste
 
   - parent: bin
-    category: garbage
+    category: waste

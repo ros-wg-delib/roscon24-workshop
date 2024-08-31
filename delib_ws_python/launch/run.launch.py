@@ -13,6 +13,8 @@ def generate_launch_description():
         executable="run",
         name="run_world",
         parameters=[{"problem_number": LaunchConfiguration("problem_number")}],
+        output="screen",
+        emulate_tty="True",
     )
     # Solution node
     solution_node = Node(

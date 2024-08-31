@@ -1,0 +1,102 @@
+# Problem 4 World
+#
+# __Goal__:
+# - Banana on table_sink.
+#
+# __Initial State__:
+# - Banana on table_source.
+# - Door closed
+#
+# __Available Actions__:
+# - Pick object
+# - Place object
+# - Move robot
+# - Open door
+# - Close door
+#
+# __Available Conditions__:
+# - Robot location
+#     dining_room, banana_farm
+# - Object location
+#     table_sink, table_source
+# - Object in hand
+#     true, false
+
+metadata:
+   locations: $PWD/location_data.yaml
+   objects: $PWD/object_data.yaml
+
+robots:
+  - name: robot
+    radius: 0.1
+    location: dining_room
+    path_executor:
+      type: constant_velocity
+    path_planner:
+      type: rrt
+      rrt_star: true
+    action_execution_options:
+      navigate:
+        success_probability: 0.9
+        rng_seed: 42
+        battery_usage: 1
+      pick:
+        success_probability: 0.5
+        battery_usage: 5
+      place:
+        battery_usage: 5
+      open:
+        success_probability: 0.75
+        battery_usage: 10
+      close:
+        battery_usage: 10
+
+rooms:
+  - name: banana_farm
+    footprint:
+      type: polygon
+      coords:
+        - [-2, 1]
+        - [-1, 1]
+        - [-1, -1]
+        - [-2, -1]
+    wall_width: 0.2
+    color: [1, 0, 0]
+  - name: dining_room
+    footprint:
+      type: polygon
+      coords:
+        - [2, 1]
+        - [1, 1]
+        - [1, -1]
+        - [2, -1]
+    wall_width: 0.2
+    color: [0, 1, 0]
+
+hallways:
+  - room_start: banana_farm
+    room_end: dining_room
+    width: 0.3
+    conn_method: auto
+    is_open: false
+    is_locked: false
+
+locations:
+  - name: table_source
+    parent: banana_farm
+    category: table
+    pose: [-1.5, 0.5]
+  - name: table_sink
+    parent: dining_room
+    category: table
+    pose: [1.5, 0.5]
+  - name: charging_station
+    parent: dining_room
+    category: charging_station
+    pose: [1.5, -0.5]
+    is_charger: true
+
+objects:
+  - parent: table_source
+    category: banana
+    pose: [-1.5, 0.5]
