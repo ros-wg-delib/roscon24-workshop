@@ -10,7 +10,7 @@ def problem1():
     return (
         (ACTIONS.NAVIGATE, "pantry_storage"),
         (ACTIONS.PICK, "snacks0"),
-        (ACTIONS.NAVIGATE, "dining_table"),
+        (ACTIONS.NAVIGATE, "table"),
         (ACTIONS.PLACE, "snacks0"),
     )
 
