@@ -61,11 +61,11 @@ def problem3():
 def problem4():
     """Gets the Problem 4 solution"""
     return (
-        problem2()
+        problem3()
         + (
             (ACTIONS.NAVIGATE, "hall_dining_closet"),
             (ACTIONS.OPEN, "hall_dining_closet"),
             (ACTIONS.NAVIGATE, "charger"),
         )
-        + problem3()
+        + problem2()
     )

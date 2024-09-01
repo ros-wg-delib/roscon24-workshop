@@ -213,6 +213,7 @@ locations:
       parent: closet
       category: charger
       pose: [3.5, 2.5, 0, -0.785]
+      is_charger: true
 
 objects:
   - parent: pantry
