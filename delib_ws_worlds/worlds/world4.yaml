@@ -1,12 +1,12 @@
-# Problem 3 World
-# Adds detection and action success probability.
+# Problem 4 World
+# Adds battery usage to actions.
 
 metadata:
    locations: $PWD/location_data.yaml
    objects: $PWD/object_data.yaml
 
 params:
-  name: problem3
+  name: delib_ws_problem_4
   inflation_radius: 0.01
   object_radius: 0.01
 

@@ -5,14 +5,14 @@ metadata:
    objects: $PWD/object_data.yaml
 
 params:
-  name: problem1
+  name: delib_ws_problem_1
   inflation_radius: 0.01
   object_radius: 0.01
 
 robots:
   - name: robot
     radius: 0.1
-    location: office
+    location: dining
     path_executor:
       type: constant_velocity
     path_planner:

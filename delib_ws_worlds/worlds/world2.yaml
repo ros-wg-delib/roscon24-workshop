@@ -6,7 +6,7 @@ metadata:
    objects: $PWD/object_data.yaml
 
 params:
-  name: problem2
+  name: delib_ws_problem_2
   inflation_radius: 0.01
   object_radius: 0.01
 

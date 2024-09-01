@@ -25,15 +25,7 @@ def get_goal_state(problem_number):
             ("locations.pantry.is_open", False),
         )
     elif problem_number == 4:
-        return (
-            ("objects.bread0.parent", "table_tabletop"),
-            ("objects.butter0.parent", "table_tabletop"),
-            ("locations.fridge.is_open", False),
-            ("locations.pantry.is_open", False),
-            ("objects.waste0.parent", "dumpster_disposal"),
-            ("objects.waste1.parent", "dumpster_disposal"),
-            ("locations.dumpster.is_open", False),
-        )
+        return get_goal_state(2) + get_goal_state(3)
     else:
         raise ValueError(f"No goal state for problem number: {problem_number}")
 
