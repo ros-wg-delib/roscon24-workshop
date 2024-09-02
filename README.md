@@ -43,7 +43,9 @@ sudo rm -rf .colcon/build .colcon/install .colcon/log
 
 ### Problem 1
 
-[package delib_ws_p1](delib_ws_p1)
+```bash
+ros2 run delib_ws_worlds run --ros-args -p problem_number:=1
+```
 
 __Goal__:
 Banana on table 2.
@@ -68,7 +70,9 @@ __Available Conditions__:
 
 ### Problem 2
 
-[package delib_ws_p2](delib_ws_p2)
+```bash
+ros2 run delib_ws_worlds run --ros-args -p problem_number:=2
+```
 
 __Goal__:
 Banana on table 2.
@@ -98,7 +102,9 @@ __Available Conditions__:
 
 ### Problem 3
 
-[package delib_ws_p3](delib_ws_p3)
+```bash
+ros2 run delib_ws_worlds run --ros-args -p problem_number:=3
+```
 
 __Goal__:
 Banana on table 2.
@@ -132,7 +138,9 @@ __Available Conditions__:
 
 ### Problem 4
 
-[package delib_ws_p4](delib_ws_p4)
+```bash
+ros2 run delib_ws_worlds run --ros-args -p problem_number:=4
+```
 
 __Goal__:
 Banana on table 2.
