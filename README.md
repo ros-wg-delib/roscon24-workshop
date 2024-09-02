@@ -39,6 +39,8 @@ you can run this command:
 sudo rm -rf .colcon/build .colcon/install .colcon/log
 ```
 
+---
+
 ## Problem Descriptions
 
 ### Problem 1
@@ -48,25 +50,16 @@ ros2 run delib_ws_worlds run --ros-args -p problem_number:=1
 ```
 
 __Goal__:
-Banana on table 2.
+Snacks on the dining room table.
 
 __Initial State__:
-Banana on table 1.
+Snacks in the kitchen pantry.
 
 __Available Actions__:
 
 - Pick object
 - Place object
 - Move robot
-
-__Available Conditions__:
-
-- Robot location
-    table 1, table 2
-- Object location
-    table 1, table 2
-- Object in hand
-    true, false
 
 ### Problem 2
 
@@ -75,10 +68,12 @@ ros2 run delib_ws_worlds run --ros-args -p problem_number:=2
 ```
 
 __Goal__:
-Banana on table 2.
+Waste should be in the dumpster.
+Dumpster should be closed.
 
 __Initial State__:
-Banana on table 1.
+Waste is on the office desk and in the office bin.
+Hallways into the trash room are closed.
 
 __Available Actions__:
 
@@ -88,17 +83,6 @@ __Available Actions__:
     (will fail if door is closed)
 - Open door
 - Close door
-
-__Available Conditions__:
-
-- Robot location
-    table 1, table 2
-- Object location
-    table 1, table 2
-- Object in hand
-    true, false
-- Door state
-    open, closed
 
 ### Problem 3
 
@@ -107,34 +91,24 @@ ros2 run delib_ws_worlds run --ros-args -p problem_number:=3
 ```
 
 __Goal__:
-Banana on table 2.
+Bring bread and butter to the dining table.
+Fridge and pantry should be closed at the end.
 
 __Initial State__:
-Banana on table 1.
+Bread is in the pantry, which is closed.
+Butter is in the fridge, which is closed.
 
 __Available Actions__:
 
 - Pick object
-    (may fail with probability 0.5)
 - Place object
 - Move robot
-    Locations: table 1, table 2, door
     (will fail if door is closed)
-    (can also fail while moving with probability 0.1)
 - Open door
-    (may fail with probability 0.5)
 - Close door
+- Detect objects (optional)
 
-__Available Conditions__:
-
-- Robot location
-    table 1, table 2
-- Object location
-    table 1, table 2
-- Object in hand
-    true, false
-- Door state
-    open, closed
+Actions may fail with some probability.
 
 ### Problem 4
 
@@ -143,39 +117,28 @@ ros2 run delib_ws_worlds run --ros-args -p problem_number:=4
 ```
 
 __Goal__:
-Banana on table 2.
-Never run out of battery.
+Bring bread and butter to the dining table.
+Fridge and pantry should be closed at the end.
+Waste should be in the dumpster.
+Dumpster should be closed.
+Don't run out of battery!
 
 __Initial State__:
-Banana on table 1.
+Bread is in the pantry, which is closed.
+Butter is in the fridge, which is closed.
+Waste is on the office desk and in the office bin.
+Hallways into the trash room are closed.
 
 __Available Actions__:
 
 - Pick object
-    (may fail with probability 0.5)
 - Place object
 - Move robot
-    Locations: table 1, table 2, door, charging station
     (will fail if door is closed)
-    (can also fail while moving with probability 0.1)
 - Open door
-    (may fail with probability 0.5)
-    (returns reason for failure, slipped, locked)
-        - locked -> find different way
-        - slipped handle -> try again
 - Close door
-- Charge battery
-    (can only be done at charging station)
+- Detect objects (optional)
 
-__Available Conditions__:
+Actions may fail with some probability.
 
-- Robot location
-    table 1, table 2
-- Object location
-    table 1, table 2
-- Object in hand
-    true, false
-- Door state
-    open, closed
-- Battery level
-    (low, normal, full)
+Actions now use up battery, which can be fixed by navigating to the charger.
