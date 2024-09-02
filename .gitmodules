@@ -2,11 +2,11 @@
 	path = dependencies/pyrobosim
 	url = https://github.com/sea-bass/pyrobosim.git
 	branch = main
-[submodule "dependencies/skiros2"]
+[submodule "dependencies/SkiROS2/skiros2"]
 	path = dependencies/SkiROS2/skiros2
 	url = https://github.com/RVMI/skiros2
 	branch = fix/ros2_jazzy_build
-[submodule "dependencies/skiros2_std_lib"]
+[submodule "dependencies/SkiROS2/skiros2_std_lib"]
 	path = dependencies/SkiROS2/skiros2_std_lib
 	url = https://github.com/RVMI/skiros2_std_lib
 	branch = ros2
@@ -18,3 +18,7 @@
 	path = dependencies/rosbridge_suite
 	url = https://github.com/RobotWebTools/rosbridge_suite.git
 	branch = ros2
+[submodule "dependencies/SkiROS2/skiros2_pyrobosim_lib"]
+	path = dependencies/SkiROS2/skiros2_pyrobosim_lib
+	url = https://github.com/matthias-mayr/skiros2_pyrobosim_lib.git
+	branch = main
