@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="test navigate">
+
+    <executable package_path="pyrobosim_flexbe_behaviors.test_navigate_sm" class="testnavigateSM" />
+    <tagstring>pyrobosim, navigate</tagstring>
+    <author>David Conner</author>
+    <date>Thu Aug 08 2024</date>
+    <description>
+        Test navigation state
+    </description>
+
+
+    <!-- Contained Behaviors -->
+
+    <!-- Available Parameters -->
+
+</behavior>
