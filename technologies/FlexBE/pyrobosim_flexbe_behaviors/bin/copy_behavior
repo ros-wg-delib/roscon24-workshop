@@ -1,0 +1,100 @@
+#!/bin/bash
+
+# Copyright 2023 Christopher Newport University
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+# WARNING: Use at your own risk, this script does not protect against overwriting files, or mis-naming
+
+if [ $# -lt 1 ]; then
+    echo -e "\e[93mThis is an extremely simple script designed to copy behaviors\033[0m"
+    echo -e "\e[93mfrom the install folder to the src folder assumed to be a git repo\033[0m"
+    echo -e "\e[93mfor storage.\033[0m"
+    echo ""
+    echo -e "\e[93mIt requires a WORKSPACE_ROOT environment variable assuming a standard \033[0m"
+    echo -e "\e[93m \${WORKSPACE_ROOT}/install and \${WORKSPACE_ROOT}/src layout.\033[0m"
+    echo ""
+    echo -e "\e[93mRun this script from the base src folder for behaviors package\033[0m"
+    echo -e "\e[93m  e.g., \${WORKSPACE_ROOT}/src/pyrobosim_flexbe\033[0m"
+    echo ""
+    echo -e "\e[93m  Usage:  ros2 run pyrobosim_flexbe_behaviors copy_behavior BEHAVIOR_FILE_BASE <OPTIONAL_BEHAVIOR_PACKAGE>\033[0m"
+    echo -e "\e[93m   where BEHAVIOR_FILE_BASE_NAME.xml is the saved manifest name\033[0m"
+    echo -e "\e[93m   OPTIONAL_BEHAVIOR_PACKAGE defaults to 'pyrobosim_flexbe_behaviors'\033[0m"
+    echo ""
+    echo -e "\e[93m  WARNING: Use at your own risk, this script does not protect against overwriting files or mis-naming\033[0m"
+    exit 2
+fi
+
+
+beh=$(echo "$1" | cut -f 1 -d '.')  # include only the base file name is someone pastes .xml name
+pack="pyrobosim_flexbe_behaviors"  # Default name uses this behaviors package
+if [ $# -eq 2 ]; then
+    pack="$2"
+    echo "Using specified package '${pack}'!"
+fi
+
+# A few basic checks before attempting to copy
+if [ ! -d "${pack}" ]; then
+    echo ""
+    echo -e "\e[91m Package '${pack}' does not exist under current directory '${PWD}' !\033[0m"
+    echo ""
+    echo -e "\e[93mRun this script from the base src folder for behaviors package\033[0m"
+    echo -e "\e[93m  e.g., \${WORKSPACE_ROOT}/src/pyrobosim_flexbe\033[0m"
+    exit
+fi
+
+if [ ! -d "${pack}/${pack}" ]; then
+    echo ""
+    echo -e "\e[91m Behavior implementation folder  '${pack}/${pack}' does not exist under current directory '${PWD}' !\033[0m"
+    echo ""
+    echo -e "\e[93mRun this script from the base src folder for behaviors package\033[0m"
+    echo -e "\e[93m  e.g., \${WORKSPACE_ROOT}/src/pyrobosim_flexbe\033[0m"
+    exit
+fi
+
+if [ ! -f "${WORKSPACE_ROOT}/install/${pack}/local/lib/python3.10/dist-packages/${pack}/${beh}_sm.py" ]; then
+    echo ""
+    echo -e "\e[91m Behavior '${beh}' implementation does not exist in install folder for '${pack}' package!\033[0m"
+    echo ""
+    echo "Available behavior manifests in '${pack}' :"
+    ls ${WORKSPACE_ROOT}/install/${pack}/lib/${pack}/manifest
+    echo ""
+    echo -e "\e[93mConfirm behavior and package names!\033[0m"
+    exit
+fi
+
+
+# Begin the work
+echo "Copying '${beh}' implementation to '${pack}' under '${PWD}' ..."
+cp ${WORKSPACE_ROOT}/install/${pack}/local/lib/python3.10/dist-packages/${pack}/${beh}_sm.py ./${pack}/${pack}/${beh}_sm.py
+
+if test $? -eq 0; then
+    echo "Copying '${beh}.xml' manifest to '${pack}' ..."
+
+    cp ${WORKSPACE_ROOT}/install/${pack}/lib/${pack}/manifest/${beh}.xml ./${pack}/manifest/${beh}.xml
+    if test $? -eq 0; then
+      echo ""
+      echo -e "\e[92mDone copying behavior '${beh}' to '${pack}'!\033[0m"
+      echo "Do not forget to git commit and git push any changes."
+      exit
+    else
+      echo ""
+      echo -e "\e[91m Failed to copy behavior '${beh}.xml' manifest after copying behavior implementation!\033[0m"
+      exit
+    fi
+else
+    echo ""
+    echo -e "\e[91m Failed to copy behavior '${beh}'!\033[0m"
+    exit
+fi
