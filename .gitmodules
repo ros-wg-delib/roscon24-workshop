@@ -22,3 +22,11 @@
 	path = technologies/SkiROS2/skiros2_pyrobosim_lib
 	url = https://github.com/matthias-mayr/skiros2_pyrobosim_lib.git
 	branch = main
+[submodule "dependencies/FlexBE/flexbe_behavior_engine"]
+	path = dependencies/FlexBE/flexbe_behavior_engine
+	url = https://github.com/FlexBE/flexbe_behavior_engine.git
+	branch = ros2-devel
+[submodule "dependencies/FlexBE/flexbe_webui"]
+	path = dependencies/FlexBE/flexbe_webui
+	url = https://github.com/FlexBE/flexbe_webui.git
+	branch = main
