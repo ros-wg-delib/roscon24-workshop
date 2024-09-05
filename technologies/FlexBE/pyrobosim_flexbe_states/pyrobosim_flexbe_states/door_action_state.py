@@ -40,7 +40,7 @@ class DoorActionState(EventState):
     -- timeout             Total time to wait for action to complete in seconds (default = 2s)
 
     Outputs
-    <= done                Successfull completion
+    <= done                Successful completion
     <= failed              Failed to perform action
 
     User data
