@@ -35,7 +35,7 @@ To run start the following in separate terminals
   * This launches a server that will pop up a simple UI to allow operator input on request
   * Here is use it to select from among the detected objects
 
-  From the FlexBE UI "Behavior Dashboard" select the simple `delip_ws_p2_sm` behavior.
+  From the FlexBE UI "Behavior Dashboard" select the simple `delib_ws_p2_sm` behavior.
 
   Click on the "StateMachine Editor" tab to see the state machine.
   For now this is configured to require the operator to confirm most transitions unless you place in "Full" autonomy on the "Runtime Control".
