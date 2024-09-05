@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Test Plan Path">
+
+    <executable package_path="pyrobosim_flexbe_behaviors.test_plan_path_sm" class="TestPlanPathSM" />
+    <tagstring>pyrobosim, plan</tagstring>
+    <author>David Conner</author>
+    <date>Wed Aug 14 2024</date>
+    <description>
+        Simple test of PlanPath action for pyrobosim
+    </description>
+
+
+    <!-- Contained Behaviors -->
+
+    <!-- Available Parameters -->
+
+</behavior>

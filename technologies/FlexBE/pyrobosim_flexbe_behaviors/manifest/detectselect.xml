@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="DetectSelect">
+
+    <executable package_path="pyrobosim_flexbe_behaviors.detectselect_sm" class="DetectSelectSM" />
+    <tagstring>pyrobosim, plan</tagstring>
+    <author>David Conner</author>
+    <date>Wed Aug 14 2024</date>
+    <description>
+        Simple test of PlanPath action for pyrobosim with detection and selection
+        actions.
+    </description>
+
+
+    <!-- Contained Behaviors -->
+
+    <!-- Available Parameters -->
+    <params>
+
+        <param type="text" name="move_location" default="counter0_right" label="Move to location" hint="Sets the location to move to first" />
+
+        <param type="text" name="place_location" default="desk0" label="Place location" hint="Sets the location where we want to place object" />
+
+    </params>
+
+
+</behavior>

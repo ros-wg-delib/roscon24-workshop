@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="delib_ws_p2">
+
+    <executable package_path="pyrobosim_flexbe_behaviors.delib_ws_p2_sm" class="delib_ws_p2SM" />
+    <tagstring>pyrobosim, roscon24</tagstring>
+    <author>David Conner</author>
+    <date>Sat Aug 31 2024</date>
+    <description>
+        Behavior demonstrating p2 - travel, open door, go to table, pick object,
+        transport, and place
+    </description>
+
+
+    <!-- Contained Behaviors -->
+    <contains name="DetectSelect" />
+
+    <!-- Available Parameters -->
+    <params>
+
+        <param type="text" name="door_location" default="hall_dining_trash" label="door_location" hint="Sets the door location" />
+
+        <param type="text" name="get_location" default="desk" label="get_location" hint="Sets the location to get object from" />
+
+        <param type="text" name="put_location" default="dumpster" label="put_location" hint="Sets the location to put the object" />
+
+    </params>
+
+
+</behavior>

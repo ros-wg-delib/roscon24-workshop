@@ -33,6 +33,7 @@ repos:
     rev: 24.8.0
     hooks:
       - id: black
+        exclude: ^technologies/FlexBE
 
   # Finds spelling issues in code.
   - repo: https://github.com/codespell-project/codespell

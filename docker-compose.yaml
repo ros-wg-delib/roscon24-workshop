@@ -27,11 +27,13 @@ services:
     # Networking and IPC for ROS 2
     network_mode: host
     ipc: host
-    # Allows graphical programs in the container
     environment:
+      # Allows graphical programs in the container
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
       - NVIDIA_DRIVER_CAPABILITIES=all
+      # Enables FlexBE web UI to work as root inside the container
+      - QTWEBENGINE_DISABLE_SANDBOX=1
     volumes:
       # Mount the workshop source code
       - ./:/delib_ws/src/:rw
