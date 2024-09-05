@@ -18,12 +18,12 @@ RUN mkdir -p /delib_ws/src/
 
 # Install external dependencies.
 WORKDIR /delib_ws
-COPY dependencies src/dependencies
-RUN source /opt/ros/jazzy/setup.bash && \
-    rosdep install --from-paths src -y --ignore-src
 # Aggregated Python dependencies
 COPY python-requirements.txt /delib_ws
 RUN pip3 install --break-system-packages -r python-requirements.txt
+COPY dependencies src/dependencies
+RUN source /opt/ros/jazzy/setup.bash && \
+    rosdep install --from-paths src -y --ignore-src
 # SkiROS2 dependencies
 RUN src/dependencies/SkiROS2/skiros2/skiros2/scripts/install_fd_task_planner.sh
 
