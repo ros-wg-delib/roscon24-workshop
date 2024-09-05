@@ -33,10 +33,10 @@ ros2 run delib_ws_p1 run
 ```
 
 **NOTE:** If you want to cleanup the colcon build artifacts across container usage,
-you can run this command:
+you can run this command (it will ask you for your sudo password):
 
 ```bash
-sudo rm -rf .colcon/build .colcon/install .colcon/log
+./clean_build.sh
 ```
 
 ---
