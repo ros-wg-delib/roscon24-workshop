@@ -39,7 +39,7 @@ fi
 
 beh=$(echo "$1" | cut -f 1 -d '.')  # include only the base file name is someone pastes .xml name
 pack="pyrobosim_flexbe_behaviors"  # Default name uses this behaviors package
-if [ $# -eq 2 ]; then 
+if [ $# -eq 2 ]; then
     pack="$2"
     echo "Using specified package '${pack}'!"
 fi

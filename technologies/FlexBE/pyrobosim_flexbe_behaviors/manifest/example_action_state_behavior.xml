@@ -9,7 +9,7 @@
     <description>
         A simple behavior demonstrating the ExampleActionState interface to the
         turtlesim RotateAbsolute action server.
-        
+
         The example includes userdata defined in the statemachine configuration.
     </description>
 
