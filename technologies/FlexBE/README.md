@@ -32,21 +32,26 @@ To run start the following in separate terminals
     Wait on the `Begin behavior mirror processing ...` message in terminal
 
 * `clear; ros2 run flexbe_input input_action_server`
-  * This launches a server that will pop up a simple UI to allow operator input on request
-  * Here is use it to select from among the detected objects
+  * This launches an action server that will pop up a simple UI that will allow the operator input data on request
+  * In this demonstration, it is used to select from among the detected objects
+  * This must be started to avoid a `'flexbe/behavior_input' is not available` warning in the demonstration behavior.
 
-  From the FlexBE UI "Behavior Dashboard" select the simple `delib_ws_p2_sm` behavior.
+  From the FlexBE UI "Behavior Dashboard", select "Load Behavior" from the main toolbar, and then select `delib_ws_p2_sm` from the list of available behaviors.
 
   Click on the "StateMachine Editor" tab to see the state machine.
-  For now this is configured to require the operator to confirm most transitions unless you place in "Full" autonomy on the "Runtime Control".
+  For now, this demonstration behavior is configured to require the operator to confirm most transitions unless you place in "Full" autonomy on the "Runtime Control".
 
   Click on the "Runtime Control" tab.
   You may specify the parameters for the initial "Move to Location" where you will look for objects, and the "Place Location".
   The default values show are specified as "Behavior Parameters" on the dashboard.
 
   Select "Start Behavior" and follow along as the UI "mirrors" the onboard behavior.
+  For `p2`, you should first invoke the `open` outcome to activate the "OpenDoorSM" sub-state machine
+  to open the required doors and dumpster (you may invoke this repeatedly), then
+  activate the `go` outcome to activate the "DetectSelect" sub-behavior to go to the target
+  location and detect available objects.
 
-  > Note: In `Low` autonmy, you will need to click on the outcome label when requested (state has finished) to confirm the transition when prompted at the UI.
+  > Note: In `Low` autonomy, you will need to click on the outcome label when requested (that is, when the state has finished) to confirm the transition when prompted at the UI.
 
   > WARNING: An operator can preempt a state, so wait for the state to finish and request the outcome by highlighting the transition.
 
