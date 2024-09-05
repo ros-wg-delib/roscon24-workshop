@@ -62,5 +62,3 @@ To run start the following in separate terminals
 - [ ] Battery monitor state and concurrency example
 - [ ] Define (sub-)behaviors for workshop tasks
 - [ ] Write up more detail usage instructions
-
-
