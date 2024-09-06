@@ -1,6 +1,6 @@
 adjustText
 astar
-fastAPI==0.89.1
+fastAPI>=0.109.1
 matplotlib
 numpy<2.1.0
 pycollada
