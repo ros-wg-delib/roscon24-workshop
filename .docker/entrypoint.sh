@@ -27,17 +27,17 @@ function delib_build() {
         cd $cwd
 }
 
-function delib_build_package() {
+function delib_build_packages() {
         cwd=$(pwd)
         delib_ws
-        colcon build --symlink-install --continue-on-error --packages-ignore skiros2_task --packages-select "$1"
+        colcon build --symlink-install --continue-on-error --packages-ignore skiros2_task --packages-select "$@"
         cd $cwd
 }
 
-function delib_build_package_up_to() {
+function delib_build_packages_up_to() {
         cwd=$(pwd)
         delib_ws
-        colcon build --symlink-install --continue-on-error --packages-ignore skiros2_task --packages-up-to "$1"
+        colcon build --symlink-install --continue-on-error --packages-ignore skiros2_task --packages-up-to "$@"
         cd $cwd
 }
 
