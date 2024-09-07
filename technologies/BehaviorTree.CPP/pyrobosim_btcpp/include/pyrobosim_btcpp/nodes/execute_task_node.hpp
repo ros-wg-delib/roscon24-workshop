@@ -46,7 +46,8 @@ public:
   // default implementation of the onFailure callback. Can be overridden by the derived class
   NodeStatus onFailure(ActionNodeErrorCode error) override;
 
-  NodeStatus onResultReceived(const WrappedResult& wr) override final {
+  NodeStatus onResultReceived(const WrappedResult& wr) override final
+  {
     return onResultReceived(wr.result->execution_result);
   }
 };
@@ -59,14 +60,15 @@ NodeStatus ExecuteTaskNode::onResultReceived(const ExecutionResult& execution_re
 {
   if(execution_result.status != ExecutionResult::SUCCESS)
   {
-    RCLCPP_ERROR(logger(), "[%s] failed with error: %s. Message: %s",
-                 name().c_str(), resultToStr(execution_result), execution_result.message.c_str());
+    RCLCPP_ERROR(logger(), "[%s] failed with error: %s. Message: %s", name().c_str(),
+                 resultToStr(execution_result), execution_result.message.c_str());
     return NodeStatus::FAILURE;
-   }
-   return NodeStatus::SUCCESS;
+  }
+  return NodeStatus::SUCCESS;
 }
 
-NodeStatus ExecuteTaskNode::onFailure(ActionNodeErrorCode error) {
+NodeStatus ExecuteTaskNode::onFailure(ActionNodeErrorCode error)
+{
   RCLCPP_ERROR(logger(), "[%s] failed with error: %s", name().c_str(), toStr(error));
   return NodeStatus::FAILURE;
 }

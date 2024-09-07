@@ -6,7 +6,7 @@ This package provides some ready to use Nodes (i.e. "actions") to be used with *
 
 A BTCPP executor is provided to run Behavior Trees stored as XML files
 
-For instance, consider this sample XML in [trees/navigate_demo.xml](pyrobosim_btcpp/trees/navigate_demo.xml)
+For instance, consider this sample XML in [trees/navigation_demo.xml](pyrobosim_btcpp/trees/navigation_demo.xml)
 
 ```xml
 <root BTCPP_format="4">

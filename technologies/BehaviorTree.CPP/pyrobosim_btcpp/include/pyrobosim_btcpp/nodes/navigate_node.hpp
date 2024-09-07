@@ -33,5 +33,4 @@ public:
   }
 };
 
-
 }  // namespace BT

@@ -12,7 +12,6 @@
 // BTCPP nodes in this package
 #include "pyrobosim_btcpp/nodes/navigate_node.hpp"
 
-
 std::filesystem::path GetFilePath(const std::string& filename)
 {
   // check first the given path
@@ -22,7 +21,7 @@ std::filesystem::path GetFilePath(const std::string& filename)
   }
   // try appending the package directory
   const std::string package_dir = ament_index_cpp::get_package_share_directory("pyrobosim_btcpp");
-  const auto package_path  = std::filesystem::path(package_dir) / filename;
+  const auto package_path = std::filesystem::path(package_dir) / filename;
   if(std::filesystem::exists(package_path))
   {
     return package_path;
