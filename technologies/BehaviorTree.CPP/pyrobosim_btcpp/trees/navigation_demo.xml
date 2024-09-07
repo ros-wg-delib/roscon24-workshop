@@ -3,8 +3,8 @@
   <BehaviorTree ID="MainTree">
     <Sequence>
       <Navigate name="ToOffice" target="office"/>
-      <Navigate name="ToDining" target="dining"/>
-      <Navigate name="ToKitchen" target="kitchen"/>
+      <Navigate name="ToFridge" target="fridge"/>
+      <Navigate name="ToTable" target="table"/>
     </Sequence>
   </BehaviorTree>
 
