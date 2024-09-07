@@ -80,7 +80,7 @@ int main(int argc, char** argv)
   BT::StdCoutLogger console_logger(tree);
   console_logger.enableTransitionToIdle(false);
 
-  // This is the "main loop":xecution is completed once the tick() method returns SUCCESS of FAILURE 
+  // This is the "main loop":xecution is completed once the tick() method returns SUCCESS of FAILURE
   BT::NodeStatus res = tree.tickWhileRunning();
 
   std::cout << "Execution completed. Result: " << BT::toStr(res) << std::endl;

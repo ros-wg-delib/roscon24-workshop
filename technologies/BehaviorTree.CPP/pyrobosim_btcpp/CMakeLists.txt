@@ -25,7 +25,7 @@ add_executable(btcpp_executor src/btcpp_executor.cpp)
 
 ament_target_dependencies(btcpp_executor ${THIS_PACKAGE_DEPS})
 
-target_include_directories(btcpp_executor PUBLIC 
+target_include_directories(btcpp_executor PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty>)
 

@@ -26,7 +26,7 @@ inline const char* resultToStr(pyrobosim_msgs::msg::ExecutionResult result)
       return "CANCELED";
   }
   return "UNKNOWN";
-}    
+}
 
 /**
  * @brief Base class for all the nodes that execute a task using the ExecuteTaskAction
@@ -40,14 +40,14 @@ public:
 
   using ExecutionResult = pyrobosim_msgs::msg::ExecutionResult;
 
-  // virtual method processing the result. Can be overriden by the derived class
+  // virtual method processing the result. Can be overridden by the derived class
   virtual NodeStatus onResultReceived(const ExecutionResult& execution_result);
 
-  // default implementation of the onFailure callback. Can be overriden by the derived class
+  // default implementation of the onFailure callback. Can be overridden by the derived class
   NodeStatus onFailure(ActionNodeErrorCode error) override;
 
   NodeStatus onResultReceived(const WrappedResult& wr) override final {
-    return onResultReceived(wr.result->execution_result);  
+    return onResultReceived(wr.result->execution_result);
   }
 };
 
@@ -59,7 +59,7 @@ NodeStatus ExecuteTaskNode::onResultReceived(const ExecutionResult& execution_re
 {
   if(execution_result.status != ExecutionResult::SUCCESS)
   {
-    RCLCPP_ERROR(logger(), "%s failed with error: %s. %s", 
+    RCLCPP_ERROR(logger(), "[%s] failed with error: %s. Message: %s",
                  name().c_str(), resultToStr(execution_result), execution_result.message.c_str());
     return NodeStatus::FAILURE;
    }
@@ -67,7 +67,7 @@ NodeStatus ExecuteTaskNode::onResultReceived(const ExecutionResult& execution_re
 }
 
 NodeStatus ExecuteTaskNode::onFailure(ActionNodeErrorCode error) {
-  RCLCPP_ERROR(logger(), "%s failed with error: %s", name().c_str(), toStr(error));
+  RCLCPP_ERROR(logger(), "[%s] failed with error: %s", name().c_str(), toStr(error));
   return NodeStatus::FAILURE;
 }
 

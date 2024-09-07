@@ -15,7 +15,7 @@ public:
   // specify the ports offered by this node
   static BT::PortsList providedPorts()
   {
-    return providedBasicPorts({ InputPort<std::string>("target") });
+    return providedBasicPorts({ BT::InputPort<std::string>("target") });
   }
 
   // Implement the method that sends the goal
