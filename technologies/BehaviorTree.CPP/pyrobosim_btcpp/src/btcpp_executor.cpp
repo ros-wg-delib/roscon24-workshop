@@ -1,4 +1,4 @@
-#include <CLI11/CLI11.hpp>
+#include <fstream>
 
 // ROS includes
 #include <rclcpp/rclcpp.hpp>
@@ -31,23 +31,23 @@ std::filesystem::path GetFilePath(const std::string& filename)
 
 int main(int argc, char** argv)
 {
-  // Parse command line arguments
-  CLI::App app("BehaviorTree.CPP executor for pyrobosim");
-
-  std::string tree_filename;
-  app.add_option("-t,--tree", tree_filename, "Path to the XML containing the tree")->required();
-
-  bool save_model = false;
-  app.add_flag("--save-model", save_model, "Save the XML model of the tree");
-
-  CLI11_PARSE(app, argc, argv);
-
-  const std::filesystem::path filepath = GetFilePath(tree_filename);
-
-  //----------------------------------
   // Create a ROS Node
   rclcpp::init(argc, argv);
   auto nh = std::make_shared<rclcpp::Node>("btcpp_executor");
+
+  nh->declare_parameter("tree", rclcpp::PARAMETER_STRING);
+  nh->declare_parameter("save-model", false);
+
+  const std::string tree_filename = nh->get_parameter("tree").as_string();
+  const bool save_model = nh->get_parameter("save-model").as_bool();
+
+  if(tree_filename.empty())
+  {
+    RCLCPP_FATAL(nh->get_logger(), "Missing parameter 'tree' with the path to the Behavior Tree "
+                                   "XML file");
+    return 1;
+  }
+  const std::filesystem::path filepath = GetFilePath(tree_filename);
 
   //----------------------------------
   // register all the actions in the factory

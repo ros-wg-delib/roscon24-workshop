@@ -67,7 +67,6 @@ repos:
     hooks:
       - id: clang-format
         types_or: [c++, c]
-        exclude: ^technologies/BehaviorTree.CPP/pyrobosim_btcpp/3rdparty
         args: ['-fallback-style=none', '-i']
 
 exclude: '(dependencies|.colcon)/.*'

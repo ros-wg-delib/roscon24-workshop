@@ -23,5 +23,5 @@ For instance, consider this sample XML in [trees/navigation_demo.xml](pyrobosim_
 ```
 
 ```
-ros2 run pyrobosim_btcpp btcpp_executor --tree=trees/navigation_demo.xml
+ros2 run pyrobosim_btcpp btcpp_executor --ros-args -p tree:=trees/navigation_demo.xml
 ```

@@ -53,6 +53,7 @@ public:
 private:
   bool setGoal(Goal& goal) override final
   {
+    goal.action.robot = "robot";  // default name
     return setGoal(goal.action);
   }
 
