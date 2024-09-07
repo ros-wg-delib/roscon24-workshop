@@ -1,3 +1,6 @@
 __pycache__/
 .colcon/
 .vscode
+/build/*
+/install/*
+/log/*

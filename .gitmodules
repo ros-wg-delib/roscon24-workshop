@@ -30,3 +30,7 @@
 	path = dependencies/FlexBE/flexbe_webui
 	url = https://github.com/FlexBE/flexbe_webui.git
 	branch = main
+[submodule "dependencies/BehaviorTree.ROS2"]
+	path = dependencies/BehaviorTree.ROS2
+	url = https://github.com/BehaviorTree/BehaviorTree.ROS2.git
+	branch = humble
