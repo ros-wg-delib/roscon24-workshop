@@ -2,33 +2,43 @@ cmake_minimum_required(VERSION 3.8)
 project(pyrobosim_btcpp)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
+  add_compile_options(-Wall -Wextra)
 endif()
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
 
-set(DEPENDENCIES
+set(THIS_PACKAGE_DEPS
+  ament_index_cpp
   behaviortree_ros2
   pyrobosim_msgs
+  rclcpp
 )
 
 # for each dependency, find and include the package
-foreach(DEPENDENCY ${DEPENDENCIES})
+foreach(DEPENDENCY ${THIS_PACKAGE_DEPS})
   find_package(${DEPENDENCY} REQUIRED)
 endforeach()
 
+# create executable
+add_executable(btcpp_executor src/btcpp_executor.cpp)
 
-if(BUILD_TESTING)
-  find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # comment the line when a copyright and license is added to all source files
-  set(ament_cmake_copyright_FOUND TRUE)
-  # the following line skips cpplint (only works in a git repo)
-  # comment the line when this package is in a git repo and when
-  # a copyright and license is added to all source files
-  set(ament_cmake_cpplint_FOUND TRUE)
-  ament_lint_auto_find_test_dependencies()
-endif()
+ament_target_dependencies(btcpp_executor ${THIS_PACKAGE_DEPS})
+
+target_include_directories(btcpp_executor PUBLIC 
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/3rdparty>)
+
+
+# Install executable and trees
+install(
+  DIRECTORY trees
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(
+  TARGETS btcpp_executor
+  DESTINATION DESTINATION lib/${PROJECT_NAME}
+)
 
 ament_package()

@@ -1,0 +1,11 @@
+<root BTCPP_format="4">
+
+  <BehaviorTree ID="MainTree">
+    <Sequence>
+      <Navigate name="ToOffice" target="office"/>
+      <Navigate name="ToDining" target="dining"/>
+      <Navigate name="ToKitchen" target="kitchen"/>
+    </Sequence>
+  </BehaviorTree>
+
+</root>
