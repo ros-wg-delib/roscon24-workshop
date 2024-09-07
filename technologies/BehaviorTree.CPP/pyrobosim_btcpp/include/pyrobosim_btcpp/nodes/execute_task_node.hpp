@@ -38,13 +38,23 @@ public:
     : RosActionNode<pyrobosim_msgs::action::ExecuteTaskAction>(name, conf, params)
   {}
 
+  using TaskAction = pyrobosim_msgs::msg::TaskAction;
   using ExecutionResult = pyrobosim_msgs::msg::ExecutionResult;
+
+  // method that sends the goal. Must be implemented by the derived class
+  virtual bool setGoal(TaskAction& action) = 0;
 
   // virtual method processing the result. Can be overridden by the derived class
   virtual NodeStatus onResultReceived(const ExecutionResult& execution_result);
 
   // default implementation of the onFailure callback. Can be overridden by the derived class
   NodeStatus onFailure(ActionNodeErrorCode error) override;
+
+private:
+  bool setGoal(Goal& goal) override final
+  {
+    return setGoal(goal.action);
+  }
 
   NodeStatus onResultReceived(const WrappedResult& wr) override final
   {

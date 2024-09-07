@@ -19,7 +19,7 @@ public:
   }
 
   // Implement the method that sends the goal
-  bool setGoal(Goal& goal) override
+  bool setGoal(TaskAction& action) override
   {
     std::string location;
     if(!getInput("target", location) || location.empty())
@@ -27,8 +27,8 @@ public:
       throw BT::RuntimeError("missing required input [target]");
     }
     // prepare the goal message
-    goal.action.type = "navigate";
-    goal.action.target_location = location;
+    action.type = "navigate";
+    action.target_location = location;
     return true;
   }
 };
