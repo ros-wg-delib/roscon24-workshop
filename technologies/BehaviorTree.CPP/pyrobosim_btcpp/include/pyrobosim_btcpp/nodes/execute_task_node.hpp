@@ -50,10 +50,15 @@ public:
   // default implementation of the onFailure callback. Can be overridden by the derived class
   NodeStatus onFailure(ActionNodeErrorCode error) override;
 
+  // this helper function will add the port "robotID" and "action_name" by default to every node.
+  // They both have default values and don't need to be specified in the XML files
+  static BT::PortsList appendProvidedPorts(PortsList other_ports);
+
 private:
   bool setGoal(Goal& goal) override final
   {
-    goal.action.robot = "robot";  // default name
+    // initialize the field goal.action.robot
+    getInput("robotID", goal.action.robot);
     return setGoal(goal.action);
   }
 
@@ -67,7 +72,7 @@ private:
 //------------------------------------------------------------
 //------------------------------------------------------------
 
-NodeStatus ExecuteTaskNode::onResultReceived(const ExecutionResult& execution_result)
+inline NodeStatus ExecuteTaskNode::onResultReceived(const ExecutionResult& execution_result)
 {
   if(execution_result.status != ExecutionResult::SUCCESS)
   {
@@ -78,10 +83,18 @@ NodeStatus ExecuteTaskNode::onResultReceived(const ExecutionResult& execution_re
   return NodeStatus::SUCCESS;
 }
 
-NodeStatus ExecuteTaskNode::onFailure(ActionNodeErrorCode error)
+inline NodeStatus ExecuteTaskNode::onFailure(ActionNodeErrorCode error)
 {
   RCLCPP_ERROR(logger(), "[%s] failed with error: %s", name().c_str(), toStr(error));
   return NodeStatus::FAILURE;
+}
+
+inline BT::PortsList ExecuteTaskNode::appendProvidedPorts(PortsList other_ports)
+{
+  PortsList ports = { InputPort<std::string>("action_name", "execute_action", "Action server name"),
+                      InputPort<std::string>("robotID", "robot", "Robot name") };
+  ports.insert(other_ports.begin(), other_ports.end());
+  return ports;
 }
 
 }  // namespace BT
