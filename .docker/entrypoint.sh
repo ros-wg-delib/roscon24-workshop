@@ -7,6 +7,7 @@ source /opt/ros/jazzy/setup.bash
 export PYTHONWARNINGS="ignore:setup.py install is deprecated,ignore:easy_install command is deprecated"
 
 export ROS_WS=/delib_ws
+export WORKSPACE_ROOT=$ROS_WS	# For FlexBE compatibility
 export ROS_DOMAIN_ID=0
 
 function print_ros_variables () {
@@ -56,11 +57,11 @@ function delib_clean () {
 }
 
 # Automatic build when entering the container
-if [ ! -f /delib_ws/install/setup.bash ]
+if [ ! -f $ROS_WS/install/setup.bash ]
 then
   delib_build
 fi
-source /delib_ws/install/setup.bash
+source $ROS_WS/install/setup.bash
 
 # Execute the command passed into this entrypoint.
 exec "$@"
