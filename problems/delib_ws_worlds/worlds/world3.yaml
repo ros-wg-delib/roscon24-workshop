@@ -46,6 +46,12 @@ rooms:
         - [1.6, -1.0]
         - [1.6, 1.0]
         - [-1.6, 1.0]
+    # Add navigation poses since the centroid is blocked by the table.
+    nav_poses:
+      - [-1.0, 0.0, 0.0, 0.0]  # left
+      - [1.0, 0.0, 0.0, 3.14]  # right
+      - [0.0, 0.8, 0.0, -1.57]  # above
+      - [0.0, -0.8, 0.0, 1.57]  # below
     wall_width: 0.2
     color: [0, 1, 0]
 
