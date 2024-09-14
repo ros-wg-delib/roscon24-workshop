@@ -27,6 +27,8 @@ services:
     # Networking and IPC for ROS 2
     network_mode: host
     ipc: host
+    # Needed to run Groot inside the container
+    privileged: true
     environment:
       # Allows graphical programs in the container
       - DISPLAY=${DISPLAY}
