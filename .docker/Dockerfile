@@ -3,21 +3,27 @@
 FROM ros:jazzy-ros-base AS roscon_delib_ws_2024
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-# Install dependencies
+# Install apt dependencies.
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
-    apt-utils python3-pip python3-tk python3-wrapt python3-inflection \
+    apt-utils curl fuse3 libfuse2 \
     libegl1 libgl1-mesa-dev libglu1-mesa-dev '^libxcb.*-dev' libx11-xcb-dev \
     libxi-dev libxkbcommon-dev libxkbcommon-x11-dev libxrender-dev \
-    libnss3 libasound2t64 libxkbfile1
+    libnss3 libasound2t64 libxkbfile1 \
+    python3-pip python3-tk python3-wrapt python3-inflection
 
 # Create a ROS 2 workspace.
 RUN mkdir -p /delib_ws/src/
+WORKDIR /delib_ws
 
 # Install external dependencies.
-WORKDIR /delib_ws
+# Groot2 for BehaviorTree.CPP
+RUN curl -o Groot2.AppImage https://s3.us-west-1.amazonaws.com/download.behaviortree.dev/groot2_linux_installer/Groot2-v1.6.1-x86_64.AppImage && \
+    chmod a+x Groot2.AppImage && \
+    groupadd fuse && \
+    usermod -aG fuse root
 # Aggregated Python dependencies
 COPY python-requirements.txt /delib_ws
 RUN pip3 install --break-system-packages -r python-requirements.txt
