@@ -36,7 +36,7 @@ Commonly this is just `http://localhost:8085`.
 The WebUI has four distinct sections:
 * On the left you have the list of available nodes.
   These can be moved into the main editing area at the center to add them to the tree.
-  Some nodes (e.g. EnumConstant) require you to click on the node in the list and add required details at the bottom of the editing window before they can be added to  the tree via the `AddToTree` button.
+  Some nodes (e.g. EnumFields) require you to click on the node in the list and add required details at the bottom of the editing window before they can be added to  the tree via the `AddToTree` button.
 * In the center there is the main editing window.
   By moving nodes into this area their position within the tree can be adjusted.
   When connecting nodes from the data terminals at either the left (inputs) or right (outputs) side of a node you can created data connections between nodes.
