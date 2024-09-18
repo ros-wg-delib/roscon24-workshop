@@ -8,11 +8,12 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
-    apt-utils curl fuse3 libfuse2 \
+    apt-utils curl fuse3 libfuse2 gdb nano \
     libegl1 libgl1-mesa-dev libglu1-mesa-dev '^libxcb.*-dev' libx11-xcb-dev \
     libxi-dev libxkbcommon-dev libxkbcommon-x11-dev libxrender-dev \
     libnss3 libasound2t64 libxkbfile1 \
-    python3-pip python3-tk python3-wrapt python3-inflection
+    python3-pip python3-tk python3-wrapt python3-inflection \
+    ros-jazzy-rqt-service-caller
 
 # Create a ROS 2 workspace.
 RUN mkdir -p /delib_ws/src/
