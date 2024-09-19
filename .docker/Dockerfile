@@ -8,7 +8,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
-    apt-utils curl fuse3 libfuse2 gdb nano \
+    apt-utils curl fuse3 libfuse2 gdb nano unzip \
     libegl1 libgl1-mesa-dev libglu1-mesa-dev '^libxcb.*-dev' libx11-xcb-dev \
     libxi-dev libxkbcommon-dev libxkbcommon-x11-dev libxrender-dev \
     libnss3 libasound2t64 libxkbfile1 \
@@ -33,6 +33,16 @@ RUN source /opt/ros/jazzy/setup.bash && \
     rosdep install --from-paths src -y --ignore-src
 # SkiROS2 dependencies
 RUN src/dependencies/SkiROS2/skiros2/skiros2/scripts/install_fd_task_planner.sh
+# Convince toolchain 
+# (modest)
+RUN curl -o modest.zip https://www.modestchecker.net/Downloads/Modest-Toolset-v3.1.265-gdc4a442d8-linux-x64.zip && \
+    unzip modest.zip && \
+    ln -s /delib_ws/Modest/modest /usr/local/bin/modest
+# (AS2FM)
+RUN cd src/dependencies/convince/AS2FM && \
+    pip3 install --break-system-packages as2fm_common/. && \
+    pip3 install --break-system-packages jani_generator/. && \
+    pip3 install --break-system-packages scxml_converter/.
 
 # Remove MatPlotLib display warnings.
 RUN mkdir /tmp/runtime-root
