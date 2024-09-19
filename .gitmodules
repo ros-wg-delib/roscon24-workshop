@@ -34,3 +34,6 @@
 	path = dependencies/BehaviorTree.ROS2
 	url = https://github.com/BehaviorTree/BehaviorTree.ROS2.git
 	branch = humble
+[submodule "dependencies/convince/AS2FM"]
+	path = dependencies/convince/AS2FM
+	url = https://github.com/convince-project/AS2FM.git
