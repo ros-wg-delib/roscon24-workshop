@@ -37,3 +37,6 @@
 [submodule "dependencies/convince/AS2FM"]
 	path = dependencies/convince/AS2FM
 	url = https://github.com/convince-project/AS2FM.git
+[submodule "dependencies/convince/bt_tools"]
+	path = dependencies/convince/bt_tools
+	url = https://github.com/boschresearch/bt_tools.git
