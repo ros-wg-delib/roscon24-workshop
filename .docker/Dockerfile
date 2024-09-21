@@ -33,7 +33,7 @@ RUN source /opt/ros/jazzy/setup.bash && \
     rosdep install --from-paths src -y --ignore-src
 # SkiROS2 dependencies
 RUN src/dependencies/SkiROS2/skiros2/skiros2/scripts/install_fd_task_planner.sh
-# Convince toolchain 
+# Convince toolchain
 # (smc_storm)
 RUN wget https://github.com/convince-project/smc_storm/releases/download/0.0.3/smc_storm_executable.tar.gz && \
     tar -xzf smc_storm_executable.tar.gz && \
