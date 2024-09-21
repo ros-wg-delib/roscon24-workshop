@@ -8,7 +8,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
-    apt-utils curl fuse3 libfuse2 gdb nano unzip \
+    apt-utils curl fuse3 libfuse2 gdb nano wget \
     libegl1 libgl1-mesa-dev libglu1-mesa-dev '^libxcb.*-dev' libx11-xcb-dev \
     libxi-dev libxkbcommon-dev libxkbcommon-x11-dev libxrender-dev \
     libnss3 libasound2t64 libxkbfile1 \
@@ -34,10 +34,11 @@ RUN source /opt/ros/jazzy/setup.bash && \
 # SkiROS2 dependencies
 RUN src/dependencies/SkiROS2/skiros2/skiros2/scripts/install_fd_task_planner.sh
 # Convince toolchain 
-# (modest)
-RUN curl -o modest.zip https://www.modestchecker.net/Downloads/Modest-Toolset-v3.1.265-gdc4a442d8-linux-x64.zip && \
-    unzip modest.zip && \
-    ln -s /delib_ws/Modest/modest /usr/local/bin/modest
+# (smc_storm)
+RUN wget https://github.com/convince-project/smc_storm/releases/download/0.0.3/smc_storm_executable.tar.gz && \
+    tar -xzf smc_storm_executable.tar.gz && \
+    ./install.sh --install-dependencies && \
+    ln -s /delib_ws/bin/smc_storm /usr/local/bin/smc_storm
 # (AS2FM)
 RUN cd src/dependencies/convince/AS2FM && \
     pip3 install --break-system-packages as2fm_common/. && \
