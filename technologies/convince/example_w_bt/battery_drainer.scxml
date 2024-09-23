@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scxml 
-    initial="use_battery" 
-    version="1.0" 
+<scxml
+    initial="use_battery"
+    version="1.0"
     name="BatteryDrainer"
     model_src=""
     xmlns="http://www.w3.org/2005/07/scxml">

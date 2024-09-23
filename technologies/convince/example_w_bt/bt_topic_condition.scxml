@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scxml 
-    initial="initial" 
-    version="1.0" 
+<scxml
+    initial="initial"
+    version="1.0"
     name="TopicCondition"
     model_src=""
     xmlns="http://www.w3.org/2005/07/scxml">
@@ -11,7 +11,7 @@
     </datamodel>
 
     <ros_topic_subscriber topic="alarm" type="std_msgs/Bool" />
-    
+
     <!-- Assumption: We get an event when the node is ticked by the BT, named "bt_tick". -->
     <!-- Assumption: We have to send an event to the BT, that is either "bt_success" or "bt_failure". -->
 

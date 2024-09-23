@@ -6,7 +6,7 @@
     <behavior_tree>
         <input type="bt.cpp-xml" src="./bt.xml" />
         <input type="bt-plugin-ros-scxml" src="./bt_topic_condition.scxml" />
-        <input type="bt-plugin-ros-scxml" src="./bt_topic_action.scxml" /> 
+        <input type="bt-plugin-ros-scxml" src="./bt_topic_action.scxml" />
     </behavior_tree>
 
     <node_models>
