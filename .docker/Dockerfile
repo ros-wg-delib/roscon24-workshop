@@ -33,6 +33,19 @@ RUN source /opt/ros/jazzy/setup.bash && \
     rosdep install --from-paths src -y --ignore-src
 # SkiROS2 dependencies
 RUN src/dependencies/SkiROS2/skiros2/skiros2/scripts/install_fd_task_planner.sh
+# Convince toolchain
+# (smc_storm)
+RUN curl -O -L https://github.com/convince-project/smc_storm/releases/download/0.0.3/smc_storm_executable.tar.gz && \
+    tar -xzf smc_storm_executable.tar.gz && \
+    ./install.sh --install-dependencies && \
+    ln -s /delib_ws/bin/smc_storm /usr/local/bin/smc_storm
+# (AS2FM)
+RUN cd src/dependencies/convince/AS2FM && \
+    pip3 install --break-system-packages as2fm_common/. && \
+    pip3 install --break-system-packages jani_generator/. && \
+    pip3 install --break-system-packages scxml_converter/. && \
+    pip3 uninstall -y --break-system-packages js2py && \
+    pip3 install --break-system-packages git+https://github.com/felixonmars/Js2Py.git@py3.12 # Temporary fix for js2py
 
 # Remove MatPlotLib display warnings.
 RUN mkdir /tmp/runtime-root
