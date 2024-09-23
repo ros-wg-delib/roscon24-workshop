@@ -5,7 +5,7 @@ While there is also a [full documentation](https://convince-project.github.io/AS
 
 ## Introduction to example
 
-The folder `example_w_bt` contains a model of a simplistic system that consist of a battery that is drained at a fixed rate and the logic to charge it when it is low.
+The folder `technologies/convince/example_w_bt` contains a model of a simplistic system that consist of a battery that is drained at a fixed rate and the logic to charge it when it is low.
 
 In the folder you will find the following files:
 
