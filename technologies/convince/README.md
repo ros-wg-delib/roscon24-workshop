@@ -1,6 +1,6 @@
 # AS2FM by CONVINCE
 
-This is an introduction to the tool AS2FM (Autonomous Systems to Formal Models) that is part of the CONVINCE toolchain.
+This is an introduction to the tool [AS2FM (Autonomous Systems to Formal Models)](https://convince-project.github.io/AS2FM/index.html) that is part of the [CONVINCE toolchain](https://convince-project.github.io/overview/).
 While there is also a [full documentation](https://convince-project.github.io/AS2FM/index.html), this is a short introductory example.
 
 ## Introduction to example
