@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml
+    initial="initial"
+    version="1.0"
+    name="TopicAction"
+    model_src=""
+    xmlns="http://www.w3.org/2005/07/scxml">
+
+    <ros_topic_publisher topic="charge" type="std_msgs/Empty" />
+
+    <!-- Assumption: We get an event when the node is ticked by the BT, named "bt_tick". -->
+    <!-- Assumption: We have to send an event to the BT, that is either "bt_success" or "bt_failure". -->
+
+    <state id="initial">
+        <transition event="bt_tick" target="initial">
+            <ros_topic_publish name="charge" />
+            <!-- Let's assume this is always successful. -->
+            <send event="bt_success" />
+        </transition>
+    </state>
+
+</scxml>
