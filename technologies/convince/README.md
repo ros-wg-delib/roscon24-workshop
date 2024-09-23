@@ -23,7 +23,8 @@ In the folder you will find the following files:
 
 ## Prerequisites
 
-This example expects btlib to be built:
+This example expects btlib to be built.
+This should normally be the case in the docker image. If not, run this:
 
 ```bash
 cd $ROS_WS
