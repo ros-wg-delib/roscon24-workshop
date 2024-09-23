@@ -8,7 +8,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
-    apt-utils curl fuse3 libfuse2 gdb nano wget \
+    apt-utils curl fuse3 libfuse2 gdb nano \
     libegl1 libgl1-mesa-dev libglu1-mesa-dev '^libxcb.*-dev' libx11-xcb-dev \
     libxi-dev libxkbcommon-dev libxkbcommon-x11-dev libxrender-dev \
     libnss3 libasound2t64 libxkbfile1 \
@@ -35,7 +35,7 @@ RUN source /opt/ros/jazzy/setup.bash && \
 RUN src/dependencies/SkiROS2/skiros2/skiros2/scripts/install_fd_task_planner.sh
 # Convince toolchain
 # (smc_storm)
-RUN wget https://github.com/convince-project/smc_storm/releases/download/0.0.3/smc_storm_executable.tar.gz && \
+RUN curl -o https://github.com/convince-project/smc_storm/releases/download/0.0.3/smc_storm_executable.tar.gz && \
     tar -xzf smc_storm_executable.tar.gz && \
     ./install.sh --install-dependencies && \
     ln -s /delib_ws/bin/smc_storm /usr/local/bin/smc_storm
