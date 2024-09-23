@@ -28,7 +28,7 @@ This example expects btlib to be built:
 ```bash
 cd $ROS_WS
 colcon build --symlink-install --packages-select btlib
-source $ROS_WS/install/setup.bash
+source ./install/setup.bash
 ```
 
 ## Running the example
@@ -36,7 +36,7 @@ source $ROS_WS/install/setup.bash
 To run the example, navigate to the `example_w_bt` folder:
 
 ```bash
-cd /delib_ws/src/technologies/convince/example_w_bt
+cd $ROS_WS/src/technologies/convince/example_w_bt
 ```
 
 First, you need to translate all of the files mentioned above into a single JANI model file:
