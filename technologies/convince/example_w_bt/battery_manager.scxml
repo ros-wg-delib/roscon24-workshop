@@ -14,11 +14,11 @@
     <ros_topic_publisher topic="alarm" type="std_msgs/Bool" />
 
     <state id="check_battery">
-        <ros_topic_callback topic="level" target="check_battery">
+        <ros_topic_callback name="level" target="check_battery">
             <assign location="battery_alarm" expr="_msg.data &lt; 30" />
         </ros_topic_callback>
         <onentry>
-            <ros_topic_publish topic="alarm">
+            <ros_topic_publish name="alarm">
                 <field name="data" expr="battery_alarm" />
             </ros_topic_publish>
         </onentry>

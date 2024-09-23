@@ -13,7 +13,7 @@
 
     <state id="initial">
         <transition event="bt_tick" target="initial">
-            <ros_topic_publish topic="charge" />
+            <ros_topic_publish name="charge" />
             <!-- Let's assume this is always successful. -->
             <send event="bt_success" />
         </transition>
