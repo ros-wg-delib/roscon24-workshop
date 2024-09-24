@@ -45,7 +45,8 @@ RUN cd src/dependencies/convince/AS2FM && \
     pip3 install --break-system-packages jani_generator/. && \
     pip3 install --break-system-packages scxml_converter/. && \
     pip3 uninstall -y --break-system-packages js2py && \
-    pip3 install --break-system-packages git+https://github.com/felixonmars/Js2Py.git@py3.12 # Temporary fix for js2py
+    pip3 install --break-system-packages git+https://github.com/felixonmars/Js2Py.git@py3.12  # Temporary fix for js2py && \
+    pip3 uninstall -y --break-system-packages matplotlib  # Temporary fix for MatPlotLib conflict
 
 # Remove MatPlotLib display warnings.
 RUN mkdir /tmp/runtime-root
