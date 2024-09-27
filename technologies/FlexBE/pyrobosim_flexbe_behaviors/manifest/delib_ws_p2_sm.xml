@@ -8,7 +8,7 @@
     <date>Sat Aug 31 2024</date>
     <description>
         Behavior demonstrating p2 - travel, open door, go to table, pick object,
-        transport, and place
+        transport, and place using embedded state machine and operator selection.
     </description>
 
 

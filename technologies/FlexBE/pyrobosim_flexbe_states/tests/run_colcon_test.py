@@ -42,9 +42,9 @@ class TestFlexBEStates(PyTester):
 
     @classmethod
     def setUpClass(cls):
-
-        PyTester._package = "pyrobosim_flexbe_states"
-        PyTester._tests_folder = "tests"
+        """Set up the test class."""
+        PyTester._package = 'pyrobosim_flexbe_states'
+        PyTester._tests_folder = 'tests'
 
         PyTester.setUpClass()  # Do this last after setting package and tests folder
 

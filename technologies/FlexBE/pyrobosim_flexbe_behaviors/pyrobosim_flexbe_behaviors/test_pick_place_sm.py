@@ -63,9 +63,9 @@ class testpickplaceSM(Behavior):
         self.name = 'test pick place'
 
         # parameters of this behavior
-        self.add_parameter('location', 'counter0_left')
-        self.add_parameter('object', 'banana')
-        self.add_parameter('return_location', 'desk0')
+        self.add_parameter('location', 'pantry')
+        self.add_parameter('object', 'bread')
+        self.add_parameter('return_location', 'desk')
 
         # Initialize ROS node information
         initialize_flexbe_core(node)
@@ -74,12 +74,6 @@ class testpickplaceSM(Behavior):
 
         # Additional initialization code can be added inside the following tags
         # [MANUAL_INIT]
-
-
-
-
-
-
 
 
         # [/MANUAL_INIT]
@@ -99,12 +93,6 @@ class testpickplaceSM(Behavior):
 
         # Additional creation code can be added inside the following tags
         # [MANUAL_CREATE]
-
-
-
-
-
-
 
 
         # [/MANUAL_CREATE]
@@ -183,7 +171,8 @@ class testpickplaceSM(Behavior):
                                                  'planning_failed': Autonomy.Off,
                                                  'motion_failed': Autonomy.Off,
                                                  'canceled': Autonomy.Off,
-                                                 'timeout': Autonomy.Off})
+                                                 'timeout': Autonomy.Off},
+                                       remapping={'msg': 'msg'})
 
             # x:827 y:52
             OperatableStateMachine.add('NavigateReturn',
@@ -202,7 +191,8 @@ class testpickplaceSM(Behavior):
                                                  'planning_failed': Autonomy.Off,
                                                  'motion_failed': Autonomy.Off,
                                                  'canceled': Autonomy.Off,
-                                                 'timeout': Autonomy.Off})
+                                                 'timeout': Autonomy.Off},
+                                       remapping={'msg': 'msg'})
 
             # x:536 y:47
             OperatableStateMachine.add('PickObject',
@@ -230,12 +220,6 @@ class testpickplaceSM(Behavior):
 
     # Private functions can be added inside the following tags
     # [MANUAL_FUNC]
-
-
-
-
-
-
 
 
     # [/MANUAL_FUNC]

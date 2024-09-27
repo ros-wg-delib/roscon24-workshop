@@ -3,14 +3,13 @@
     href="http://download.ros.org/schema/package_format3.xsd"
     schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-    <name>pyrobosim_flexbe_states</name>
+    <name>pyrobosim_flexbe_utilities</name>
     <version>0.0.1</version>
     <description>
-      All implemented FlexBE state implementations for pyrobosim interfaces.
+      Pyrobosim utilities.
 
       Implemented for ROSCon '24 Deliberative Technologies Workshop.
 
-      Feel free to add new states.
     </description>
     <author email="robotics@cnu.edu">David Conner</author>
     <maintainer email="robotics@cnu.edu">David Conner</maintainer>
@@ -18,7 +17,7 @@
 
     <exec_depend>rclpy</exec_depend>
     <exec_depend>flexbe_core</exec_depend>
-    <exec_depend>pyrobosim_flexbe_utilities</exec_depend>
+    <exec_depend>pyrobosim_ros</exec_depend>
 
     <test_depend>ament_copyright</test_depend>
     <test_depend>ament_flake8</test_depend>
@@ -29,7 +28,6 @@
     <buildtool_depend>ament_cmake_python</buildtool_depend>
 
     <export>
-        <flexbe_states />
         <build_type>ament_python</build_type>
     </export>
 

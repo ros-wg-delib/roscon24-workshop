@@ -29,7 +29,7 @@ from rclpy.duration import Duration
 
 class PlaceActionState(EventState):
     """
-    FlexBE state to place object action for PyRoboSim robot
+    FlexBE state to place object action for PyRoboSim robot.
 
     Elements defined here for UI
     Parameters
@@ -55,8 +55,7 @@ class PlaceActionState(EventState):
 
         self._goal = ExecuteTaskAction.Goal()
         self._goal.action = TaskAction(robot=robot_name,
-                                       type="place",
-                                      )
+                                       type='place')
 
         self._topic = action_topic
         self._timeout = Duration(seconds=timeout)
@@ -84,18 +83,18 @@ class PlaceActionState(EventState):
             userdata.msg = result.message  # Output message
             if status == GoalStatus.STATUS_SUCCEEDED:
                 if result.status == ExecutionResult.SUCCESS:
-                    Logger.localinfo(f"{self} - successfully placed object")
+                    Logger.localinfo(f"'{self}' - successfully placed object")
                     self._return = 'done'
                 elif result.status in (ExecutionResult.PRECONDITION_FAILURE,
                                        ExecutionResult.PLANNING_FAILURE,
                                        ExecutionResult.EXECUTION_FAILURE):
-                    Logger.logwarn(f"{self} : '{self._topic}' - place failure '{result.message}'")
+                    Logger.logwarn(f"'{self}' : '{self._topic}' - place failure '{result.message}'")
                     self._return = 'failed'
                 elif result.status in (ExecutionResult.CANCELED):
-                    Logger.logwarn(f"{self} : '{self._topic}' - canceled '{result.message}'")
+                    Logger.logwarn(f"'{self}' : '{self._topic}' - canceled '{result.message}'")
                     self._return = 'failed'
                 else:
-                    Logger.logwarn(f"{self} : '{self._topic}' -"
+                    Logger.logwarn(f"'{self}' : '{self._topic}' -"
                                    f" unknown failure ({result.status}) '{result.message}'")
                     self._return = 'failed'
                 return self._return
@@ -105,7 +104,7 @@ class PlaceActionState(EventState):
         elif self._node.get_clock().now().nanoseconds - self._start_time.nanoseconds > self._timeout.nanoseconds:
             # Failed to return call in timely manner
             self._return = 'failed'
-            userdata.msg = f"{self._name}: failed to place object within timeout!"
+            userdata.msg = f"'{self._name}': failed to place object within timeout!"
             Logger.localwarn(userdata.msg)
 
         # Otherwise check for status change
@@ -119,16 +118,16 @@ class PlaceActionState(EventState):
         # If the action has not yet finished, None outcome will be returned and the state stays active.
         return self._return
 
-
     def on_enter(self, userdata):
         """Call when state becomes active."""
         # make sure to reset the error state since a previous state execution might have failed
+        Logger.localinfo(f"on_enter '{self}' - '{self.path}' ...")
         self._return = None
         self._client.remove_result(self._topic)  # clear any prior result from action server
 
         # Send the goal.
         try:
-            self._client.send_goal(self._topic, self._goal, wait_duration=self._timeout.nanoseconds*1e-9)
+            self._client.send_goal(self._topic, self._goal, wait_duration=self._timeout.nanoseconds * 1e-9)
             self._start_time = self._node.get_clock().now()
         except Exception as exc:  # pylint: disable=W0703
             # Since a state failure not necessarily causes a behavior failure,
@@ -148,9 +147,10 @@ class PlaceActionState(EventState):
 
         # Local message are shown in terminal but not the UI
         if self._return == 'done':
-            Logger.localinfo(f'Successfully completed place action.')
+            Logger.localinfo('Successfully completed place action.')
         else:
             Logger.localwarn('Failed to complete place action.')
+        Logger.localinfo(f"on_exit '{self}' - '{self.path}' ...")
 
         # Choosing to remove in on_enter and retain in proxy for now
         # Either choice can be valid.
@@ -158,3 +158,19 @@ class PlaceActionState(EventState):
         #     # remove the old result so we are ready for the next time
         #     # and don't prematurely return
         #     self._client.remove_result(self._topic)
+
+    def on_pause(self):
+        """Execute each time this state is paused."""
+        Logger.localinfo(f"on_pause '{self}' - '{self.path}' ...")
+
+    def on_resume(self, userdata):
+        """Execute each time this state is resumed."""
+        Logger.localinfo(f"on_resume '{self}' - '{self.path}' ...")
+
+    def on_start(self):
+        """Call when behavior starts."""
+        Logger.localinfo(f" on_start  '{self}' - '{self.path}' ")
+
+    def on_stop(self):
+        """Call when behavior stops."""
+        Logger.localinfo(f" on_stop  '{self}' - '{self.path}'")

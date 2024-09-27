@@ -17,9 +17,9 @@
     <!-- Available Parameters -->
     <params>
 
-        <param type="text" name="move_location" default="counter0_right" label="Move to location" hint="Sets the location to move to first" />
+        <param type="text" name="move_location" default="pantry" label="Move to location" hint="Sets the location to move to first" />
 
-        <param type="text" name="place_location" default="desk0" label="Place location" hint="Sets the location where we want to place object" />
+        <param type="text" name="place_location" default="desk" label="Place location" hint="Sets the location where we want to place object" />
 
     </params>
 

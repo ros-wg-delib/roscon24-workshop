@@ -1,0 +1,8 @@
+[flake8]
+exclude = .git
+max-line-length = 130
+ignore = W503, D100, D105, D107, E203, F401
+# Ignore docstring requirements for public modules, magic methods, and __init__ functions.
+# For W503 - https://www.flake8rules.com/rules/W503.html and https://peps.python.org/pep-0008/#should-a-line-break-before-or-after-a-binary-operator
+# For E203 the state machine writer starts line with ,
+# F401 state machine writer adds imports by default

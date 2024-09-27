@@ -72,10 +72,6 @@ class TestPlanPathSM(Behavior):
         # [MANUAL_INIT]
 
 
-
-
-
-
         # [/MANUAL_INIT]
 
         # Behavior comments:
@@ -85,23 +81,17 @@ class TestPlanPathSM(Behavior):
         # Root state machine
         # x:1232 y:54, x:1214 y:117
         _state_machine = OperatableStateMachine(outcomes=['finished', 'failed'])
-        _state_machine.userdata.destination = 'table_source'
-        _state_machine.userdata.table = 'table_sink'
-        _state_machine.userdata.desk = 'desk0'
+        _state_machine.userdata.destination = 'dumpster'
 
         # Additional creation code can be added inside the following tags
         # [MANUAL_CREATE]
-
-
-
-
 
 
         # [/MANUAL_CREATE]
 
         with _state_machine:
             # x:128 y:59
-            OperatableStateMachine.add('PlanCounter',
+            OperatableStateMachine.add('PlanDestination',
                                        PlanPathState(action_topic='robot/plan_path',
                                                      timeout=2.0),
                                        transitions={'done': 'FollowPath'  # 428 72 -1 -1 -1 -1
@@ -135,10 +125,6 @@ class TestPlanPathSM(Behavior):
 
     # Private functions can be added inside the following tags
     # [MANUAL_FUNC]
-
-
-
-
 
 
     # [/MANUAL_FUNC]

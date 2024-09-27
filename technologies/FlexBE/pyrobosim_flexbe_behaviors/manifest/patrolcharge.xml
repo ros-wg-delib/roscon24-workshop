@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="PatrolCharge">
+
+    <executable package_path="pyrobosim_flexbe_behaviors.patrolcharge_sm" class="PatrolChargeSM" />
+    <tagstring>pyrobosim, battery</tagstring>
+    <author>Conner</author>
+    <date>Mon Sep 23 2024</date>
+    <description>
+        Patrol and recharge as necessary
+    </description>
+
+
+    <!-- Contained Behaviors -->
+    <contains name="Patrol" />
+    <contains name="Traverse" />
+
+    <!-- Available Parameters -->
+
+</behavior>

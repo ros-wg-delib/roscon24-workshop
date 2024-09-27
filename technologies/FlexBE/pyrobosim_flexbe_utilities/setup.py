@@ -5,7 +5,7 @@ from glob import glob
 from setuptools import find_packages
 from setuptools import setup
 
-PACKAGE_NAME = 'pyrobosim_flexbe_states'
+PACKAGE_NAME = 'pyrobosim_flexbe_utilities'
 
 setup(
     name=PACKAGE_NAME,
@@ -14,15 +14,13 @@ setup(
     data_files=[
         ('share/ament_index/resource_index/packages', ['resource/' + PACKAGE_NAME]),
         ('share/' + PACKAGE_NAME, ['package.xml']),
-        ('share/' + PACKAGE_NAME + '/tests', glob('tests/*.test')),
-        ('share/' + PACKAGE_NAME + '/launch', glob('tests/*.launch.py')),
     ],
 
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='David Conner',
     maintainer_email='robotics@cnu.edu',
-    description='Interface FlexBE state implementations for Pyrobosim',
+    description='Pyrobosim utilities used by pyrobosim_flexbe_states ',
     license='Apache 2.0',
     tests_require=['pytest'],
     entry_points={

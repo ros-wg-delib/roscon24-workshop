@@ -16,11 +16,11 @@
     <!-- Available Parameters -->
     <params>
 
-        <param type="text" name="location" default="counter0_left" label="Start location" hint="Sets the location" />
+        <param type="text" name="location" default="pantry" label="Start location" hint="Sets the location" />
 
-        <param type="text" name="object" default="banana" label="Object to pick" hint="Sets the object" />
+        <param type="text" name="object" default="bread" label="Object to pick" hint="Sets the object" />
 
-        <param type="text" name="return_location" default="desk0" label="Return location" hint="Sets the return location" />
+        <param type="text" name="return_location" default="desk" label="Return location" hint="Sets the return location" />
 
     </params>
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Go Beh">
+
+    <executable package_path="pyrobosim_flexbe_behaviors.go_beh_sm" class="GoBehSM" />
+    <tagstring>pyrobosim, delib_ws</tagstring>
+    <author>Conner</author>
+    <date>Sun Sep 08 2024</date>
+    <description>
+        Go to target behavior
+    </description>
+
+
+    <!-- Contained Behaviors -->
+
+    <!-- Available Parameters -->
+    <params>
+
+        <param type="text" name="target" default="desk" label="target" hint="Sets the target" />
+
+    </params>
+
+
+</behavior>

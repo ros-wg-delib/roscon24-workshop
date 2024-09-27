@@ -26,7 +26,7 @@
 Define delib_ws_p2_sm.
 
 Behavior demonstrating p2 - travel, open door, go to table, pick object,
-transport, and place
+transport, and place using embedded state machine and operator selection.
 
 Created on Sat Aug 31 2024
 @author: David Conner
@@ -55,12 +55,12 @@ from pyrobosim_flexbe_states.plan_path_state import PlanPathState
 # [/MANUAL_IMPORT]
 
 
-class delibwsp2smSM(Behavior):
+class delib_ws_p2_smSM(Behavior):
     """
     Define delib_ws_p2_sm.
 
     Behavior demonstrating p2 - travel, open door, go to table, pick object,
-    transport, and place
+    transport, and place using embedded state machine and operator selection.
     """
 
     def __init__(self, node):

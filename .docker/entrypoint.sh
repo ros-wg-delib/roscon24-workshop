@@ -56,6 +56,13 @@ function delib_clean () {
         cd $cwd
 }
 
+# Use this to switch to software rendering to avoid
+# conflicts with GPU and docker
+function qt_soft_render() {
+        export QT_QUICK_BACKEND=software
+        echo "Using $QT_QUICK_BACKEND for QT rendering"
+}
+
 # Automatic build when entering the container
 if [ ! -f $ROS_WS/install/setup.bash ]
 then
