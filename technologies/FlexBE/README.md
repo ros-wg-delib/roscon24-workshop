@@ -31,6 +31,11 @@ To run start the following in separate terminals
   * Note: It is best to give the OCS software several seconds to start and load behaviors before launching the UI
     Wait on the `Begin behavior mirror processing ...` message in terminal
 
+> Note: On some systems, the docker and GPU interations interfere with UI rendering.
+> `export QT_QUICK_BACKEND=software` in terminal or use the aliased helper function
+> `qt_rendering()` before launching the `webui_client`
+
+
 * `clear; ros2 run flexbe_input input_action_server`
   * This launches an action server that will pop up a simple UI that will allow the operator input data on request
   * In this demonstration, it is used to select from among the detected objects
