@@ -14,14 +14,13 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='phil',
-    maintainer_email='philsplus@gmail.com',
-    description='TODO: Package description',
-    license='TODO: License declaration',
+    maintainer='David Conner',
+    maintainer_email='robotics@cnu.edu',
+    description='Demonstration behaviors for FlexBE using Pyrobosim',
+    license='Apache 2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'example_behavior_sm = pyrobosim_flexbe_behaviors.example_behavior_sm',
         ],
     },
 )

@@ -1,7 +1,5 @@
 # FlexBE States and Behaviors for ROSCon 2024 Deliberation Technologies Workshop
 
-> NOTE: This is a very preliminary version
-
 
 # Installation and Setup
 
@@ -11,7 +9,9 @@ To build locally at home see the [installation instructions](docs/installation.m
 
 ## Usage
 
-We provide a few behaviors, for now use the `delib_ws_p2_sm` behavior.
+We provide a few behaviors as described below.
+
+This quick start uses the `delib_ws_p2_sm` behavior.
 This includes a statemachine with on nested sub-statemachine to allow selection of a door to open, and a
 nested behavior called `DetectSelect` that plans path to location, retrieves a user selected object, and places at target location.
 
@@ -55,10 +55,70 @@ To run start the following in separate terminals
 
   > WARNING: An operator can preempt a state, so wait for the state to finish and request the outcome by highlighting the transition.
 
-  > NOTE: Much more to follow.
+  Alternatively you can try :
+  * `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=4`
 
-## To dos
+  And load `PatrolCharge` to move about all rooms and recharge the battery when level drops below 30% charge.
+  This uses a `ConcurrencyContainer` and a `PriorityContainer` to preempt the `Patrol` behavior and recharge the battery.
 
-- [ ] Battery monitor state and concurrency example
-- [ ] Define (sub-)behaviors for workshop tasks
-- [ ] Write up more detail usage instructions
+
+There are a number of demonstration behaviors created to demonstrate various state implementations
+
+### Provided State Implementations
+
+The `flexbe_states` package in the `dependencies/FlexBE/flexbe_behavior_engine` submodule provides a number of generic states.
+
+Specifically we demonstrate:
+* `LogState` - print message to terminal (both console and UI)
+* `LogKeyState` - print message containing user data value at specified key
+* `OperatorDecisionState` - allow operator to select among specified outcomes; in full autonomy the "suggested" outcome is selected.
+* `SelectionState` - uses `input_action_server` to allow user to select among given data
+* `InputState` - uses `input_action_server` to allow user to input simple data such as string, number, or list of numbers
+
+The `pyrobosim_flexbe_states` package under `technologies/FlexBE` includes:
+* `check_door_state.py` - Uses pyrobosim `RequestWorldState` service to check door status using non-blocking call
+* `detect_local_objects_state.py` - Invokes a pyrobosim `ExecuteTaskAction` to `detect` objects, then uses `RequestWorldState`
+* `detect_objects_state.py` - Invokes the pyrobosim `DetectObjects` action to detect objects, then adds to user data
+* `door_action_state.py` - Invoke `ExecuteTaskAction` to `open` or `close` an openable (including doors, dumpster, pantry, fridge, ...)
+* `follow_path_state.py` - Follow current path passed as user data into state
+* `monitor_battery_state.py` - Monitor battery state and return outcome if either low or high level detected (blocks, use in concurrent state)
+* `navigate_action_state.py` - Navigation action that combines planning and following
+* `next_room_state.py` - Does simple planning to determine adjacent room based on connected rooms
+* `pick_action_state.py` - Does pick action at current location
+* `place_action_state.py` - Does place action at current location
+* `plan_path_state.py` - Request plan from current location to target location
+
+The above states have extra logging information that is shown in the onboard behavior terminal.  Each state transition `on_start`, `on_enter`, `on_exit`, `on_pause`, `on_resume`, and `on_stop` are logged.  This is not recommended in regular states, but is done here for educational purposes.
+
+### Basic Demonstration Behaviors
+
+In order of increasing complexity
+
+Use `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=1`
+
+* `test navigate` - Test navigation state
+* `Test Plan Path` - Simple plan then follow behavior with userdata
+* `test pick place` - Navigation with pick and place using behavior parameters
+* `DetectSelect` - Move, detect objects, select using `input_action_server`, move and place
+* `Go Beh` - Go to target location
+
+Use `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=1`
+
+* `delib_ws_p2` - use behavior parameters plan to door, open door, then use `DetectSelect` embedded behavior
+* `delib_ws_p2_sm` - use hierarchical state machine to select door, open, then use `DetectSelect` embedded behavior
+* `Through Door` - Travel through doorway opening if necessary
+* `Traverse` - Go to specified target location, opening intermediate doors if necessary using `Go Beh` and `Through Door`
+  * This incorporates a simple planning `NextRoomState` to determine the next adjacent room based on world structure
+
+* `Patrol` - traverses each room in particular order using `Traverse` behavior
+  * You may want to use low autonomy and confirm reasonable paths and guide to open doors initially before switching to full autonomy
+
+ Use `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=4`
+
+  * `PatrolCharge` - This uses a `Concurrency` container that includes the `Patrol` behavior and a state machine that monitors battery level.
+    * On low battery level (set to 30%), a `PriorityContainer` invokes the `Traverse` behavior to go to charging dock.
+    * This pauses the `Patrol` behavior until finished charging.  On resuming, any active planning or follow states will return `failed` and restart the `Patrol` behavior.
+
+
+You can build on these behavior demonstrations to solve the workshop tasks.
+

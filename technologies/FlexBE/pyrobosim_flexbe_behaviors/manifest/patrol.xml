@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Patrol">
+
+    <executable package_path="pyrobosim_flexbe_behaviors.patrol_sm" class="PatrolSM" />
+    <tagstring>pyrobosim, patrol</tagstring>
+    <author>Conner</author>
+    <date>Mon Sep 23 2024</date>
+    <description>
+        Patrol rooms without concern for battery
+    </description>
+
+
+    <!-- Contained Behaviors -->
+    <contains name="Traverse" />
+
+    <!-- Available Parameters -->
+
+</behavior>

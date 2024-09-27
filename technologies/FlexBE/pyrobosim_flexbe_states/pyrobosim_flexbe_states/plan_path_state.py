@@ -31,12 +31,12 @@ from rclpy.duration import Duration
 
 class PlanPathState(EventState):
     """
-    FlexBE state to request plan for PyRoboSim robot
+    FlexBE state to request plan for PyRoboSim robot.
 
     Elements defined here for UI
     Parameters
     -- action_topic     Action topic name (default= 'robot/plan_path')
-    -- timeout          Total time to wait for plan in seconds (default = 5s)
+    -- timeout          Total time to wait for plan in seconds (default = 10s)
 
     Outputs
     <= done                Successfully planned path to goal.
@@ -49,7 +49,7 @@ class PlanPathState(EventState):
     """
 
     def __init__(self, action_topic='robot/plan_path',
-                 timeout=2.0):
+                 timeout=10.0):
         # See example_state.py for basic explanations.
         super().__init__(outcomes=['done', 'failed'],
                          input_keys=['goal'],
@@ -83,13 +83,17 @@ class PlanPathState(EventState):
             if status == GoalStatus.STATUS_SUCCEEDED:
                 result_status = result.execution_result.status
                 userdata.path = None
+                loc = self._goal.target_location
+                if loc == '':
+                    loc = self._goal.target_pose  # Allow for using Pose instead of string location name
                 if result_status == ExecutionResult.SUCCESS and result.path is not None:
-                    Logger.localinfo(f"{self} - planning success with {len(result.path.poses)} waypoints")
+                    Logger.localinfo(f"'{self}' - planning to target location='{loc}' "
+                                     f'successful with {len(result.path.poses)} waypoints')
                     userdata.path = result.path
                     self._return = 'done'
                 else:
-                    Logger.localwarn(f"{self} : '{self._topic}' -"
-                                   f" planning failure ({result_status}) '{userdata.msg}'")
+                    Logger.localwarn(f"'{self}' : '{self._topic}' - target location='{loc}'"
+                                     f" planning failure ({result_status}) '{userdata.msg}'")
                     self._return = 'failed'
                 return self._return
             else:
@@ -98,7 +102,7 @@ class PlanPathState(EventState):
         elif self._node.get_clock().now().nanoseconds - self._start_time.nanoseconds > self._planning_timeout.nanoseconds:
             # Failed to return call in timely manner
             self._return = 'failed'
-            userdata.msg = f"{self._name}: failed to plan path within timeout!"
+            userdata.msg = f"'{self}': failed to plan path within timeout!"
             Logger.localwarn(userdata.msg)
 
         # Otherwise check for action status change
@@ -112,10 +116,10 @@ class PlanPathState(EventState):
         # If the action has not yet finished, None outcome will be returned and the state stays active.
         return self._return
 
-
     def on_enter(self, userdata):
         """Call when state becomes active."""
         # make sure to reset the data from prior executions
+        Logger.localinfo(f"on_enter '{self}' - '{self.path}' ...")
         self._return = None
         userdata.path = None
         userdata.msg = ''
@@ -130,15 +134,16 @@ class PlanPathState(EventState):
         try:
             goal = userdata.goal
             if isinstance(goal, str):
-                self._goal = PlanPath.Goal(target_location = goal)
+                self._goal = PlanPath.Goal(target_location=goal)
             elif isinstance(goal, Pose):
-                self._goal = PlanPath.Goal(pose=goal)
+                self._goal = PlanPath.Goal(target_pose=goal)
+                Logger.localinfo(f'Using {self._goal.target_pose} as goal pose!')
             else:
                 userdata.msg = f"Invalid goal type '{type(goal)}' - must be string or Pose!"
                 Logger.localwarn(userdata.msg)
                 self._return = 'failed'
                 return
-            self._client.send_goal(self._topic, self._goal, wait_duration=self._planning_timeout.nanoseconds*1e-9)
+            self._client.send_goal(self._topic, self._goal, wait_duration=self._planning_timeout.nanoseconds * 1e-9)
             self._start_time = self._node.get_clock().now()
         except Exception as exc:  # pylint: disable=W0703
             # Since a state failure not necessarily causes a behavior failure,
@@ -165,9 +170,10 @@ class PlanPathState(EventState):
 
         # Local message are shown in terminal but not the UI
         if self._return == 'done':
-            Logger.localinfo(f'Successfully planned path.')
+            Logger.localinfo('Successfully planned path.')
         else:
             Logger.localwarn('Failed to plan path.')
+        Logger.localinfo(f"on_exit '{self}' - '{self.path}' ...")
 
         # Choosing to remove in on_enter and retain in proxy for now
         # Either choice can be valid.
@@ -175,3 +181,25 @@ class PlanPathState(EventState):
         #     # remove the old result so we are ready for the next time
         #     # and don't prematurely return
         #     self._client.remove_result(self._topic)
+
+    def on_pause(self):
+        """Execute each time this state is paused."""
+        Logger.localinfo(f"on_pause '{self}' - '{self.path}' ...")
+        if self._client.is_active(self._topic):
+            self._client.cancel(self._topic)
+            Logger.localinfo(f"Cancelling active planning request '{self}' when paused ...")
+
+    def on_resume(self, userdata):
+        """Execute each time this state is resumed."""
+        Logger.localinfo(f"on_resume '{self}' - '{self.path}' ...")
+        if self._return is None:
+            Logger.localinfo(f"Cannot resume planning action '{self}' - require new request ...")
+            self._return = 'failed'
+
+    def on_start(self):
+        """Call when behavior starts."""
+        Logger.localinfo(f" on_start  '{self}' - '{self.path}' ")
+
+    def on_stop(self):
+        """Call when behavior stops."""
+        Logger.localinfo(f" on_stop  '{self}' - '{self.path}'")

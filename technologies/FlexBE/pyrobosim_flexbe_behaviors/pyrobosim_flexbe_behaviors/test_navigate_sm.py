@@ -108,19 +108,11 @@ class testnavigateSM(Behavior):
                                                     },
                                        autonomy={'done': Autonomy.Full})
 
-            # x:1086 y:90
-            OperatableStateMachine.add('LogCounter',
-                                       LogState(text="Arrived at counter",
-                                                severity=2),
-                                       transitions={'done': 'finished'  # 1221 89 -1 -1 -1 -1
-                                                    },
-                                       autonomy={'done': Autonomy.High})
-
             # x:629 y:102
             OperatableStateMachine.add('LogDesk',
                                        LogState(text="Arrived at desk",
                                                 severity=2),
-                                       transitions={'done': 'NavigateCounter'  # 753 104 -1 -1 -1 -1
+                                       transitions={'done': 'NavigatePantry'  # 753 104 -1 -1 -1 -1
                                                     },
                                        autonomy={'done': Autonomy.High})
 
@@ -132,6 +124,14 @@ class testnavigateSM(Behavior):
                                                     },
                                        autonomy={'done': Autonomy.Full})
 
+            # x:1086 y:90
+            OperatableStateMachine.add('LogPantry',
+                                       LogState(text="Arrived at pantry",
+                                                severity=2),
+                                       transitions={'done': 'finished'  # 1221 89 -1 -1 -1 -1
+                                                    },
+                                       autonomy={'done': Autonomy.High})
+
             # x:908 y:498
             OperatableStateMachine.add('LogTimeout',
                                        LogState(text="time out error",
@@ -139,25 +139,6 @@ class testnavigateSM(Behavior):
                                        transitions={'done': 'failed'  # 1125 394 -1 -1 -1 -1
                                                     },
                                        autonomy={'done': Autonomy.Full})
-
-            # x:806 y:103
-            OperatableStateMachine.add('NavigateCounter',
-                                       NavigateActionState(target_location='counter',
-                                                           robot_name=robot_name,
-                                                           action_topic=action_topic,
-                                                           server_timeout=5.0,
-                                                           navigate_timeout=None),
-                                       transitions={'done': 'LogCounter'  # 1053 96 -1 -1 -1 -1
-                                                    , 'planning_failed': 'LogFailed'  # 1055 198 -1 -1 -1 -1
-                                                    , 'motion_failed': 'LogFailed'  # 1055 198 -1 -1 -1 -1
-                                                    , 'canceled': 'LogCanceled'  # 929 275 -1 -1 -1 -1
-                                                    , 'timeout': 'LogTimeout'  # 850 448 853 156 -1 -1
-                                                    },
-                                       autonomy={'done': Autonomy.Off,
-                                                 'planning_failed': Autonomy.Off,
-                                                 'motion_failed': Autonomy.Off,
-                                                 'canceled': Autonomy.Off,
-                                                 'timeout': Autonomy.Off})
 
             # x:345 y:144
             OperatableStateMachine.add('NavigateDesk',
@@ -176,7 +157,28 @@ class testnavigateSM(Behavior):
                                                  'planning_failed': Autonomy.Off,
                                                  'motion_failed': Autonomy.Off,
                                                  'canceled': Autonomy.Off,
-                                                 'timeout': Autonomy.Off})
+                                                 'timeout': Autonomy.Off},
+                                       remapping={'msg': 'msg'})
+
+            # x:806 y:103
+            OperatableStateMachine.add('NavigatePantry',
+                                       NavigateActionState(target_location='pantry',
+                                                           robot_name=robot_name,
+                                                           action_topic=action_topic,
+                                                           server_timeout=5.0,
+                                                           navigate_timeout=None),
+                                       transitions={'done': 'LogPantry'  # 1053 96 -1 -1 -1 -1
+                                                    , 'planning_failed': 'LogFailed'  # 1055 198 -1 -1 -1 -1
+                                                    , 'motion_failed': 'LogFailed'  # 1055 198 -1 -1 -1 -1
+                                                    , 'canceled': 'LogCanceled'  # 929 275 -1 -1 -1 -1
+                                                    , 'timeout': 'LogTimeout'  # 850 448 853 156 -1 -1
+                                                    },
+                                       autonomy={'done': Autonomy.Off,
+                                                 'planning_failed': Autonomy.Off,
+                                                 'motion_failed': Autonomy.Off,
+                                                 'canceled': Autonomy.Off,
+                                                 'timeout': Autonomy.Off},
+                                       remapping={'msg': 'msg'})
 
         return _state_machine
 

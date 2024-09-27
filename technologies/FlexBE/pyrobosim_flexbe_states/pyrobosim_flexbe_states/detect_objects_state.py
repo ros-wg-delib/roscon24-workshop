@@ -29,7 +29,7 @@ from rclpy.duration import Duration
 
 class DetectObjectsState(EventState):
     """
-    FlexBE state to request local objects for PyRoboSim robot
+    FlexBE state to request local objects for PyRoboSim robot.
 
     Elements defined here for UI
     Parameters
@@ -68,14 +68,26 @@ class DetectObjectsState(EventState):
         self._service_called = False
 
     def on_start(self):
+        """Call when behavior starts."""
         # Set up the proxy now, but do not wait on the service just yet
+        Logger.localinfo(f" on_start  '{self}' - '{self.path}' ...")
         self._act_client = ProxyActionClient({self._action_topic: DetectObjects},
                                              wait_duration=0.0)  # no need to wait here, we'll check on_enter
 
     def on_stop(self):
+        """Call when behavior stops."""
         # Remove the proxy client if no longer in use
         ProxyActionClient.remove_client(self._action_topic)
         self._act_client = None
+        Logger.localinfo(f" on_stop  '{self}' - '{self.path}' ...")
+
+    def on_pause(self):
+        """Execute each time this state is paused."""
+        Logger.localinfo(f"on_pause '{self}' - '{self.path}' ...")
+
+    def on_resume(self, userdata):
+        """Execute each time this state is resumed."""
+        Logger.localinfo(f"on_resume '{self}' - '{self.path}' ...")
 
     def execute(self, userdata):
         """
@@ -98,10 +110,10 @@ class DetectObjectsState(EventState):
                     userdata.msg = result.execution_result.message
                     if result_status == ExecutionResult.SUCCESS:
                         Logger.localinfo(f"  '{self}' : '{self._action_topic}' "
-                                         f"detected {len(result.detected_objects)} objects")
-                        if len(result.detected_objects)==0:
+                                         f'detected {len(result.detected_objects)} objects')
+                        if len(result.detected_objects) == 0:
                             userdata.items = None
-                            userdata.msg = f"{self.name}: found no objects at location!"
+                            userdata.msg = f"'{self}': found no objects at location!"
                             self._return = 'nothing'
                         else:
                             objects = result.detected_objects
@@ -112,14 +124,14 @@ class DetectObjectsState(EventState):
                             userdata.items = names
                             self._return = 'done'
                     else:
-                        Logger.localwarn(f"{self} : '{self._action_topic}' -"
-                                   f" failed to detect objects ({result_status}) '{userdata.msg}'")
+                        Logger.localwarn(f"'{self}' : '{self._action_topic}' -"
+                                         f" failed to detect objects ({result_status}) '{userdata.msg}'")
                         userdata.items = None
                         self._return = 'failed'
             elif self._node.get_clock().now().nanoseconds - self._start_time.nanoseconds > self._timeout.nanoseconds:
                 # Failed to return call in timely manner
                 self._return = 'failed'
-                userdata.msg = f"{self._name}: failed to get objects within timeout!"
+                userdata.msg = f"'{self}': failed to get objects within timeout!"
                 Logger.localwarn(userdata.msg)
 
             # Otherwise check for action status change
@@ -130,7 +142,7 @@ class DetectObjectsState(EventState):
                 Logger.loginfo(f" '{self}' : '{self._action_topic}' -  detection goal was aborted! ")
                 self._return = 'failed'
         except Exception as exc:  # pylint: disable=W0703
-            Logger.logerr(f"{self._name}: {self._action_topic} exception {type(exc)} - {str(exc)}")
+            Logger.logerr(f"'{self}': {self._action_topic} exception {type(exc)} - {str(exc)}")
             self._return = 'failed'
 
         # If the action has not yet finished, None outcome will be returned and the state stays active.
@@ -139,6 +151,7 @@ class DetectObjectsState(EventState):
     def on_enter(self, userdata):
         """Call when state becomes active."""
         # make sure to reset the data from prior executions
+        Logger.localinfo(f" on_enter  '{self}' - '{self.path}' ...")
         self._return = None
         userdata.items = None
         self._act_client.remove_result(self._action_topic)  # clear any prior result from action server
@@ -151,7 +164,7 @@ class DetectObjectsState(EventState):
                 goal = DetectObjects.Goal()
             else:
                 goal = DetectObjects.Goal(target_object=self._filter)
-            self._act_client.send_goal(self._action_topic, goal, wait_duration=self._timeout.nanoseconds*1e-9)
+            self._act_client.send_goal(self._action_topic, goal, wait_duration=self._timeout.nanoseconds * 1e-9)
         except Exception as exc:  # pylint: disable=W0703
             # Since a state failure not necessarily causes a behavior failure,
             # it is recommended to only print warnings, not errors.
@@ -162,7 +175,8 @@ class DetectObjectsState(EventState):
     def on_exit(self, userdata):
         """Call when state is deactivated."""
         # Make sure that the action is not running when leaving this state.
-        # A situation where the action would still be active is for example when the operator manually triggers an outcome.
+        # A situation where the action would still be active is for example when
+        # the operator manually triggers an outcome.
 
         if self._act_client.is_active(self._action_topic):
             self._act_client.cancel(self._action_topic)
@@ -174,11 +188,13 @@ class DetectObjectsState(EventState):
                 self._return = 'failed'
             else:
                 status_string = self._act_client.get_status_string(self._action_topic)
-                Logger.loginfo(f" '{self}' : '{self._action_topic}' - Requested to cancel an active detection request ({status_string}).")
+                Logger.loginfo(f" '{self}' : '{self._action_topic}' - Requested to cancel "
+                               f'an active detection request ({status_string}).')
 
         # Local message are shown in terminal but not the UI
         # Generally avoid doing this except when debugging
         if self._return == 'done':
-            Logger.localinfo(f'Successfully retrieved detected items.')
+            Logger.localinfo('Successfully retrieved detected items.')
         else:
             Logger.localwarn('Failed to detect items.')
+        Logger.localinfo(f" on_exit  '{self}' - '{self.path}' ...")

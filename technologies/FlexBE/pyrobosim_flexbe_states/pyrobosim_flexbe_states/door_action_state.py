@@ -78,6 +78,14 @@ class DoorActionState(EventState):
         self._start_time = None
         self._return = None  # Retain return value in case the outcome is blocked by operator
 
+    def on_pause(self):
+        """Execute each time this state is paused."""
+        Logger.localinfo(f"on_pause '{self}' - '{self.path}' ...")
+
+    def on_resume(self, userdata):
+        """Execute each time this state is resumed."""
+        Logger.localinfo(f"on_resume '{self}' - '{self.path}' ...")
+
     def execute(self, userdata):
         """
         Call periodically while this state is active.
@@ -95,7 +103,7 @@ class DoorActionState(EventState):
             userdata.msg = result.message  # Output message
             if status == GoalStatus.STATUS_SUCCEEDED:
                 if result.status == ExecutionResult.SUCCESS:
-                    Logger.localinfo(f"{self} - successfully {self._action_outcome}!")
+                    Logger.localinfo(f"'{self}' - successfully {self._action_outcome}!")
                     self._return = 'done'
                 elif result.status in (ExecutionResult.PRECONDITION_FAILURE,
                                        ExecutionResult.PLANNING_FAILURE,
@@ -111,7 +119,8 @@ class DoorActionState(EventState):
                     self._return = 'failed'
                 return self._return
             else:
-                Logger.logwarn(f"{self} : '{self._topic}' - command invalid action status to '{self._action_type}' '{result.message}'")
+                Logger.logwarn(f"'{self}' : '{self._topic}' - command invalid action status"
+                               f" to '{self._action_type}' '{result.message}'")
                 self._return = 'failed'
         elif self._node.get_clock().now().nanoseconds - self._start_time.nanoseconds > self._timeout.nanoseconds:
             # Failed to return call in timely manner
@@ -132,16 +141,16 @@ class DoorActionState(EventState):
         # If the action has not yet finished, None outcome will be returned and the state stays active.
         return self._return
 
-
     def on_enter(self, userdata):
         """Call when state becomes active."""
         # make sure to reset the error state since a previous state execution might have failed
+        Logger.localinfo(f"on_enter '{self}' - '{self.path}' ...")
         self._return = None
         self._client.remove_result(self._topic)  # clear any prior result from action server
 
         # Send the goal.
         try:
-            self._client.send_goal(self._topic, self._goal, wait_duration=self._timeout.nanoseconds*1e-9)
+            self._client.send_goal(self._topic, self._goal, wait_duration=self._timeout.nanoseconds * 1e-9)
             self._start_time = self._node.get_clock().now()
         except Exception as exc:  # pylint: disable=W0703
             # Since a state failure not necessarily causes a behavior failure,
@@ -161,9 +170,10 @@ class DoorActionState(EventState):
 
         # Local message are shown in terminal but not the UI
         if self._return == 'done':
-            Logger.localinfo(f'Successfully completed pick action.')
+            Logger.localinfo('Successfully completed door action.')
         else:
-            Logger.localwarn('Failed to complete pick action.')
+            Logger.localwarn('Failed to complete door action.')
+        Logger.localinfo(f"on_exit '{self}' - '{self.path}' ...")
 
         # Choosing to remove in on_enter and retain in proxy for now
         # Either choice can be valid.
@@ -171,3 +181,11 @@ class DoorActionState(EventState):
         #     # remove the old result so we are ready for the next time
         #     # and don't prematurely return
         #     self._client.remove_result(self._topic)
+
+    def on_start(self):
+        """Call when behavior starts."""
+        Logger.localinfo(f" on_start  '{self}' - '{self.path}' ")
+
+    def on_stop(self):
+        """Call when behavior stops."""
+        Logger.localinfo(f" on_stop  '{self}' - '{self.path}'")
