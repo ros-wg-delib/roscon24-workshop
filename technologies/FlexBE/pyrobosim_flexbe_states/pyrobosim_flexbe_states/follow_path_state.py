@@ -74,7 +74,9 @@ class FollowPathState(EventState):
         if self._client.has_result(self._topic):
             # Check if the action has been finished
             result = self._client.get_result(self._topic, clear=True)
-            Logger.localinfo(f"  '{self}' : '{self._topic}' returned {status} {result}")
+            Logger.localinfo(f"  '{self}' : '{self._topic}' returned {status} "
+                             f'result.status={result.execution_result.status}'
+                             f" '{result.execution_result.message}'")
             if status == GoalStatus.STATUS_SUCCEEDED:
                 result_status = result.execution_result.status
                 userdata.msg = result.execution_result.message  # Output message
