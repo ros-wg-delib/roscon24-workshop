@@ -16,11 +16,7 @@
 
 """FlexBE State to navigate PyRoboSim robot to target location."""
 
-import math
-
 from action_msgs.msg import GoalStatus
-
-from rclpy.duration import Duration
 
 from flexbe_core import EventState, Logger
 from flexbe_core.proxy import ProxyActionClient
@@ -28,12 +24,12 @@ from flexbe_core.proxy import ProxyActionClient
 from pyrobosim_msgs.action import ExecuteTaskAction
 from pyrobosim_msgs.msg import ExecutionResult, TaskAction
 
-
+from rclpy.duration import Duration
 
 
 class NavigateActionState(EventState):
     """
-    FlexBE state to navigate PyRoboSim robot to target location
+    FlexBE state to navigate PyRoboSim robot to target location.
 
     Elements defined here for UI
     Parameters
@@ -52,7 +48,7 @@ class NavigateActionState(EventState):
     #> msg                 Output message
     """
 
-    def __init__(self, target_location, robot_name="robot",
+    def __init__(self, target_location, robot_name='robot',
                  action_topic='/execute_action', server_timeout=5.0,
                  navigate_timeout=None):
         # See example_state.py for basic explanations.
@@ -62,9 +58,9 @@ class NavigateActionState(EventState):
 
         self._goal = ExecuteTaskAction.Goal()
         self._goal.action = TaskAction(robot=robot_name,
-                                       type="navigate",
+                                       type='navigate',
                                        target_location=target_location,
-                                      )
+                                       )
 
         self._timeout = None
         if navigate_timeout is not None:
@@ -97,7 +93,7 @@ class NavigateActionState(EventState):
             Logger.localinfo(f"  '{self}' : '{self._topic}' returned {status} {result}")
             if status == GoalStatus.STATUS_SUCCEEDED:
                 result = result.execution_result
-                self._elapsed = (self._node.get_clock().now() - self._start_time).nanoseconds*1e-9
+                self._elapsed = (self._node.get_clock().now() - self._start_time).nanoseconds * 1e-9
                 userdata.msg = result.message
 
                 if result.status == ExecutionResult.SUCCESS:
@@ -134,10 +130,10 @@ class NavigateActionState(EventState):
         # If the action has not yet finished, None outcome will be returned and the state stays active.
         return self._return
 
-
     def on_enter(self, userdata):
         """Call when state becomes active."""
         # make sure to reset the return state since a previous state execution might have failed
+        Logger.localinfo(f"on_enter '{self}' - '{self.path}' ...")
         self._return = None
         self._client.remove_result(self._topic)  # clear any prior result from action server
 
@@ -169,6 +165,7 @@ class NavigateActionState(EventState):
             Logger.loginfo(f'Successfully completed motion in {self._elapsed:.3f} seconds.')
         else:
             Logger.logwarn('Failed to complete motion.')
+        Logger.localinfo(f"on_exit '{self}' - '{self.path}' ...")
 
         # Choosing to remove in on_enter and retain in proxy for now
         # Either choice can be valid.
@@ -176,3 +173,19 @@ class NavigateActionState(EventState):
         #     # remove the old result so we are ready for the next time
         #     # and don't prematurely return
         #     self._client.remove_result(self._topic)
+
+    def on_pause(self):
+        """Execute each time this state is paused."""
+        Logger.localinfo(f"on_pause '{self}' - '{self.path}' ...")
+
+    def on_resume(self, userdata):
+        """Execute each time this state is resumed."""
+        Logger.localinfo(f"on_resume '{self}' - '{self.path}' ...")
+
+    def on_start(self):
+        """Call when behavior starts."""
+        Logger.localinfo(f" on_start  '{self}' - '{self.path}' ")
+
+    def on_stop(self):
+        """Call when behavior stops."""
+        Logger.localinfo(f" on_stop  '{self}' - '{self.path}'")

@@ -70,8 +70,8 @@ class DetectSelectSM(Behavior):
         self.name = 'DetectSelect'
 
         # parameters of this behavior
-        self.add_parameter('move_location', 'counter0_right')
-        self.add_parameter('place_location', 'desk0')
+        self.add_parameter('move_location', 'pantry')
+        self.add_parameter('place_location', 'desk')
 
         # Initialize ROS node information
         initialize_flexbe_core(node)

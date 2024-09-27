@@ -54,7 +54,7 @@ from pyrobosim_flexbe_states.plan_path_state import PlanPathState
 # [/MANUAL_IMPORT]
 
 
-class delibwsp2SM(Behavior):
+class delib_ws_p2SM(Behavior):
     """
     Define delib_ws_p2.
 

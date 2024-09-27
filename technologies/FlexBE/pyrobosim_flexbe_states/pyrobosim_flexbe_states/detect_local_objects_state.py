@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""FlexBE State to command PyRoboSim robot to plan a path to target location."""
+"""FlexBE State to request local objects for PyRoboSim robot."""
 
 from action_msgs.msg import GoalStatus
 
@@ -22,15 +22,15 @@ from flexbe_core import EventState, Logger
 from flexbe_core.proxy import ProxyActionClient, ProxyServiceCaller
 
 from pyrobosim_msgs.action import ExecuteTaskAction
-from pyrobosim_msgs.srv import RequestWorldState
 from pyrobosim_msgs.msg import ExecutionResult, TaskAction
+from pyrobosim_msgs.srv import RequestWorldState
 
 from rclpy.duration import Duration
 
 
 class DetectLocalObjectsState(EventState):
     """
-    FlexBE state to request local objects for PyRoboSim robot
+    FlexBE state to request local objects for PyRoboSim robot.
 
     Elements defined here for UI
     Parameters
@@ -78,17 +78,29 @@ class DetectLocalObjectsState(EventState):
         self._service_called = False
 
     def on_start(self):
+        """Execute when behavior starts."""
         # Set up the proxy now, but do not wait on the service just yet
+        Logger.localinfo(f" on_start  '{self}' - '{self.path}' ...")
         self._srv_client = ProxyServiceCaller({self._srv_topic: RequestWorldState}, wait_duration=0.0)
         self._act_client = ProxyActionClient({self._action_topic: ExecuteTaskAction},
                                              wait_duration=0.0)  # no need to wait here, we'll check on_enter
 
     def on_stop(self):
+        """Execute when behavior stops."""
         # Remove the proxy client if no longer in use
         ProxyServiceCaller.remove_client(self._srv_topic)
         ProxyActionClient.remove_client(self._action_topic)
         self._srv_client = None
         self._act_client = None
+        Logger.localinfo(f" on_stop  '{self}' - '{self.path}' ...")
+
+    def on_pause(self):
+        """Execute each time this state is paused."""
+        Logger.localinfo(f"on_pause '{self}' - '{self.path}' ...")
+
+    def on_resume(self, userdata):
+        """Execute each time this state is resumed."""
+        Logger.localinfo(f"on_resume '{self}' - '{self.path}' ...")
 
     def execute(self, userdata):
         """
@@ -109,9 +121,9 @@ class DetectLocalObjectsState(EventState):
                 userdata.items = self._process_srv_response(result)
                 Logger.localinfo(f"   returned '{self._return}' with {len(userdata.items) if userdata.items else 0}")
             elif self._node.get_clock().now().nanoseconds - self._srv_start_time.nanoseconds > self._call_timeout.nanoseconds:
-                    # Failed to return call in timely manner
-                    self._return = 'failed'
-                    Logger.logerr(f"{self._name}: Service {self._srv_topic} call timed out!")
+                # Failed to return call in timely manner
+                self._return = 'failed'
+                Logger.logerr(f"'{self._name}': Service '{self._srv_topic}' call timed out!")
             return self._return
 
         # We have not finished detection yet
@@ -127,14 +139,14 @@ class DetectLocalObjectsState(EventState):
                     if result_status == ExecutionResult.SUCCESS:
                         if self._srv_client.is_available(self._srv_topic, wait_duration=0.0):
                             # Non-blocking check for availability
-                            Logger.localinfo(f"{self} - detection completed - now request items from service result")
+                            Logger.localinfo(f"'{self}' - detection completed - now request items from service result")
                             self._do_service_call()
                         elif self._srv_start_time is None:
-                            Logger.localinfo(f"{self} - detection completed - wait for world state server to become available")
+                            Logger.localinfo(f"'{self}' - detection completed - wait for world state server to become available")
                             self._srv_start_time = self._node.get_clock().now()  # Reset timer for call timeout
                         elif self._node.get_clock().now().nanoseconds - self._srv_start_time.nanoseconds > self._call_timeout.nanoseconds:
                             # Failed to return call in timely manner
-                            Logger.logerr(f"{self._name}: Service {self._srv_topic} is not available!")
+                            Logger.logerr(f"'{self._name}': Service '{self._srv_topic}' is not available!")
                             self._return = 'failed'
                         # Otherwise waiting for service to become available
 
@@ -146,7 +158,7 @@ class DetectLocalObjectsState(EventState):
                 Logger.loginfo(f" '{self}' : '{self._action_topic}' -  detection goal was aborted! ")
                 self._return = 'failed'
         except Exception as exc:  # pylint: disable=W0703
-            Logger.logerr(f"{self._name}: {self._action_topic} exception {type(exc)} - {str(exc)}")
+            Logger.logerr(f"'{self._name}': '{self._action_topic}' exception {type(exc)} - {str(exc)}")
             self._return = 'failed'
 
         # If the action has not yet finished, None outcome will be returned and the state stays active.
@@ -155,12 +167,12 @@ class DetectLocalObjectsState(EventState):
     def _do_service_call(self):
         """Make the service call using async non-blocking."""
         try:
-            Logger.localinfo(f"{self._name}: Calling service {self._srv_topic} ...")
+            Logger.localinfo(f"'{self._name}': Calling service '{self._srv_topic}' ...")
             srv_request = RequestWorldState.Request(robot=self._robot_name)
-            self._srv_client.call_async(self._srv_topic, srv_request, wait_duration=self._call_timeout.nanoseconds*1e-9)
+            self._srv_client.call_async(self._srv_topic, srv_request, wait_duration=self._call_timeout.nanoseconds * 1e-9)
             self._service_called = True
         except Exception as exc:
-            Logger.logerr(f"{self._name}: Service {self._srv_topic} exception {type(exc)} - {str(exc)}")
+            Logger.logerr(f"'{self._name}': Service '{self._srv_topic}' exception {type(exc)} - {str(exc)}")
             raise exc
 
     def _process_srv_response(self, response):
@@ -178,7 +190,7 @@ class DetectLocalObjectsState(EventState):
 
         Logger.localinfo(f"Robot '{self._robot_name}' at location '{robot.last_visited_location}'")
 
-        local_objects  = []
+        local_objects = []
         for obj in response.state.objects:
             if obj.parent == robot.last_visited_location:
                 if self._filter is None:
@@ -191,6 +203,7 @@ class DetectLocalObjectsState(EventState):
     def on_enter(self, userdata):
         """Call when state becomes active."""
         # make sure to reset the data from prior executions
+        Logger.localinfo(f" on_enter  '{self}' - '{self.path}' ...")
         self._srv_start_time = None  # Reset timer for call timeout
         self._return = None
         self._service_called = False
@@ -203,11 +216,11 @@ class DetectLocalObjectsState(EventState):
             goal = ExecuteTaskAction.Goal()
             if self._filter is None:
                 goal.action = TaskAction(robot=self._robot_name,
-                                         type="detect",
+                                         type='detect',
                                          )
             else:
                 goal.action = TaskAction(robot=self._robot_name,
-                                         type="detect",
+                                         type='detect',
                                          object=self._filter
                                          )
             self._act_client.send_goal(self._action_topic, goal, wait_duration=self._server_timeout_sec)
@@ -232,10 +245,12 @@ class DetectLocalObjectsState(EventState):
                 self._return = 'failed'
             else:
                 status_string = self._act_client.get_status_string(self._action_topic)
-                Logger.loginfo(f" '{self}' : '{self._action_topic}' - Requested to cancel an active plan request ({status_string}).")
+                Logger.loginfo(f" '{self}' : '{self._action_topic}' - Requested to cancel "
+                               f"an active plan request ('{status_string}').")
 
         # Local message are shown in terminal but not the UI
         if self._return == 'done':
-            Logger.localinfo(f'Successfully retrieved detected items.')
+            Logger.localinfo('Successfully retrieved detected items.')
         else:
             Logger.localwarn('Failed to detect items.')
+        Logger.localinfo(f" on_exit  '{self}' - '{self.path}' ...")

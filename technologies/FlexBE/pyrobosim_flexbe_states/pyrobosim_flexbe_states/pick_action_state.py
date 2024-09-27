@@ -29,7 +29,7 @@ from rclpy.duration import Duration
 
 class PickActionState(EventState):
     """
-    FlexBE state to pick action for PyRoboSim robot
+    FlexBE state to pick action for PyRoboSim robot.
 
     Elements defined here for UI
     Parameters
@@ -46,7 +46,7 @@ class PickActionState(EventState):
     #> msg        string   Result message
     """
 
-    def __init__(self, robot_name="robot",
+    def __init__(self, robot_name='robot',
                  action_topic='/execute_action',
                  timeout=2.0):
         # See example_state.py for basic explanations.
@@ -55,7 +55,7 @@ class PickActionState(EventState):
                          output_keys=['msg'])
 
         self._goal = ExecuteTaskAction.Goal()
-        self._goal.action = TaskAction(robot=robot_name, type="pick")
+        self._goal.action = TaskAction(robot=robot_name, type='pick')
 
         self._topic = action_topic
         self._timeout = Duration(seconds=timeout)
@@ -99,12 +99,12 @@ class PickActionState(EventState):
                     self._return = 'failed'
                 return self._return
             else:
-                Logger.logwarn(f"{self} : '{self._topic}' - invalid action status '{result.message}'")
+                Logger.logwarn(f"'{self}' : '{self._topic}' - invalid action status '{result.message}'")
                 self._return = 'failed'
         elif self._node.get_clock().now().nanoseconds - self._start_time.nanoseconds > self._timeout.nanoseconds:
             # Failed to return call in timely manner
             self._return = 'failed'
-            userdata.msg = f"{self._name}: failed to pick object within timeout!"
+            userdata.msg = f"'{self}': failed to pick object within timeout!"
             Logger.localwarn(userdata.msg)
 
         # Otherwise check for status change
@@ -118,10 +118,10 @@ class PickActionState(EventState):
         # If the action has not yet finished, None outcome will be returned and the state stays active.
         return self._return
 
-
     def on_enter(self, userdata):
         """Call when state becomes active."""
         # make sure to reset the error state since a previous state execution might have failed
+        Logger.localinfo(f"on_enter '{self}' - '{self.path}' ...")
         self._return = None
         self._client.remove_result(self._topic)  # clear any prior result from action server
 
@@ -134,7 +134,7 @@ class PickActionState(EventState):
         # Send the goal.
         try:
             self._goal.action.object = userdata.object
-            self._client.send_goal(self._topic, self._goal, wait_duration=self._timeout.nanoseconds*1e-9)
+            self._client.send_goal(self._topic, self._goal, wait_duration=self._timeout.nanoseconds * 1e-9)
             self._start_time = self._node.get_clock().now()
         except Exception as exc:  # pylint: disable=W0703
             # Since a state failure not necessarily causes a behavior failure,
@@ -154,9 +154,10 @@ class PickActionState(EventState):
 
         # Local message are shown in terminal but not the UI
         if self._return == 'done':
-            Logger.localinfo(f'Successfully completed pick action.')
+            Logger.localinfo('Successfully completed pick action.')
         else:
             Logger.localwarn('Failed to complete pick action.')
+        Logger.localinfo(f"on_exit '{self}' - '{self.path}' ...")
 
         # Choosing to remove in on_enter and retain in proxy for now
         # Either choice can be valid.
@@ -164,3 +165,19 @@ class PickActionState(EventState):
         #     # remove the old result so we are ready for the next time
         #     # and don't prematurely return
         #     self._client.remove_result(self._topic)
+
+    def on_pause(self):
+        """Execute each time this state is paused."""
+        Logger.localinfo(f"on_pause '{self}' - '{self.path}' ...")
+
+    def on_resume(self, userdata):
+        """Execute each time this state is resumed."""
+        Logger.localinfo(f"on_resume '{self}' - '{self.path}' ...")
+
+    def on_start(self):
+        """Call when behavior starts."""
+        Logger.localinfo(f" on_start  '{self}' - '{self.path}' ")
+
+    def on_stop(self):
+        """Call when behavior stops."""
+        Logger.localinfo(f" on_stop  '{self}' - '{self.path}'")
