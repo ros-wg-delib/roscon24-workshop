@@ -105,7 +105,6 @@ class FollowPathState(EventState):
         Logger.localinfo(f"on_enter '{self}' - '{self.path}' ...")
         self._return = None
         userdata.msg = ''
-        self._client.remove_result(self._topic)  # clear any prior result from action server
 
         if 'path' not in userdata:
             self._return = 'failed'
@@ -124,12 +123,14 @@ class FollowPathState(EventState):
                 self._return = 'failed'
                 return
             Logger.localinfo(f'Send follow path goal with {len(path.poses)} waypoints ...')
+            # Send goal clears prior results
             self._client.send_goal(self._topic, self._goal, wait_duration=self._server_timeout_sec)
         except Exception as exc:  # pylint: disable=W0703
             # Since a state failure not necessarily causes a behavior failure,
             # it is recommended to only print warnings, not errors.
             # Using a linebreak before appending the error log enables the operator to collapse details in the GUI.
             Logger.logwarn(f"Failed to send the '{self}' command:\n  {type(exc)} - {exc}")
+            self._client.remove_result(self._topic)  # clear any prior result from action server
             self._return = 'failed'
 
     def on_exit(self, userdata):
@@ -140,14 +141,15 @@ class FollowPathState(EventState):
         if self._client.is_active(self._topic):
             self._client.cancel(self._topic)
 
-            # Check for action status change
-            status = self._client.get_status(self._topic)
+            # Check for action status change (blocking call!)
+            is_terminal, status = self._client.verify_action_status(self._topic, 0.1)
             if status == GoalStatus.STATUS_CANCELED:
                 Logger.loginfo(f" '{self}' : '{self._topic}' - request to follow was canceled! ")
-                self._return = 'failed'
             else:
                 status_string = self._client.get_status_string(self._topic)
-                Logger.loginfo(f" '{self}' : '{self._topic}' - Requested to cancel an active follow request ({status_string}).")
+                Logger.loginfo(f" '{self}' : '{self._topic}' - Requested to cancel an active follow request"
+                               f" ({is_terminal}, '{status_string}').")
+            self._return = 'failed'
 
         # Local message are shown in terminal but not the UI
         if self._return == 'done':
@@ -169,6 +171,15 @@ class FollowPathState(EventState):
         if self._client.is_active(self._topic):
             self._client.cancel(self._topic)
             Logger.localinfo(f"Cancelling active follow action '{self}' when paused ...")
+            # Check for action status change (blocking call!)
+            is_terminal, status = self._client.verify_action_status(self._topic, 0.1)
+            if status == GoalStatus.STATUS_CANCELED:
+                Logger.loginfo(f" '{self}' : '{self._topic}' - request to follow was canceled! ")
+            else:
+                status_string = self._client.get_status_string(self._topic)
+                Logger.loginfo(f" '{self}' : '{self._topic}' - Requested to cancel an active follow request"
+                               f" ({is_terminal}, '{status_string}').")
+            self._return = 'failed'
 
     def on_resume(self, userdata):
         """Execute each time this state is resumed."""

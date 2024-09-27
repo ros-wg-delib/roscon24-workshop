@@ -40,6 +40,7 @@ from flexbe_core import OperatableStateMachine
 from flexbe_core import PriorityContainer
 from flexbe_core import initialize_flexbe_core
 from flexbe_states.log_key_state import LogKeyState
+from flexbe_states.log_state import LogState
 from pyrobosim_flexbe_behaviors.patrol_sm import PatrolSM
 from pyrobosim_flexbe_behaviors.traverse_sm import TraverseSM
 from pyrobosim_flexbe_states.monitor_battery_state import MonitorBatteryState
@@ -96,6 +97,14 @@ class PatrolChargeSM(Behavior):
                                             output_keys=['msg'])
 
         with _sm_container_0:
+            # x:87 y:45
+            OperatableStateMachine.add('Recharge',
+                                       LogState(text="Begin recharge ...",
+                                                severity=Logger.REPORT_INFO),
+                                       transitions={'done': 'Traverse'  # 241 71 -1 -1 250 120
+                                                    },
+                                       autonomy={'done': Autonomy.Off})
+
             # x:156 y:121
             OperatableStateMachine.add('Traverse',
                                        self.use_behavior(TraverseSM, 'PatrolWithBattery/BatteryMaintain/Container/Traverse',
@@ -133,11 +142,10 @@ class PatrolChargeSM(Behavior):
                                                  'failed': Autonomy.Inherit},
                                        remapping={'msg': 'msg'})
 
-        # x:621 y:283, x:626 y:146, x:603 y:384, x:616 y:482, x:430 y:400
+        # x:621 y:77, x:631 y:283, x:603 y:384, x:616 y:482
         _sm_patrolwithbattery_2 = ConcurrencyContainer(outcomes=['finished', 'failed'],
                                                        output_keys=['msg'],
-                                                       conditions=[('failed', [('Patrol', 'failed')]),
-                                                                   ('failed', [('BatteryMaintain', 'failed')]),
+                                                       conditions=[('failed', [('BatteryMaintain', 'failed')]),
                                                                    ('finished', [('Patrol', 'finished')])
                                                                    ])
 
@@ -145,9 +153,8 @@ class PatrolChargeSM(Behavior):
             # x:132 y:62
             OperatableStateMachine.add('Patrol',
                                        self.use_behavior(PatrolSM, 'PatrolWithBattery/Patrol'),
-                                       transitions={'failed': 'failed', 'finished': 'finished'},
-                                       autonomy={'failed': Autonomy.Inherit,
-                                                 'finished': Autonomy.Inherit},
+                                       transitions={'finished': 'finished'},
+                                       autonomy={'finished': Autonomy.Inherit},
                                        remapping={'msg': 'msg'})
 
             # x:163 y:269
@@ -163,7 +170,7 @@ class PatrolChargeSM(Behavior):
                                        transitions={'finished': 'finished'  # 547 125 -1 -1 -1 -1
                                                     , 'failed': 'LogFailed'  # 441 172 -1 -1 -1 -1
                                                     },
-                                       autonomy={'finished': Autonomy.Inherit,
+                                       autonomy={'finished': Autonomy.High,
                                                  'failed': Autonomy.Inherit},
                                        remapping={'msg': 'msg'})
 

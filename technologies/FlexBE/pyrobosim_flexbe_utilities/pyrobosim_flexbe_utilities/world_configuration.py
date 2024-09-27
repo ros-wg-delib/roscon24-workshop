@@ -22,77 +22,25 @@ from collections import deque
 
 from ament_index_python.packages import get_package_share_directory
 
-import numpy as np
+from shapely.geometry import Point, Polygon
 
 import yaml
 
 
-# Helper function: Distance from point to a line segment
-def point_to_line_distance(point, line_start, line_end):
-    """Calculate distance of point to line."""
-    # Convert to NumPy arrays
-    point = np.array(point)
-    line_start = np.array(line_start)
-    line_end = np.array(line_end)
-
-    # Line segment vector
-    line_vec = line_end - line_start
-    # Vector from start of line to the point
-    point_vec = point - line_start
-
-    # Project the point onto the line (normalized)
-    line_len = np.linalg.norm(line_vec)
-    line_unitvec = line_vec / line_len
-    projection = np.dot(point_vec, line_unitvec)
-
-    # Clamp the projection between 0 and line length to handle the endpoints
-    projection = np.clip(projection, 0, line_len)
-
-    # Find the nearest point on the line segment
-    nearest = line_start + projection * line_unitvec
-
-    # Return the Euclidean distance between the point and the nearest point on the line segment
-    return np.linalg.norm(nearest - point)
-
-
-# Helper function:
-def is_point_inside_polygon(point, polygon):
-    """Check if a point is inside the polygon using ray-casting."""
-    x, y = point
-    inside = False
-    n = len(polygon)
-
-    for i in range(n):
-        x1, y1 = polygon[i]
-        x2, y2 = polygon[(i + 1) % n]
-
-        if ((y1 > y) != (y2 > y)) and (x < (x2 - x1) * (y - y1) / (y2 - y1) + x1):
-            inside = not inside
-
-    return inside
-
-
-# Main helper function
 def signed_distance_to_polygon(polygon, point):
-    """Calculate the signed distance."""
-    # Step 1: Calculate the distance to each edge
-    min_distance = float('inf')
+    """
+    Calculate the signed distance to polygon boundary.
 
-    for i in range(len(polygon)):
-        line_start = polygon[i]
-        line_end = polygon[(i + 1) % len(polygon)]  # Wrap around to first vertex
+    Use negative value for points inside the polygon.
+    """
+    # Calculate the distance from the point to the polygon boundary
+    distance = point.distance(polygon)
 
-        distance = point_to_line_distance(point, line_start, line_end)
-        min_distance = min(min_distance, distance)
-
-    # Step 2: Check if the point is inside the polygon
-    inside = is_point_inside_polygon(point, polygon)
-
-    # Step 3: Return the signed distance
-    if inside:
-        return -min_distance  # Negative if inside
+    # Check if the point is inside the polygon
+    if polygon.contains(point):
+        return -distance  # Negative if inside
     else:
-        return min_distance  # Positive if outside
+        return distance  # Positive if outside
 
 
 class WorldConfiguration:
@@ -133,7 +81,7 @@ class WorldConfiguration:
             print(f'hallway between rooms {possible_rooms}')
             if pose is not None:
                 distances = [signed_distance_to_polygon(world_data['rooms'][room],
-                                                        (pose.position.x, pose.position.y)) for room in possible_rooms]
+                                                        Point(pose.position.x, pose.position.y)) for room in possible_rooms]
                 possible_rooms = (possible_rooms[0], ) if distances[0] < distances[1] else (possible_rooms[1], )
                 print(f'  choosing {possible_rooms} based on pose!')
             return possible_rooms
@@ -244,7 +192,7 @@ class WorldConfiguration:
             if room['footprint']['type'] != 'polygon':
                 print(f"Invalid footprint type '{room['footprint']['type']}' for '{room['name']}'")
                 continue
-            rooms[room['name']] = room['footprint']['coords']
+            rooms[room['name']] = Polygon(room['footprint']['coords'])
 
         print(f'Loaded {len(categories)} categories in {len(locations)} locations'
               f' in {len(hallway_graph)} ({len(rooms)}) rooms')

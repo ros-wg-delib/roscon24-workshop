@@ -123,7 +123,6 @@ class PlanPathState(EventState):
         self._return = None
         userdata.path = None
         userdata.msg = ''
-        self._client.remove_result(self._topic)  # clear any prior result from action server
         if 'goal' not in userdata:
             self._return = 'failed'
             userdata.msg = f"PlanActionState '{self}' requires userdata.goal key!"
@@ -143,6 +142,7 @@ class PlanPathState(EventState):
                 Logger.localwarn(userdata.msg)
                 self._return = 'failed'
                 return
+            # Send goal clears the prior results
             self._client.send_goal(self._topic, self._goal, wait_duration=self._planning_timeout.nanoseconds * 1e-9)
             self._start_time = self._node.get_clock().now()
         except Exception as exc:  # pylint: disable=W0703
@@ -151,6 +151,7 @@ class PlanPathState(EventState):
             # Using a linebreak before appending the error log enables the operator to collapse details in the GUI.
             Logger.logwarn(f"Failed to send the '{self}' command:\n  {type(exc)} - {exc}")
             self._return = 'failed'
+            self._client.remove_result(self._topic)  # clear any prior result from action server
 
     def on_exit(self, userdata):
         """Call when state is deactivated."""
@@ -159,14 +160,15 @@ class PlanPathState(EventState):
 
         if self._client.is_active(self._topic):
             self._client.cancel(self._topic)
-            # Check for action status change
-            status = self._client.get_status(self._topic)  # get status before clearing result
+            # Check for action status change (blocking call!)
+            is_terminal, status = self._client.verify_action_status(self._topic, 0.1)
             if status == GoalStatus.STATUS_CANCELED:
                 Logger.loginfo(f" '{self}' : '{self._topic}' - request to plan was canceled! ")
-                self._return = 'failed'
             else:
                 status_string = self._client.get_status_string(self._topic)
-                Logger.loginfo(f" '{self}' : '{self._topic}' - Requested to cancel an active plan request ({status_string}).")
+                Logger.loginfo(f" '{self}' : '{self._topic}' - Requested to cancel an active plan request"
+                               f" ({is_terminal}, '{status_string}').")
+            self._return = 'failed'
 
         # Local message are shown in terminal but not the UI
         if self._return == 'done':
@@ -188,6 +190,15 @@ class PlanPathState(EventState):
         if self._client.is_active(self._topic):
             self._client.cancel(self._topic)
             Logger.localinfo(f"Cancelling active planning request '{self}' when paused ...")
+            # Check for action status change (blocking call!)
+            is_terminal, status = self._client.verify_action_status(self._topic, 0.1)
+            if status == GoalStatus.STATUS_CANCELED:
+                Logger.loginfo(f" '{self}' : '{self._topic}' - request to plan was canceled! ")
+            else:
+                status_string = self._client.get_status_string(self._topic)
+                Logger.loginfo(f" '{self}' : '{self._topic}' - Requested to cancel an active plan request"
+                               f" ({is_terminal}, '{status_string}').")
+            self._return = 'failed'
 
     def on_resume(self, userdata):
         """Execute each time this state is resumed."""
