@@ -124,6 +124,4 @@ Use `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=1`
     * On low battery level (set to 30%), a `PriorityContainer` invokes the `Traverse` behavior to go to charging dock.
     * This pauses the `Patrol` behavior until finished charging.  On resuming, any active planning or follow states will return `failed` and restart the `Patrol` behavior.
 
-
 You can build on these behavior demonstrations to solve the workshop tasks.
-
