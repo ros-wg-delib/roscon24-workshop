@@ -31,7 +31,7 @@ To run start the following in separate terminals
   * Note: It is best to give the OCS software several seconds to start and load behaviors before launching the UI
     Wait on the `Begin behavior mirror processing ...` message in terminal
 
-> Note: On some systems, the docker and GPU interations interfere with UI rendering.
+> Note: On some systems, the docker and GPU interactions interfere with UI rendering.
 > `export QT_QUICK_BACKEND=software` in terminal or use the aliased helper function
 > `qt_rendering()` before launching the `webui_client`
 
