@@ -206,7 +206,7 @@ locations:
       parent: kitchen
       category: storage
       pose: [-3.65, -1.5, 0.0, 1.57]
-      is_open: true
+      is_open: false
 
     - name: bin
       parent: office
