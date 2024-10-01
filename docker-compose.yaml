@@ -31,7 +31,7 @@ services:
     privileged: true
     environment:
       # Ensure your ROS 2 system is only visible on the local network
-      - ROS_LOCALHOST_ONLY=1
+      - ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
       # If you disable ROS_LOCALHOST_ONLY above, ensure you use a unique domain ID on your network
       - ROS_DOMAIN_ID=0
       # Allows graphical programs in the container
