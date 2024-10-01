@@ -8,7 +8,6 @@ export PYTHONWARNINGS="ignore:setup.py install is deprecated,ignore:easy_install
 
 export ROS_WS=/delib_ws
 export WORKSPACE_ROOT=$ROS_WS	# For FlexBE compatibility
-export ROS_DOMAIN_ID=0
 
 function print_ros_variables () {
         echo -e "ROS Distro: \t" $ROS_DISTRO

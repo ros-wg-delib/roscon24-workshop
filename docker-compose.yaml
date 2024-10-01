@@ -30,6 +30,10 @@ services:
     # Needed to run Groot inside the container
     privileged: true
     environment:
+      # Ensure your ROS 2 system is only visible on the local network
+      - ROS_AUTOMATIC_DISCOVERY_RANGE=LOCALHOST
+      # If you disable ROS_LOCALHOST_ONLY above, ensure you use a unique domain ID on your network
+      - ROS_DOMAIN_ID=0
       # Allows graphical programs in the container
       - DISPLAY=${DISPLAY}
       - QT_X11_NO_MITSHM=1
