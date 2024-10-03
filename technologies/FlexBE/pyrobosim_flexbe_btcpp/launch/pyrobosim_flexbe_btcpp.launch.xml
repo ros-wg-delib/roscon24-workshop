@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="pyrobosim_flexbe_btcpp" exec="flexbe_btcpp_executor" output="screen">
+    <param from="$(find-pkg-share pyrobosim_flexbe_btcpp)/config/pyrobosim_flexbe_btcpp.yaml"/>
+  </node>
+</launch>
