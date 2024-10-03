@@ -10,7 +10,12 @@
 #include <behaviortree_cpp/xml_parsing.h>
 
 // BTCPP nodes in this package
+#include "pyrobosim_btcpp/nodes/open_door_node.hpp"
+#include "pyrobosim_btcpp/nodes/close_door_node.hpp"
+#include "pyrobosim_btcpp/nodes/detect_object_node.hpp"
 #include "pyrobosim_btcpp/nodes/navigate_node.hpp"
+#include "pyrobosim_btcpp/nodes/pick_object_node.hpp"
+#include "pyrobosim_btcpp/nodes/place_object_node.hpp"
 
 std::filesystem::path GetFilePath(const std::string& filename)
 {
@@ -59,7 +64,12 @@ int main(int argc, char** argv)
   params.nh = nh;
   params.default_port_value = "execute_action";
 
+  factory.registerNodeType<BT::CloseDoorAction>("CloseDoor", params);
+  factory.registerNodeType<BT::DetectObject>("DetectObject", params);
   factory.registerNodeType<BT::NavigateAction>("Navigate", params);
+  factory.registerNodeType<BT::OpenDoorAction>("OpenDoor", params);
+  factory.registerNodeType<BT::PickObject>("PickObject", params);
+  factory.registerNodeType<BT::PlaceObject>("PlaceObject", params);
 
   // optionally we can display and save the model of the tree
   if(save_model)

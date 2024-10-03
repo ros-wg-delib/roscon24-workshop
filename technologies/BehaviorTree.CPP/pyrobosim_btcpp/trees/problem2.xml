@@ -1,0 +1,17 @@
+<root BTCPP_format="4">
+
+  <BehaviorTree ID="MainTree">
+    <Sequence>
+        <Fallback>
+            <Navigate name="ToTrash" target="trash"/>
+            <Sequence>
+                <OpenDoor/>
+                <Navigate name="ToTrash" target="trash"/>
+            </Sequence>
+        </Fallback>
+        <Navigate name="ToTable" target="table"/>
+        <CloseDoor/>
+    </Sequence>
+  </BehaviorTree>
+
+</root>
