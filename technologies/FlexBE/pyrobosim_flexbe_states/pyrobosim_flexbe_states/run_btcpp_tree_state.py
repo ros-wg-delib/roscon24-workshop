@@ -91,12 +91,12 @@ class RunBtCppState(EventState):
         if self._client.has_result(self._topic):
             # Check if the action has been finished
             result = self._client.get_result(self._topic, clear=True)
-            Logger.localinfo(f"action result={str(result)}")
             userdata.msg = result.return_message  # Output message
             if status == GoalStatus.STATUS_SUCCEEDED:
                 node_status = result.node_status.status
                 if node_status == NodeStatus.SUCCESS:
-                    Logger.localinfo(f"'{self}' - behavior tree returned success!")
+                    Logger.localinfo(f"'{self}' - behavior tree returned success!"
+                                     f" '{result.return_message}'")
                     self._return = 'success'
                 else:
                     Logger.localwarn(f"'{self}' : '{self._topic}' - behavior tree "
@@ -167,7 +167,7 @@ class RunBtCppState(EventState):
             self._return = 'failure'
 
         # Local message are shown in terminal but not the UI
-        if self._return == 'done':
+        if self._return == 'success':
             Logger.localinfo('Successfully executed the BT.')
         else:
             Logger.localwarn('failure to execute the BT.')

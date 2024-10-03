@@ -107,6 +107,7 @@ public:
   {
     RCLCPP_INFO(kLogger, "onTreeCreated ...");
     logger_cout_ = std::make_shared<BT::StdCoutLogger>(tree);
+    tic_count_ = 0;
   }
 
 
@@ -122,11 +123,13 @@ public:
   std::optional<std::string> onTreeExecutionCompleted(BT::NodeStatus status,
                                                       bool was_cancelled) override
   {
-    // NOT really needed, even if logger_cout_ may contain a dangling pointer of the tree
-    // at this point
-    RCLCPP_INFO(kLogger, "onTreeExecutionCompleted with status=%d (canceled=%d)", int(status), was_cancelled);
+    RCLCPP_INFO(kLogger, "onTreeExecutionCompleted with status=%d (canceled=%d) after %d tics",
+                int(status), was_cancelled, tic_count_);
     logger_cout_.reset();
-    return std::string("pyrobosim_flexbe_btcpp tree complete with status=") + std::to_string(int(status));
+    std::string result = "pyrobosim_flexbe_btcpp tree completed with status=" + std::to_string(int(status)) +
+                         " after " + std::to_string(tic_count_) + " tics";
+
+    return result;
   }
 
   /**
@@ -172,9 +175,10 @@ public:
    *
    * @param status The status of the tree after the last tick
   */
-  std::optional<BT::NodeStatus> onLoopAfterTick(BT::NodeStatus status)
+  std::optional<BT::NodeStatus> onLoopAfterTick(BT::NodeStatus /*status*/)
   {
     //RCLCPP_INFO(kLogger, "pyrobosim_flexbe_btcpp - onLoopAfterTick.");
+    ++tic_count_;
     return std::nullopt;
   }
 
@@ -194,6 +198,7 @@ public:
 private:
   std::shared_ptr<BT::StdCoutLogger> logger_cout_;
   rclcpp::Subscription<pyrobosim_msgs::msg::RobotState>::SharedPtr sub_;
+  uint32_t tic_count_;
 };
 
 int main(int argc, char* argv[])
@@ -218,66 +223,3 @@ int main(int argc, char* argv[])
 
   rclcpp::shutdown();
 }
-
-// int main(int argc, char** argv)
-// {
-//   // Create a ROS Node
-//   rclcpp::init(argc, argv);
-//   auto nh = std::make_shared<rclcpp::Node>("btcpp_executor");
-
-//   nh->declare_parameter("tree", rclcpp::PARAMETER_STRING);
-//   nh->declare_parameter("save-model", false);
-
-//   const std::string tree_filename = nh->get_parameter("tree").as_string();
-//   const bool save_model = nh->get_parameter("save-model").as_bool();
-
-//   if(tree_filename.empty())
-//   {
-//     RCLCPP_FATAL(nh->get_logger(), "Missing parameter 'tree' with the path to the Behavior Tree "
-//                                    "XML file");
-//     return 1;
-//   }
-//   const std::filesystem::path filepath = GetFilePath(tree_filename);
-
-//   //----------------------------------
-//   // register all the actions in the factory
-//   BT::BehaviorTreeFactory factory;
-
-//   // all the actions are done using the same Action Server.
-//   // Therefore  single RosNodeParams will do.
-//   BT::RosNodeParams params;
-//   params.nh = nh;
-//   params.default_port_value = "execute_action";
-
-//   factory.registerNodeType<BT::CloseDoorAction>("CloseDoor", params);
-//   factory.registerNodeType<BT::DetectObject>("DetectObject", params);
-//   factory.registerNodeType<BT::NavigateAction>("Navigate", params);
-//   factory.registerNodeType<BT::OpenDoorAction>("OpenDoor", params);
-//   factory.registerNodeType<BT::PickObject>("PickObject", params);
-//   factory.registerNodeType<BT::PlaceObject>("PlaceObject", params);
-
-//   // optionally we can display and save the model of the tree
-//   if(save_model)
-//   {
-//     std::string xml_models = BT::writeTreeNodesModelXML(factory);
-//     std::cout << "--------- Node Models ---------:\n" << xml_models << std::endl;
-//     std::ofstream of("tree_nodes_model.xml");
-//     of << xml_models;
-//     std::cout << "\nXML model of the tree saved in tree_nodes_model.xml\n" << std::endl;
-//   }
-
-//   //----------------------------------
-//   // load a tree and execute
-//   BT::Tree tree = factory.createTreeFromFile(filepath.string());
-
-//   // This will add console messages for each action and condition executed
-//   BT::StdCoutLogger console_logger(tree);
-//   console_logger.enableTransitionToIdle(false);
-
-//   // This is the "main loop":xecution is completed once the tick() method returns SUCCESS of FAILURE
-//   BT::NodeStatus res = tree.tickWhileRunning();
-
-//   std::cout << "Execution completed. Result: " << BT::toStr(res) << std::endl;
-
-//   return 0;
-// }

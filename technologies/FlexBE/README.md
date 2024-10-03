@@ -138,7 +138,5 @@ Please use the following publications for reference when using FlexBE and the Fl
 
 - Joshua Zutell, David C. Conner, and Philipp Schillinger, ["ROS 2-Based Flexible Behavior Engine for Flexible Navigation"](http://dx.doi.org/10.1109/SoutheastCon48659.2022.9764047), IEEE SouthEastCon, April 2022.
 
-- Joshua Zutell, David C. Conner, and Philipp Schillinger, ["Flexible Behavior Trees: In search of the mythical HFSMBTH for Collaborative Autonomy in Robotics"](https://doi.org/10.48550/arXiv.2203.05389), 2022.
-
 - Samuel Raymond, Grace Walters, Joshua Luzier, and David C. Conner, "Design and Development of the FlexBE WebUI with Introductory Tutorials", J. Comput. Sci. Coll vol.40, no.3, CCSC Eastern, to appear October 2024.
 
