@@ -7,25 +7,31 @@
 namespace BT
 {
 
-class CloseDoorAction : public ExecuteTaskNode
+class CloseAction : public ExecuteTaskNode
 {
 public:
-  CloseDoorAction(const std::string& name, const NodeConfig& conf, const RosNodeParams& params)
+  CloseAction(const std::string& name, const NodeConfig& conf, const RosNodeParams& params)
     : ExecuteTaskNode(name, conf, params)
   {}
 
   // specify the ports offered by this node
   static BT::PortsList providedPorts()
   {
-    return ExecuteTaskNode::appendProvidedPorts({});
+    return ExecuteTaskNode::appendProvidedPorts({ BT::InputPort<std::string>("target") });
   }
 
   // Implement the method that sends the goal
   bool setGoal(TaskAction& action) override
   {
+    std::string target;
+    if(!getInput("target", target) || target.empty())
+    {
+      throw BT::RuntimeError("missing required input [target]");
+    }
+
     // prepare the goal message
     action.type = "close";
-    action.target_location = "door";
+    action.target_location = target;
     return true;
   }
 };
