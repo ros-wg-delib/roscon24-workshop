@@ -57,12 +57,14 @@
 #include <behaviortree_ros2/tree_execution_server.hpp>
 
 // BTCPP nodes used in this package
-#include "pyrobosim_btcpp/nodes/open_door_node.hpp"
-#include "pyrobosim_btcpp/nodes/close_door_node.hpp"
+#include "pyrobosim_btcpp/nodes/open_node.hpp"
+#include "pyrobosim_btcpp/nodes/close_node.hpp"
 #include "pyrobosim_btcpp/nodes/detect_object_node.hpp"
 #include "pyrobosim_btcpp/nodes/navigate_node.hpp"
 #include "pyrobosim_btcpp/nodes/pick_object_node.hpp"
 #include "pyrobosim_btcpp/nodes/place_object_node.hpp"
+
+// TO_WORKSHOP_USER: add here the include to your custom actions, if you have any
 
 #include <pyrobosim_msgs/msg/robot_state.hpp>
 
@@ -159,10 +161,10 @@ public:
     params.nh = this->node();
     params.default_port_value = "execute_action";
 
-    factory.registerNodeType<BT::CloseDoorAction>("CloseDoor", params);
+    factory.registerNodeType<BT::CloseAction>("Close", params);
     factory.registerNodeType<BT::DetectObject>("DetectObject", params);
     factory.registerNodeType<BT::NavigateAction>("Navigate", params);
-    factory.registerNodeType<BT::OpenDoorAction>("OpenDoor", params);
+    factory.registerNodeType<BT::OpenAction>("Open", params);
     factory.registerNodeType<BT::PickObject>("PickObject", params);
     factory.registerNodeType<BT::PlaceObject>("PlaceObject", params);
     RCLCPP_INFO(kLogger, "registerNodesIntoFactory - registered custom nodes.");
