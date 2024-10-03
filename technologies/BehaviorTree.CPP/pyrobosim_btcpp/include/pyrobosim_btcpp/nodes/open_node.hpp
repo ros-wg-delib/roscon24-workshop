@@ -7,30 +7,31 @@
 namespace BT
 {
 
-class PlaceObject : public ExecuteTaskNode
+class OpenAction : public ExecuteTaskNode
 {
 public:
-  PlaceObject(const std::string& name, const NodeConfig& conf, const RosNodeParams& params)
+  OpenAction(const std::string& name, const NodeConfig& conf, const RosNodeParams& params)
     : ExecuteTaskNode(name, conf, params)
   {}
 
   // specify the ports offered by this node
   static BT::PortsList providedPorts()
   {
-    return ExecuteTaskNode::appendProvidedPorts({ BT::InputPort<std::string>("object") });
+    return ExecuteTaskNode::appendProvidedPorts({ BT::InputPort<std::string>("target") });
   }
 
   // Implement the method that sends the goal
   bool setGoal(TaskAction& action) override
   {
-    std::string object;
-    if(!getInput("object", object) || object.empty())
+    std::string target;
+    if(!getInput("target", target) || target.empty())
     {
-      throw BT::RuntimeError("missing required input [object]");
+      throw BT::RuntimeError("missing required input [target]");
     }
+
     // prepare the goal message
-    action.type = "place";
-    action.object = object;
+    action.type = "open";
+    action.target_location = target;
     return true;
   }
 };
