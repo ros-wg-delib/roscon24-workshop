@@ -1,8 +1,5 @@
 # Hands-On with ROS 2 Deliberation Technologies
 
-> [!WARNING]
-> WORK IN PROGRESS!
-
 This repository contains materials for the [ROSCon 2024](https://roscon.ros.org/2024/) workshop on ROS 2
 Deliberation Technologies.
 
@@ -34,6 +31,9 @@ Additionally, it can simulate failures and battery usage in the above actions.
 
 ## Setup
 
+> [!NOTE]
+> Please make sure you have completed the setup steps before arriving at the workshop.
+
 ### System Requirements
 
 We highly recommend a host PC running Ubuntu 22.04 or 24.04.
@@ -49,6 +49,11 @@ If you do not have these tools set up:
 * Install Docker Compose using [these instructions](https://docs.docker.com/compose/install/).
 
 Once you are able to run `docker` and `docker compose` commands without `sudo`, you can move on to the installation steps below.
+
+```bash
+docker run hello-world
+docker compose --help
+```
 
 ### Installation
 
