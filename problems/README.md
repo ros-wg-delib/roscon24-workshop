@@ -20,7 +20,7 @@ Snacks on the dining room table.
 **Initial State**:
 Snacks in the kitchen pantry.
 
-**Available Actions**:
+**Actions to Use**:
 
 * Pick object
 * Place object
@@ -42,7 +42,7 @@ Dumpster should be closed.
 Waste is on the office desk and in the office bin.
 Hallways into the trash room are closed.
 
-**Available Actions**:
+**Actions to Use**:
 
 * Pick object
 * Place object
@@ -67,7 +67,7 @@ Fridge and pantry should be closed at the end.
 Bread is in the pantry, which is closed.
 Butter is in the fridge, which is closed.
 
-**Available Actions**:
+**Actions to Use**:
 
 * Pick object
 * Place object
@@ -100,7 +100,7 @@ Butter is in the fridge, which is closed.
 Waste is on the office desk and in the office bin.
 Hallways into the trash room are closed.
 
-**Available Actions**:
+**Actions to Use**:
 
 * Pick object
 * Place object

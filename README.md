@@ -33,6 +33,22 @@ Additionally, it can simulate failures and battery usage in the above actions.
 
 ## Setup
 
+### System Requirements
+
+We highly recommend a host PC running Ubuntu 22.04 or 24.04.
+
+If you are using macOS or Windows, you should install virtualization software such as [VirtualBox](https://www.virtualbox.org/) or [VMWare](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion).
+Then, set up an Ubuntu virtual machine.
+
+You also need to have Docker and Docker Compose installed on your system.
+If you do not have these tools set up:
+
+* Install the Docker Engine using [these instructions](https://docs.docker.com/engine/install/).
+* **IMPORTANT:** Make sure you also go through the [Linux post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/).
+* Install Docker Compose using [these instructions](https://docs.docker.com/compose/install/).
+
+### Installation
+
 First, clone this repository and its submodules.
 
 ```bash
@@ -51,7 +67,7 @@ Start a container.
 docker compose run base
 ```
 
-Once you're in the container, check that you can run a demo.
+Once you're in the container, check that you can launch a simulated world and the PyRoboSim UI appears on your screen.
 
 ```bash
 ros2 run delib_ws_world run
