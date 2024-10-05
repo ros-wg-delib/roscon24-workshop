@@ -57,16 +57,31 @@ Once you're in the container, check that you can run a demo.
 ros2 run delib_ws_world run
 ```
 
-**NOTE:** If you want to clean up the colcon build artifacts across container usage, you can run this command (it will ask you for your `sudo` password):
+---
 
-```bash
-./clean_build.sh
-```
+## Developing in the Container
+
+By default, the whole ROS 2 workspace should have been built on setup.
+However, you will need to rebuild your code as you develop new code or make changes to existing code.
+
+We have created handy aliases that effectively wrap around `colcon build --symlink-install`:
+
+* `delib_build` - Builds the entire workspace
+* `delib_build_packages <package1> <package2> ...` - Builds specific packages
+* `delib_build_packages_up_to <package>` - Builds all dependencies up to a specific package.
+* `delib_clean` - Cleans up the entire workspace.
 
 When you are ready to shut down the container, enter the following command:
 
 ```bash
 docker compose down --remove-orphans
+```
+
+**NOTE:** If you want to clean up any colcon build artifacts mounted to your host system (in the `.colcon` folder of this repo), you can run the following command.
+It will ask you for your `sudo` password.
+
+```bash
+./clean_build.sh
 ```
 
 ---
@@ -89,9 +104,9 @@ Snacks in the kitchen pantry.
 
 **Available Actions**:
 
-- Pick object
-- Place object
-- Move robot
+* Pick object
+* Place object
+* Move robot
 
 ### Problem 2
 
@@ -109,12 +124,12 @@ Hallways into the trash room are closed.
 
 **Available Actions**:
 
-- Pick object
-- Place object
-- Move robot
+* Pick object
+* Place object
+* Move robot
     (will fail if door is closed)
-- Open door
-- Close door
+* Open door
+* Close door
 
 ### Problem 3
 
@@ -132,13 +147,13 @@ Butter is in the fridge, which is closed.
 
 **Available Actions**:
 
-- Pick object
-- Place object
-- Move robot
+* Pick object
+* Place object
+* Move robot
     (will fail if door is closed)
-- Open door
-- Close door
-- Detect objects (optional)
+* Open door
+* Close door
+* Detect objects (optional)
 
 Actions may fail with some probability.
 
@@ -163,13 +178,13 @@ Hallways into the trash room are closed.
 
 **Available Actions**:
 
-- Pick object
-- Place object
-- Move robot
+* Pick object
+* Place object
+* Move robot
     (will fail if door is closed)
-- Open door
-- Close door
-- Detect objects (optional)
+* Open door
+* Close door
+* Detect objects (optional)
 
 Actions may fail with some probability.
 
