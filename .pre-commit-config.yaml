@@ -67,7 +67,6 @@ repos:
     rev: v3.12.2
     hooks:
       - id: markdown-link-check
-        files: ./README.md
 
   # CPP formatting
   - repo: https://github.com/pre-commit/mirrors-clang-format
