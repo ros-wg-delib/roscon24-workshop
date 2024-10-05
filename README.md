@@ -12,6 +12,7 @@ The key idea is the use of *models* of the robot and its environment to enable h
 To learn more about deliberation, refer to [Ingrand and Ghallab (2017)](https://hal.science/hal-01137921).
 
 ![image](media/deliberation_ingrand_ghallab_2017.png)
+
 *Overview diagram of robot deliberation, [Ingrand and Ghallab (2017)](https://hal.science/hal-01137921)*
 
 ---
