@@ -14,8 +14,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Lint markdown files
         uses: DavidAnson/markdownlint-cli2-action@v17
-        with:
-          globs: "./*.md\ndependencies/*.md\nproblems/**/*.md\ntechnologies/**/*.md"
 
   pre-commit:
     name: Run pre-commit
