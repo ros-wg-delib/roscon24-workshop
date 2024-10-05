@@ -81,13 +81,13 @@ During this workshop, you will work through increasingly difficult problems as y
 ros2 run delib_ws_worlds run --ros-args -p problem_number:=1
 ```
 
-__Goal__:
+**Goal**:
 Snacks on the dining room table.
 
-__Initial State__:
+**Initial State**:
 Snacks in the kitchen pantry.
 
-__Available Actions__:
+**Available Actions**:
 
 - Pick object
 - Place object
@@ -99,15 +99,15 @@ __Available Actions__:
 ros2 run delib_ws_worlds run --ros-args -p problem_number:=2
 ```
 
-__Goal__:
+**Goal**:
 Waste should be in the dumpster.
 Dumpster should be closed.
 
-__Initial State__:
+**Initial State**:
 Waste is on the office desk and in the office bin.
 Hallways into the trash room are closed.
 
-__Available Actions__:
+**Available Actions**:
 
 - Pick object
 - Place object
@@ -122,15 +122,15 @@ __Available Actions__:
 ros2 run delib_ws_worlds run --ros-args -p problem_number:=3
 ```
 
-__Goal__:
+**Goal**:
 Bring bread and butter to the dining table.
 Fridge and pantry should be closed at the end.
 
-__Initial State__:
+**Initial State**:
 Bread is in the pantry, which is closed.
 Butter is in the fridge, which is closed.
 
-__Available Actions__:
+**Available Actions**:
 
 - Pick object
 - Place object
@@ -148,20 +148,20 @@ Actions may fail with some probability.
 ros2 run delib_ws_worlds run --ros-args -p problem_number:=4
 ```
 
-__Goal__:
+**Goal**:
 Bring bread and butter to the dining table.
 Fridge and pantry should be closed at the end.
 Waste should be in the dumpster.
 Dumpster should be closed.
 Don't run out of battery!
 
-__Initial State__:
+**Initial State**:
 Bread is in the pantry, which is closed.
 Butter is in the fridge, which is closed.
 Waste is on the office desk and in the office bin.
 Hallways into the trash room are closed.
 
-__Available Actions__:
+**Available Actions**:
 
 - Pick object
 - Place object
