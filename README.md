@@ -44,7 +44,7 @@ Then, set up an Ubuntu 22.04 or 24.04 virtual machine.
 You also need to have Docker and Docker Compose installed on your system.
 If you do not have these tools set up:
 
-* Install Docker Engine using [these instructions](https://docs.docker.com/engine/install/).
+* Install Docker Engine using [these instructions](https://docs.docker.com/engine/install/ubuntu/).
   * **IMPORTANT:** Make sure you also go through the [Linux post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/).
 * Install Docker Compose using [these instructions](https://docs.docker.com/compose/install/).
 
