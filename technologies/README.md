@@ -1,4 +1,4 @@
-## Technologies
+# Technologies
 
 This folder contains all the technology-specific implementations of ROS 2 Deliberation technologies.
 
@@ -6,7 +6,7 @@ For a more complete collection of tools, refer to the [Awesome Robotic Deliberat
 
 ---
 
-### Skill Abstractions
+## Skill Abstractions
 
 While is it possible to directly program our robots to perform complex, long-horizon tasks with plain code, it can be useful to think at higher levels of abstraction.
 There are several formalisms that can help you assemble robust, reactive behaviors for your robots.
@@ -22,7 +22,7 @@ Importantly, all these tools (and many others in the ROS ecosystem) provide a pr
 
 ---
 
-### Task Planning
+## Task Planning
 
 While you can get far by programming your robots manually using finite-state machines and behavior trees, you can also automate the sequencing of these skills to perform complex tasks.
 
@@ -33,7 +33,7 @@ In this workshop, you will explore task planning in the ROS 2 ecosystem using [S
 
 ---
 
-### Formal Verification and Model Checking
+## Formal Verification and Model Checking
 
 In addition to making it easier to program our robots, another benefit of using abstractions such as finite-state machines and behavior trees is the ability to analyze their robustiness via *formal verification*.
 
