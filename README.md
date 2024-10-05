@@ -48,6 +48,8 @@ If you do not have these tools set up:
   * **IMPORTANT:** Make sure you also go through the [Linux post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/).
 * Install Docker Compose using [these instructions](https://docs.docker.com/compose/install/).
 
+Once you are able to run `docker` and `docker compose` commands without `sudo`, you can move on to the installation steps below.
+
 ### Installation
 
 First, clone this repository and its submodules.
