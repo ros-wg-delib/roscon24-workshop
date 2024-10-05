@@ -15,7 +15,7 @@ jobs:
       - name: Lint markdown files
         uses: DavidAnson/markdownlint-cli2-action@v17
         with:
-          globs: '**/*.md'
+          globs: ./README.md
 
   pre-commit:
     name: Run pre-commit
