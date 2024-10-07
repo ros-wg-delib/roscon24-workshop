@@ -10,7 +10,7 @@ on:
 
 env:
   LOCAL_IMAGE: roscon_delib_ws_2024:main
-  REGISTRY_IMAGE: ghcr.io/${{ github.repository_owner }}/base
+  REGISTRY_IMAGE: ghcr.io/${{ github.repository_owner }}/roscon_delib_ws_2024
 
 jobs:
   build:
