@@ -1,5 +1,6 @@
 name: Docker
 on:
+  pull_request:
   push:
     branches:
       - main
@@ -34,11 +35,15 @@ jobs:
       # - name: Verifying the container was built
       #   run: docker exec roscon24-workshop-base-1 colcon test
       # TODO: We only really want to run test on our problems. I need to write some ...
-      - name: Push to gh package
+      - name: Push to gh registry with sha
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
           docker tag ${{ env.LOCAL_IMAGE }} ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
           docker push ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
+      - name: Push to gh registry with latest if this is main
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
           docker tag ${{ env.LOCAL_IMAGE }} ${{ env.REGISTRY_IMAGE }}:latest
           docker push ${{ env.REGISTRY_IMAGE }}:latest
-      # TODO: Also upload tarball to
+        if: github.ref == 'refs/heads/main'
+      # TODO: Also upload tarball to release in case we need it for the thumbdrive-option at the workshop
