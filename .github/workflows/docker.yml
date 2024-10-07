@@ -22,6 +22,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
+      - name: Pull image for caching
+        run: |
+          docker pull ${{ env.REGISTRY_IMAGE }}:latest
+          docker tag ${{ env.REGISTRY_IMAGE }}:latest ${{ env.LOCAL_IMAGE }}
+        continue-on-error: true
       - name: Build and start docker
         uses: hoverkraft-tech/compose-action@v2.0.1
         with:
@@ -36,3 +41,4 @@ jobs:
           docker push ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
           docker tag ${{ env.LOCAL_IMAGE }} ${{ env.REGISTRY_IMAGE }}:latest
           docker push ${{ env.REGISTRY_IMAGE }}:latest
+      # TODO: Also upload tarball to
