@@ -1,0 +1,11 @@
+# Fix any fixable errors
+fix: true
+
+# Define glob expressions to use
+globs:
+  - "**README.md"
+
+# Define glob expressions to ignore
+ignores:
+  - dependencies/*/**
+  - technologies/SkiROS2/skiros2_pyrobosim_lib/**
