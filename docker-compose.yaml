@@ -13,7 +13,7 @@
 
 services:
   base:
-    image: roscon_delib_ws_2024:main
+    image: ghcr.io/ros-wg-delib/roscon_delib_ws_2024:latest
     build:
       context: .
       dockerfile: .docker/Dockerfile
