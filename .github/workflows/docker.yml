@@ -9,8 +9,8 @@ on:
     - cron: "0 20 * * 0"
 
 jobs:
-  build_and_test:
-    name: Build and test
+  build:
+    name: Build and push docker
     strategy:
       fail-fast: false
     runs-on: ubuntu-latest
@@ -23,9 +23,8 @@ jobs:
         with:
           compose-file: ./docker-compose.yaml
           services: base
-      # TODO: Add the following steps
-      # - name: Run tests
-      #   run: |
-      #     docker compose exec base colcon build
-      #     docker compose exec base colcon test
-      #     docker compose exec base colcon test-result
+      - name: Push to gh package
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker tag base ghcr.io/roscon_delib_ws_2024/base:latest
+          docker push ghcr.io/roscon_delib_ws_2024/base:latest
