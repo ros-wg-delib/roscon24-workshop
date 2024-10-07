@@ -29,7 +29,7 @@ jobs:
           services: base
       - name: Push to gh package
         run: |
-          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
           docker tag ${{ env.LOCAL_IMAGE }} ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
           docker push ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
           docker tag ${{ env.LOCAL_IMAGE }} ${{ env.REGISTRY_IMAGE }}:latest
