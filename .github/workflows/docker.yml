@@ -34,6 +34,7 @@ jobs:
           services: base
       - name: Verifying the container was built
         run: docker exec roscon24-workshop-base-1 colcon test
+        # TODO: Why do they fail? Does is also return a non-zero exit code?
       - name: Push to gh package
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
