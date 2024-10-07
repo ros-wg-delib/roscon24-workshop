@@ -5,7 +5,7 @@
   <version>1.0.0</version>
   <description>Example worlds for the ROS 2 Deliberation Workshop</description>
   <maintainer email="christian.henkel2@de.bosch.com">Christian Henkel</maintainer>
-  <license>Apache-2.0</license>
+  <license>BSD-3-Clause</license>
 
   <depend>pyrobosim_ros</depend>
   <depend>delib_ws_problem_interface</depend>

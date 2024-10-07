@@ -18,7 +18,7 @@ setup(
     maintainer="Christian Henkel",
     maintainer_email="christian.henkel2@de.bosch.com",
     description="Example worlds for the ROS 2 Deliberation Workshop",
-    license="Apache-2.0",
+    license="BSD-3-Clause",
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
