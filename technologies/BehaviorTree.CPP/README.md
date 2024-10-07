@@ -2,12 +2,11 @@
 
 This package provides some ready to use Nodes (i.e. "actions") to be used with **pyrobosim**.
 
-
 We suggest creating your XML trees in the folder `technologies/BehaviorTree.CPP/pyrobosim_btcpp/trees`
 
 ## How to compile
 
-```
+```bash
 colcon build --symlink-install --packages-select pyrobosim_btcpp
 ```
 
@@ -35,15 +34,15 @@ NOTE: remember that the `name` attribute in the XML is optional and used for deb
 
 You can run the BeahviorTree with the command:
 
-```
+```bash
 ros2 run pyrobosim_btcpp btcpp_executor --ros-args -p tree:=trees/navigation_demo.xml
 ```
 
 The argument `tree` above is the path to the XML file. The path can be either:
 
- - absolute,
- - relative to the folder where the command is executed
- - relative to the package folder, i.e. `technologies/BehaviorTree.CPP/pyrobosim_btcpp`.
+- absolute,
+- relative to the folder where the command is executed
+- relative to the package folder, i.e. `technologies/BehaviorTree.CPP/pyrobosim_btcpp`.
 
 ## Implemented Action Nodes
 
