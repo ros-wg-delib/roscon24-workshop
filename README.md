@@ -63,13 +63,8 @@ First, clone this repository and its submodules.
 git clone --recurse-submodules https://github.com/ros-wg-delib/roscon24-workshop.git
 ```
 
-Then, build the Docker image.
-
-```bash
-docker compose build
-```
-
-Start a container.
+Start the Docker container.
+Note that this will pull the Docker image and may take a few minutes.
 
 ```bash
 docker compose run base

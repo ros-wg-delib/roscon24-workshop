@@ -1,0 +1,49 @@
+name: Docker
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  schedule:
+    # Run every week at 20:00 on Sunday
+    - cron: "0 20 * * 0"
+
+env:
+  LOCAL_IMAGE: roscon_delib_ws_2024:main
+  REGISTRY_IMAGE: ghcr.io/${{ github.repository_owner }}/roscon_delib_ws_2024
+
+jobs:
+  build:
+    name: Build and push docker
+    strategy:
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Pull image for caching
+        run: |
+          docker pull ${{ env.REGISTRY_IMAGE }}:latest
+          docker tag ${{ env.REGISTRY_IMAGE }}:latest ${{ env.LOCAL_IMAGE }}
+        continue-on-error: true
+      - name: Build and start docker
+        uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: ./docker-compose.yaml
+          services: base
+      # - name: Verifying the container was built
+      #   run: docker exec roscon24-workshop-base-1 colcon test
+      # TODO: We only really want to run test on our problems. I need to write some ...
+      - name: Push to gh registry with sha
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+          docker tag ${{ env.LOCAL_IMAGE }} ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
+          docker push ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
+      - name: Push to gh registry with latest if this is main
+        run: |
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
+          docker tag ${{ env.LOCAL_IMAGE }} ${{ env.REGISTRY_IMAGE }}:latest
+          docker push ${{ env.REGISTRY_IMAGE }}:latest
+        if: github.ref == 'refs/heads/main'
+      # TODO: Also upload tarball to release in case we need it for the thumbdrive-option at the workshop
