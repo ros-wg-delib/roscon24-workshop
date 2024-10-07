@@ -19,7 +19,7 @@ setup(
     maintainer="hec2le",
     maintainer_email="christian.henkel2@de.bosch.com",
     description="Simple Python solutions to ROS 2 Deliberation Workshop",
-    license="Apache-2.0",
+    license="BSD-3-Clause",
     tests_require=["pytest"],
     entry_points={
         "console_scripts": ["run = delib_ws_python.run:main"],

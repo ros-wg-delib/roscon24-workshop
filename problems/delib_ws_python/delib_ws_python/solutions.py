@@ -1,3 +1,8 @@
+## @file
+# Copyright (c) 2024, Sebastian Castro, The AI Institute
+# SPDX-License-Identifier: BSD-3-Clause
+##
+
 """
 Solution implementations in Python.
 """

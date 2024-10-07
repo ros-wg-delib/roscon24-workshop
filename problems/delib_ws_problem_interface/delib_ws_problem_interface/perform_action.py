@@ -1,3 +1,8 @@
+## @file
+# Copyright (c) 2024, Christian Henkel, Robert Bosch GmbH
+# SPDX-License-Identifier: BSD-3-Clause
+##
+
 """
 Python wrapper to perform a high-level action in a PyRoboSim simulation.
 """

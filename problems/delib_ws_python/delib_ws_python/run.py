@@ -1,3 +1,8 @@
+## @file
+# Copyright (c) 2024, Sebastian Castro, The AI Institute
+# SPDX-License-Identifier: BSD-3-Clause
+##
+
 import rclpy
 
 from delib_ws_worlds.is_at_goal import get_goal_state
