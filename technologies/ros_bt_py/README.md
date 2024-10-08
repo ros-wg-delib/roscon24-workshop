@@ -20,7 +20,7 @@ ros2 run delib_ws_worlds run --ros-args -p problem_number:=1
 
 To run `ros_bt_py` with these convinience nodes you need to run:
 ```bash
-ros2 launch ros_bt_py_pyrobosim ros_bt_py_pyrobosim.launch.py 
+ros2 launch ros_bt_py_pyrobosim ros_bt_py_pyrobosim.launch.py
 ```
 
 Alternativly, to launch the regular `ros_bt_py` without any additional nodes run:
@@ -52,12 +52,12 @@ The WebUI has four distinct sections:
   Saving is unfortunately only possible in the `.ros` directory.
 * The center bottom area is where attributes on a clicked node can be edited.
   ROS message types and builtin python types are automatically completed when a type field is edited.
-> 
+>
 > BUG: When updating node attributs and clicking apply, a popup will say that changes are discarded. This a bug and the changes will apply fully as intended.
 > This will be fixed with the next GUI update.
 >
 
-This explains the basics of the `ros_bt_py` UI. 
+This explains the basics of the `ros_bt_py` UI.
 In the following some more details on specific features are given:
 
 ### Data Flow
@@ -70,7 +70,7 @@ Outputs are populated on the tick the node succeeds.
 
 Data connections are strongly typed for ROS messages and primitive python types.
 While container types (e.g arrays, lists, tuple) are checked, their content types are not.
-Connecting an `list[int]` output to an `list[string]` input will result in a runtime error. 
+Connecting an `list[int]` output to an `list[string]` input will result in a runtime error.
 
 ### ROS Actions & Servuces
 
@@ -82,10 +82,9 @@ The `FieldsToMessage` and `MessageToFields` nodes can be used to construct and d
 >
 > BUG: It should also be possible to generate full ROS message types in constants, but unfortunately due to changes to ROS/Python type introspection
 > this is not possible. ROS messages need to be constructed using the `FieldsToMessage` node.
-> 
+>
 
 ## ToDo's
 
 - [ ] Provide example solutiont trees for all problems.
 - [ ] Add convinience nodes for pyrobosim interaction.
-

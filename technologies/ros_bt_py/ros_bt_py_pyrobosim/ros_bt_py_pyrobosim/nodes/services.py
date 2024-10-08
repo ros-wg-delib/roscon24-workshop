@@ -42,21 +42,27 @@ class CheckIfCarriesObject(ServiceForSetType):
     # False. if it should be in the FAILED state
     def set_outputs(self):
         response: RequestWorldState.Response = self._service_request_future.result()
-        robot_with_matching_name: List[RobotState] = [robot for robot in response.state.robots if robot.name == self.inputs["robot_name"]]
+        robot_with_matching_name: List[RobotState] = [
+            robot
+            for robot in response.state.robots
+            if robot.name == self.inputs["robot_name"]
+        ]
         if len(robot_with_matching_name) != 1:
             self.logerr("Found more then one matching robot!")
             raise BehaviorTreeException("Found more then one matching robot!")
         robot = robot_with_matching_name[0]
-        return robot.holding_object and robot.manipulated_object == self.inputs["object_name"]
+        return (
+            robot.holding_object
+            and robot.manipulated_object == self.inputs["object_name"]
+        )
+
 
 @define_bt_node(
     NodeConfig(
         version="0.1.0",
         options={},
         inputs={"object_name": str},
-        outputs={
-            "location": str
-        },
+        outputs={"location": str},
         max_children=0,
     )
 )
@@ -79,7 +85,11 @@ class GetObjectPosition(ServiceForSetType):
     # False. if it should be in the FAILED state
     def set_outputs(self):
         response: RequestWorldState.Response = self._service_request_future.result()
-        obj_with_matching_name: List[ObjectState] = [obj for obj in response.state.objects if obj.name == self.inputs["object_name"]]
+        obj_with_matching_name: List[ObjectState] = [
+            obj
+            for obj in response.state.objects
+            if obj.name == self.inputs["object_name"]
+        ]
         if len(obj_with_matching_name) != 1:
             self.logerr("Found something other than one matching object!")
             return False

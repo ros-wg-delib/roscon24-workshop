@@ -8,4 +8,3 @@ from ros_bt_py_interfaces.msg import Node as NodeMsg
 
 from pyrobosim_msgs.action import ExecuteTaskAction
 from pyrobosim_msgs.msg import ExecutionResult
-
