@@ -21,7 +21,7 @@ setup(
     maintainer='David Conner',
     maintainer_email='robotics@cnu.edu',
     description='Pyrobosim utilities used by pyrobosim_flexbe_states ',
-    license='Apache 2.0',
+    license='BSD-3',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [

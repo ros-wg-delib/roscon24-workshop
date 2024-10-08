@@ -4,7 +4,7 @@
 
     <executable package_path="pyrobosim_flexbe_behaviors.through_door_sm" class="ThroughDoorSM" />
     <tagstring>pyrobosim</tagstring>
-    <author>conner</author>
+    <author>David Conner</author>
     <date>Sun Sep 08 2024</date>
     <description>
         Go through a door, opening if required

@@ -4,7 +4,7 @@
 
     <executable package_path="pyrobosim_flexbe_behaviors.go_beh_sm" class="GoBehSM" />
     <tagstring>pyrobosim, delib_ws</tagstring>
-    <author>Conner</author>
+    <author>David Conner</author>
     <date>Sun Sep 08 2024</date>
     <description>
         Go to target behavior
