@@ -1,21 +1,22 @@
-## The Mythical HFSMBTH
+# The Mythical HFSMBTH
 
 Inspired by the 2019 Game Developers Conference [talk](https://www.youtube.com/watch?v=Qq_xX1JCreI&t=1159s) by Bobby Anguelov, we present the "Mythical HFSMBT Hybrid".
 
 Please use the following publication for reference:
 
-  * Joshua M. Zutell, David C. Conner, and Philipp Schillinger, "Flexible Behavior Trees: In search of the mythical HFSMBTH for Collaborative Autonomy in Robotics", arXiv 2022, https://doi.org/10.48550/arXiv.2203.05389.
+* Joshua M. Zutell, David C. Conner, and Philipp Schillinger, "Flexible Behavior Trees: In search of the mythical HFSMBTH for Collaborative Autonomy in Robotics", arXiv 2022, <https://doi.org/10.48550/arXiv.2203.05389>.
 
-#### BehaviorTree.cpp Hybrid Demo
+## BehaviorTree.cpp Hybrid Demo
 
-  * `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=2`
-  * `clear; ros2 launch flexbe_onboard behavior_onboard.launch.py`
-  * `clear; ros2 launch flexbe_webui flexbe_ocs.launch.py headless:=true`
-  * `clear; ros2 run flexbe_webui webui_client`
+* `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=2`
+* `clear; ros2 launch flexbe_onboard behavior_onboard.launch.py`
+* `clear; ros2 launch flexbe_webui flexbe_ocs.launch.py headless:=true`
+* `clear; ros2 run flexbe_webui webui_client`
 
 Additionally we need to launch the custom `flexbe_btcpp_executor` node which executes the
 BT.cpp v4-based behavior trees using an `ExecuteTree` action server interface.
-  * `clear; ros2 launch pyrobosim_flexbe_btcpp pyrobosim_flexbe_btcpp.launch.xml`
+
+* `clear; ros2 launch pyrobosim_flexbe_btcpp pyrobosim_flexbe_btcpp.launch.xml`
 
 This custom executor node loads the node definitions used by this workshop demonstration.
 
@@ -27,6 +28,7 @@ We include a subset of the demonstration trees from this workshop in the `pyrobo
 ```xml
   <BehaviorTree ID="Problem2Tree">
 ```
+
 which is required if they are launched by the `ExecuteTree.action`.
 
 Additional behavior tree packages may be listed in the `pyrobosim_flexbe_btcpp/config/pyrobosim_flexbe_btcpp.yaml` configuration file, but the required node definitions must be

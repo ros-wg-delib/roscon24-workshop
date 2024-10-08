@@ -25,7 +25,6 @@
 // TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 // THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-
 // Based on pyrobosim_btcpp Copyright 2024 Davide Faconti
 // and sample_bt_executor.cpp Copyright 2024 Marq Rasmussen
 //
@@ -40,11 +39,9 @@
 // COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 #include <fstream>
 
 #include <std_msgs/msg/float32.hpp>
-
 
 // ROS includes
 #include <rclcpp/rclcpp.hpp>
@@ -67,7 +64,6 @@
 // TO_WORKSHOP_USER: add here the include to your custom actions, if you have any
 
 #include <pyrobosim_msgs/msg/robot_state.hpp>
-
 
 std::filesystem::path GetFilePath(const std::string& filename)
 {
@@ -112,7 +108,6 @@ public:
     tic_count_ = 0;
   }
 
-
   /**
    * @brief onTreeExecutionCompleted is a callback invoked after the tree execution is completed,
    * i.e. if it returned SUCCESS/FAILURE or if the action was cancelled by the Action Client.
@@ -128,8 +123,9 @@ public:
     RCLCPP_INFO(kLogger, "onTreeExecutionCompleted with status=%d (canceled=%d) after %d tics",
                 int(status), was_cancelled, tic_count_);
     logger_cout_.reset();
-    std::string result = "pyrobosim_flexbe_btcpp tree completed with status=" + std::to_string(int(status)) +
-                         " after " + std::to_string(tic_count_) + " tics";
+    std::string result =
+        "pyrobosim_flexbe_btcpp tree completed with status=" + std::to_string(int(status)) +
+        " after " + std::to_string(tic_count_) + " tics";
 
     return result;
   }
@@ -140,10 +136,10 @@ public:
   */
   bool onGoalReceived(const std::string& tree_name, const std::string& payload)
   {
-    RCLCPP_INFO(kLogger, "onGoalReceived with tree name '%s' with payload '%s'", tree_name.c_str(), payload.c_str());
+    RCLCPP_INFO(kLogger, "onGoalReceived with tree name '%s' with payload '%s'", tree_name.c_str(),
+                payload.c_str());
     return true;
   }
-
 
   /**
    * @brief registerNodesIntoFactory is a callback invoked after the
@@ -184,7 +180,6 @@ public:
     return std::nullopt;
   }
 
-
   /**
    * @brief onLoopFeedback is a callback invoked at each loop, after tree.tickOnce().
    * If it returns a valid string, it will be sent as feedback to the Action Client.
@@ -195,7 +190,6 @@ public:
   {
     return std::nullopt;
   }
-
 
 private:
   std::shared_ptr<BT::StdCoutLogger> logger_cout_;

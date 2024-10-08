@@ -5,7 +5,6 @@
 For the ROSCon '24 Deliberation Technologies workshop all required software is included in the Docker container.
 To build locally at home see the [installation instructions](docs/installation.md).
 
-
 ## Usage
 
 We provide a few behaviors as described below.
@@ -55,7 +54,7 @@ To run start the following in separate terminals
   location and detect available objects.
 
   > Note: In `Low` autonomy, you will need to click on the outcome label when requested (that is, when the state has finished) to confirm the transition when prompted at the UI.
-
+  >
   > WARNING: An operator can preempt a state, so wait for the state to finish and request the outcome by highlighting the transition.
 
   Alternatively you can try :
@@ -71,6 +70,7 @@ There are a number of demonstration behaviors created to demonstrate various sta
 The `flexbe_states` package in the `dependencies/FlexBE/flexbe_behavior_engine` submodule provides a number of generic states.
 
 Specifically we demonstrate:
+
 * `LogState` - print message to terminal (both console and UI)
 * `LogKeyState` - print message containing user data value at specified key
 * `OperatorDecisionState` - allow operator to select among specified outcomes; in full autonomy the "suggested" outcome is selected.
@@ -78,6 +78,7 @@ Specifically we demonstrate:
 * `InputState` - uses `input_action_server` to allow user to input simple data such as string, number, or list of numbers
 
 The `pyrobosim_flexbe_states` package under `technologies/FlexBE` includes:
+
 * `check_door_state.py` - Uses pyrobosim `RequestWorldState` service to check door status using non-blocking call
 * `detect_local_objects_state.py` - Invokes a pyrobosim `ExecuteTaskAction` to `detect` objects, then uses `RequestWorldState`
 * `detect_objects_state.py` - Invokes the pyrobosim `DetectObjects` action to detect objects, then adds to user data
@@ -130,8 +131,8 @@ See ["Mythical HFSMBT Hybrid"](docs/hfsmbth.md) for an example demonstration of 
 
 Please use the following publications for reference when using FlexBE and the FlexBE WebUI:
 
-- Philipp Schillinger, Stefan Kohlbrecher, and Oskar von Stryk, ["Human-Robot Collaborative High-Level Control with Application to Rescue Robotics"](http://dx.doi.org/10.1109/ICRA.2016.7487442), IEEE International Conference on Robotics and Automation (ICRA), Stockholm, Sweden, May 2016.
+* Philipp Schillinger, Stefan Kohlbrecher, and Oskar von Stryk, ["Human-Robot Collaborative High-Level Control with Application to Rescue Robotics"](http://dx.doi.org/10.1109/ICRA.2016.7487442), IEEE International Conference on Robotics and Automation (ICRA), Stockholm, Sweden, May 2016.
 
-- Joshua Zutell, David C. Conner, and Philipp Schillinger, ["ROS 2-Based Flexible Behavior Engine for Flexible Navigation"](http://dx.doi.org/10.1109/SoutheastCon48659.2022.9764047), IEEE SouthEastCon, April 2022.
+* Joshua Zutell, David C. Conner, and Philipp Schillinger, ["ROS 2-Based Flexible Behavior Engine for Flexible Navigation"](http://dx.doi.org/10.1109/SoutheastCon48659.2022.9764047), IEEE SouthEastCon, April 2022.
 
-- Samuel Raymond, Grace Walters, Joshua Luzier, and David C. Conner, "Design and Development of the FlexBE WebUI with Introductory Tutorials", J. Comput. Sci. Coll vol.40, no.3, CCSC Eastern, to appear October 2024.
+* Samuel Raymond, Grace Walters, Joshua Luzier, and David C. Conner, "Design and Development of the FlexBE WebUI with Introductory Tutorials", J. Comput. Sci. Coll vol.40, no.3, CCSC Eastern, to appear October 2024.
