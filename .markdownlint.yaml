@@ -1,0 +1,11 @@
+# Default state for all rules
+default: true
+
+# Line length check
+MD013:
+  line_length: 500  # Basically ignore this check
+  tables: false
+
+# Inline HTML check
+MD033:
+  allowed_elements: ["br"]  # Allow line breaks in tables

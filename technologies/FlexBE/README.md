@@ -1,11 +1,9 @@
 # FlexBE States and Behaviors for ROSCon 2024 Deliberation Technologies Workshop
 
-
-# Installation and Setup
+## Installation and Setup
 
 For the ROSCon '24 Deliberation Technologies workshop all required software is included in the Docker container.
 To build locally at home see the [installation instructions](docs/installation.md).
-
 
 ## Usage
 
@@ -15,8 +13,8 @@ This quick start uses the `delib_ws_p2_sm` behavior.
 This includes a statemachine with on nested sub-statemachine to allow selection of a door to open, and a
 nested behavior called `DetectSelect` that plans path to location, retrieves a user selected object, and places at target location.
 
-
 To run start the following in separate terminals
+
 * `pyrobosim` with whatever world you choose
   * `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=2`
 
@@ -34,7 +32,6 @@ To run start the following in separate terminals
 > Note: On some systems, the docker and GPU interactions interfere with UI rendering.
 > `export QT_QUICK_BACKEND=software` in terminal or use the aliased helper function
 > `qt_soft_render()` before launching the `webui_client`
-
 
 * `clear; ros2 run flexbe_input input_action_server`
   * This launches an action server that will pop up a simple UI that will allow the operator input data on request
@@ -57,7 +54,6 @@ To run start the following in separate terminals
   location and detect available objects.
 
   > Note: In `Low` autonomy, you will need to click on the outcome label when requested (that is, when the state has finished) to confirm the transition when prompted at the UI.
-
   > WARNING: An operator can preempt a state, so wait for the state to finish and request the outcome by highlighting the transition.
 
   Alternatively you can try :
@@ -66,7 +62,6 @@ To run start the following in separate terminals
   And load `PatrolCharge` to move about all rooms and recharge the battery when level drops below 30% charge.
   This uses a `ConcurrencyContainer` and a `PriorityContainer` to preempt the `Patrol` behavior and recharge the battery.
 
-
 There are a number of demonstration behaviors created to demonstrate various state implementations
 
 ### Provided State Implementations
@@ -74,6 +69,7 @@ There are a number of demonstration behaviors created to demonstrate various sta
 The `flexbe_states` package in the `dependencies/FlexBE/flexbe_behavior_engine` submodule provides a number of generic states.
 
 Specifically we demonstrate:
+
 * `LogState` - print message to terminal (both console and UI)
 * `LogKeyState` - print message containing user data value at specified key
 * `OperatorDecisionState` - allow operator to select among specified outcomes; in full autonomy the "suggested" outcome is selected.
@@ -81,6 +77,7 @@ Specifically we demonstrate:
 * `InputState` - uses `input_action_server` to allow user to input simple data such as string, number, or list of numbers
 
 The `pyrobosim_flexbe_states` package under `technologies/FlexBE` includes:
+
 * `check_door_state.py` - Uses pyrobosim `RequestWorldState` service to check door status using non-blocking call
 * `detect_local_objects_state.py` - Invokes a pyrobosim `ExecuteTaskAction` to `detect` objects, then uses `RequestWorldState`
 * `detect_objects_state.py` - Invokes the pyrobosim `DetectObjects` action to detect objects, then adds to user data
@@ -120,8 +117,8 @@ Use `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=1`
 
  Use `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=4`
 
-  * `PatrolCharge` - This uses a `Concurrency` container that includes the `Patrol` behavior and a state machine that monitors battery level.
-    * On low battery level (set to 30%), a `PriorityContainer` invokes the `Traverse` behavior to go to charging dock.
-    * This pauses the `Patrol` behavior until finished charging.  On resuming, any active planning or follow states will return `failed` and restart the `Patrol` behavior.
+* `PatrolCharge` - This uses a `Concurrency` container that includes the `Patrol` behavior and a state machine that monitors battery level.
+  * On low battery level (set to 30%), a `PriorityContainer` invokes the `Traverse` behavior to go to charging dock.
+  * This pauses the `Patrol` behavior until finished charging.  On resuming, any active planning or follow states will return `failed` and restart the `Patrol` behavior.
 
 You can build on these behavior demonstrations to solve the workshop tasks.

@@ -55,6 +55,13 @@ repos:
         types: [text]
         files: \.(yml|yaml)$
 
+  # Finds issues in markdown files.
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.14.0
+    hooks:
+      - id: markdownlint-cli2
+        args: ["--fix"]
+
   # Checks links in markdown files.
   - repo: https://github.com/tcort/markdown-link-check
     rev: v3.12.2
