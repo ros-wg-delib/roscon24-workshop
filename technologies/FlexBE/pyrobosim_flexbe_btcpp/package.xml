@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>pyrobosim_flexbe_btcpp</name>
+  <version>0.0.1</version>
+  <description>
+      BehaviorTree.CPP executor with Action interface.
+
+      Based on pyrobosim_btcpp and portions of
+      btcpp_ros2_samples code by Davide Faconti.
+
+  </description>
+  <author email="robotics@cnu.edu">David Conner</author>
+  <maintainer email="robotics@cnu.edu">David Conner</maintainer>
+  <license>BSD-3</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>flexbe_behavior_engine</exec_depend>
+  <exec_depend>flexbe_webui</exec_depend>
+  <exec_depend>pyrobosim_flexbe_states</exec_depend>
+
+  <depend>ament_index_cpp</depend>
+  <depend>behaviortree_ros2</depend>
+  <depend>pyrobosim_msgs</depend>
+  <depend>rclcpp</depend>
+  <depend>pyrobosim_btcpp</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>

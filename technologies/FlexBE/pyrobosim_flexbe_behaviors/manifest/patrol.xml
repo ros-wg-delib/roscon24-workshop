@@ -4,7 +4,7 @@
 
     <executable package_path="pyrobosim_flexbe_behaviors.patrol_sm" class="PatrolSM" />
     <tagstring>pyrobosim, patrol</tagstring>
-    <author>Conner</author>
+    <author>David Conner</author>
     <date>Mon Sep 23 2024</date>
     <description>
         Patrol rooms without concern for battery

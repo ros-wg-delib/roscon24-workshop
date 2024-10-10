@@ -23,7 +23,7 @@ setup(
     maintainer='David Conner',
     maintainer_email='robotics@cnu.edu',
     description='Interface FlexBE state implementations for Pyrobosim',
-    license='Apache 2.0',
+    license='BSD-3',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [

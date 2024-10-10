@@ -31,7 +31,7 @@ To run start the following in separate terminals
 
 > Note: On some systems, the docker and GPU interactions interfere with UI rendering.
 > `export QT_QUICK_BACKEND=software` in terminal or use the aliased helper function
-> `qt_soft_render()` before launching the `webui_client`
+> `qt_soft_render` before launching the `webui_client`
 
 * `clear; ros2 run flexbe_input input_action_server`
   * This launches an action server that will pop up a simple UI that will allow the operator input data on request
@@ -54,6 +54,7 @@ To run start the following in separate terminals
   location and detect available objects.
 
   > Note: In `Low` autonomy, you will need to click on the outcome label when requested (that is, when the state has finished) to confirm the transition when prompted at the UI.
+  >
   > WARNING: An operator can preempt a state, so wait for the state to finish and request the outcome by highlighting the transition.
 
   Alternatively you can try :
@@ -89,6 +90,7 @@ The `pyrobosim_flexbe_states` package under `technologies/FlexBE` includes:
 * `pick_action_state.py` - Does pick action at current location
 * `place_action_state.py` - Does place action at current location
 * `plan_path_state.py` - Request plan from current location to target location
+* `run_btcpp_tree_state.py` - Run a behavior tree using custom BehaviorTree.CPP executor
 
 The above states have extra logging information that is shown in the onboard behavior terminal.  Each state transition `on_start`, `on_enter`, `on_exit`, `on_pause`, `on_resume`, and `on_stop` are logged.  This is not recommended in regular states, but is done here for educational purposes.
 
@@ -122,3 +124,15 @@ Use `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=1`
   * This pauses the `Patrol` behavior until finished charging.  On resuming, any active planning or follow states will return `failed` and restart the `Patrol` behavior.
 
 You can build on these behavior demonstrations to solve the workshop tasks.
+
+See ["Mythical HFSMBT Hybrid"](docs/hfsmbth.md) for an example demonstration of a hybrid HFSM/BT.
+
+## FlexBE Publications
+
+Please use the following publications for reference when using FlexBE and the FlexBE WebUI:
+
+* Philipp Schillinger, Stefan Kohlbrecher, and Oskar von Stryk, ["Human-Robot Collaborative High-Level Control with Application to Rescue Robotics"](http://dx.doi.org/10.1109/ICRA.2016.7487442), IEEE International Conference on Robotics and Automation (ICRA), Stockholm, Sweden, May 2016.
+
+* Joshua Zutell, David C. Conner, and Philipp Schillinger, ["ROS 2-Based Flexible Behavior Engine for Flexible Navigation"](http://dx.doi.org/10.1109/SoutheastCon48659.2022.9764047), IEEE SouthEastCon, April 2022.
+
+* Samuel Raymond, Grace Walters, Joshua Luzier, and David C. Conner, "Design and Development of the FlexBE WebUI with Introductory Tutorials", J. Comput. Sci. Coll vol.40, no.3, CCSC Eastern, to appear October 2024.

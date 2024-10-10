@@ -14,7 +14,7 @@
     </description>
     <author email="robotics@cnu.edu">David Conner</author>
     <maintainer email="robotics@cnu.edu">David Conner</maintainer>
-    <license>Apache 2</license>
+    <license>BSD-3</license>
 
     <exec_depend>rclpy</exec_depend>
     <exec_depend>flexbe_core</exec_depend>

@@ -1,0 +1,18 @@
+<root BTCPP_format="4">
+
+  <BehaviorTree ID="Problem2Tree">
+    <Sequence>
+        <Fallback>
+            <Navigate name="ToTrash" target="dumpster"/>
+            <Sequence>
+                <Navigate name="ToTrash" target="hall_dining_trash"/>
+                <Open target="hall_dining_trash"/>
+                <Navigate name="ToTrash" target="dumpster"/>
+            </Sequence>
+        </Fallback>
+        <Open target="dumpster"/>
+        <Navigate name="ToTable" target="table"/>
+    </Sequence>
+  </BehaviorTree>
+
+</root>
