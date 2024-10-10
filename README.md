@@ -73,7 +73,7 @@ docker compose run base
 Once you're in the container, check that you can launch a simulated world and the PyRoboSim UI appears on your screen.
 
 ```bash
-ros2 run delib_ws_world run
+ros2 run delib_ws_worlds run
 ```
 
 ---
