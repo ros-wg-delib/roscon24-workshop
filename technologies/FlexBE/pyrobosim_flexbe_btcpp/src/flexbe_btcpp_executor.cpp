@@ -90,7 +90,7 @@ public:
   FlexibleBTActionServer(const rclcpp::NodeOptions& options) : TreeExecutionServer(options)
   {
     // here we assume that the battery voltage is published as a std_msgs::msg::Float32
-    sub_ = node()->create_subscription<pyrobosim_msgs::msg::RobotState>(
+    robot_state_sub_ = node()->create_subscription<pyrobosim_msgs::msg::RobotState>(
         "/robot/robot_state", 10, [this](const pyrobosim_msgs::msg::RobotState::SharedPtr msg) {
           // Update the global blackboard
           globalBlackboard()->set("battery_level", msg->battery_level);
@@ -105,7 +105,7 @@ public:
   {
     RCLCPP_INFO(kLogger, "onTreeCreated ...");
     logger_cout_ = std::make_shared<BT::StdCoutLogger>(tree);
-    tic_count_ = 0;
+    tick_count_ = 0;
   }
 
   /**
@@ -120,12 +120,12 @@ public:
   std::optional<std::string> onTreeExecutionCompleted(BT::NodeStatus status,
                                                       bool was_cancelled) override
   {
-    RCLCPP_INFO(kLogger, "onTreeExecutionCompleted with status=%d (canceled=%d) after %d tics",
-                int(status), was_cancelled, tic_count_);
+    RCLCPP_INFO(kLogger, "onTreeExecutionCompleted with status=%d (canceled=%d) after %d ticks",
+                int(status), was_cancelled, tick_count_);
     logger_cout_.reset();
     std::string result =
         "pyrobosim_flexbe_btcpp tree completed with status=" + std::to_string(int(status)) +
-        " after " + std::to_string(tic_count_) + " tics";
+        " after " + std::to_string(tick_count_) + " ticks";
 
     return result;
   }
@@ -176,7 +176,7 @@ public:
   std::optional<BT::NodeStatus> onLoopAfterTick(BT::NodeStatus /*status*/)
   {
     //RCLCPP_INFO(kLogger, "pyrobosim_flexbe_btcpp - onLoopAfterTick.");
-    ++tic_count_;
+    ++tick_count_;
     return std::nullopt;
   }
 
@@ -193,8 +193,8 @@ public:
 
 private:
   std::shared_ptr<BT::StdCoutLogger> logger_cout_;
-  rclcpp::Subscription<pyrobosim_msgs::msg::RobotState>::SharedPtr sub_;
-  uint32_t tic_count_;
+  rclcpp::Subscription<pyrobosim_msgs::msg::RobotState>::SharedPtr robot_state_sub_;
+  uint32_t tick_count_;
 };
 
 int main(int argc, char* argv[])

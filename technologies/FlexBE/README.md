@@ -90,7 +90,7 @@ The `pyrobosim_flexbe_states` package under `technologies/FlexBE` includes:
 * `pick_action_state.py` - Does pick action at current location
 * `place_action_state.py` - Does place action at current location
 * `plan_path_state.py` - Request plan from current location to target location
-* `run_btcpp_tree_state.py` - Run a behavior tree using custom BehaviorTree.CPP v4 executor
+* `run_btcpp_tree_state.py` - Run a behavior tree using custom BehaviorTree.CPP executor
 
 The above states have extra logging information that is shown in the onboard behavior terminal.  Each state transition `on_start`, `on_enter`, `on_exit`, `on_pause`, `on_resume`, and `on_stop` are logged.  This is not recommended in regular states, but is done here for educational purposes.
 

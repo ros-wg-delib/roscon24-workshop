@@ -5,9 +5,5 @@ bt_action_server:
     groot2_port: 1667 # Optional (defaults to 1667)
     ros_plugins_timeout: 1000  # Optional (defaults 1000 ms)
 
-#    plugins:
-#      - behaviortree_cpp/bt_plugins
-#      - btcpp_ros2_samples/bt_plugins
-
     behavior_trees:
       - pyrobosim_flexbe_btcpp/trees
