@@ -31,7 +31,7 @@ To run start the following in separate terminals
 
 > Note: On some systems, the docker and GPU interactions interfere with UI rendering.
 > `export QT_QUICK_BACKEND=software` in terminal or use the aliased helper function
-> `qt_soft_render()` before launching the `webui_client`
+> `qt_soft_render` before launching the `webui_client`
 
 * `clear; ros2 run flexbe_input input_action_server`
   * This launches an action server that will pop up a simple UI that will allow the operator input data on request
