@@ -49,3 +49,9 @@ services:
       # Allows graphical programs in the container
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       - ${XAUTHORITY:-$HOME/.Xauthority}:/root/.Xauthority
+
+  # Runs tests
+  # TODO: We want to test on workshop problems, but PyRoboSim tests will do for now.
+  test:
+    extends: base
+    command: bash -c "source install/setup.bash && python3 -m pytest /delib_ws/src/dependencies/pyrobosim/pyrobosim/test/core"
