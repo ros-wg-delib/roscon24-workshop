@@ -42,6 +42,7 @@ jobs:
           docker exec roscon24-workshop-base-1 diff -r \
             src/dependencies/convince/AS2FM/test/jani_generator/_test_data/ros_example_w_bt/ \
             src/technologies/convince/task_2_solution/
+          docker exec bash -c "source /delib_ws/install/setup.bash && pytest /delib_ws/src/dependencies/convince/AS2FM/test"
       - name: Push to gh registry with sha and branch name
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
