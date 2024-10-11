@@ -31,9 +31,8 @@ jobs:
           compose-file: ./docker-compose.yaml
           services: base
           up-flags: --build
-      # - name: Verifying the container was built
-      #   run: docker exec roscon24-workshop-base-1 colcon test
-      # TODO: We only really want to run test on our problems. I need to write some ...
+      - name: Test pyrobosim
+        run: docker exec roscon24-workshop-base-1 bash -c "source /delib_ws/install/setup.bash && pytest /delib_ws/src/dependencies/pyrobosim/pyrobosim/test/core"
       - name: Convince tests
         run: |
           docker exec roscon24-workshop-base-1 diff -r \
