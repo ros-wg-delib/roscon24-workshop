@@ -11,7 +11,6 @@ on:
 env:
   LOCAL_IMAGE: roscon_delib_ws_2024:main
   REGISTRY_IMAGE: ghcr.io/${{ github.repository_owner }}/roscon_delib_ws_2024
-
 jobs:
   build:
     name: Build and push docker
@@ -35,11 +34,13 @@ jobs:
       # - name: Verifying the container was built
       #   run: docker exec roscon24-workshop-base-1 colcon test
       # TODO: We only really want to run test on our problems. I need to write some ...
-      - name: Push to gh registry with sha
+      - name: Push to gh registry with sha and branch name
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
           docker tag ${{ env.LOCAL_IMAGE }} ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
           docker push ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
+          docker tag ${{ env.LOCAL_IMAGE }} ${{ env.REGISTRY_IMAGE }}:${{ github.ref }}
+          docker push ${{ env.REGISTRY_IMAGE }}:${{ github.ref }}
       - name: Push to gh registry with latest if this is main
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
