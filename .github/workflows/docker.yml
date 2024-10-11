@@ -31,6 +31,7 @@ jobs:
           compose-file: ./docker-compose.yaml
           services: base
           up-flags: --build
+          cwd: /roscon24-workshop
       # - name: Verifying the container was built
       #   run: docker exec roscon24-workshop-base-1 colcon test
       - name: Test pyrobosim
