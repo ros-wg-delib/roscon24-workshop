@@ -23,21 +23,21 @@ alias delib_ws='cd $ROS_WS'
 function delib_build() {
         cwd=$(pwd)
         delib_ws
-        colcon build --symlink-install --continue-on-error --packages-ignore skiros2_task
+        colcon build --symlink-install --continue-on-error
         cd $cwd
 }
 
 function delib_build_packages() {
         cwd=$(pwd)
         delib_ws
-        colcon build --symlink-install --continue-on-error --packages-ignore skiros2_task --packages-select "$@"
+        colcon build --symlink-install --continue-on-error --packages-select "$@"
         cd $cwd
 }
 
 function delib_build_packages_up_to() {
         cwd=$(pwd)
         delib_ws
-        colcon build --symlink-install --continue-on-error --packages-ignore skiros2_task --packages-up-to "$@"
+        colcon build --symlink-install --continue-on-error --packages-up-to "$@"
         cd $cwd
 }
 
