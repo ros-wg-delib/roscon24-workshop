@@ -34,6 +34,11 @@ jobs:
       # - name: Verifying the container was built
       #   run: docker exec roscon24-workshop-base-1 colcon test
       # TODO: We only really want to run test on our problems. I need to write some ...
+      - name: Verify convince problems are the same as in our tests
+        run: |
+          docker exec roscon24-workshop-base-1 diff -r \
+            src/dependencies/convince/AS2FM/test/jani_generator/_test_data/ros_example_w_bt/ \
+            src/technologies/convince/task_2_solution/
       - name: Push to gh registry with sha and branch name
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
