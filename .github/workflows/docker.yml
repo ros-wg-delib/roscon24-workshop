@@ -37,6 +37,9 @@ jobs:
       - name: Verify convince problems are the same as in our tests
         run: |
           docker exec roscon24-workshop-base-1 diff -r \
+            src/dependencies/convince/AS2FM/test/jani_generator/_test_data/ros_example/ \
+            src/technologies/convince/task_1_solution/
+          docker exec roscon24-workshop-base-1 diff -r \
             src/dependencies/convince/AS2FM/test/jani_generator/_test_data/ros_example_w_bt/ \
             src/technologies/convince/task_2_solution/
       - name: Push to gh registry with sha and branch name
