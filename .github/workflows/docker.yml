@@ -28,9 +28,9 @@ jobs:
       - name: Build Docker image
         run: |
           docker compose build
-      - name: Run tests
+      - name: Build ROS workspace and run tests
         run: |
-          docker compose up test
+          docker compose run build_and_test
       - name: Push to gh registry with sha and branch name
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
