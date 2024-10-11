@@ -13,7 +13,7 @@
                         "right": {
                             "left": {
                                 "op": "≤",
-                                "left": "topic_level_msg.data",
+                                "left": "topic_level_msg.ros_fields__data",
                                 "right": 0
                             },
                             "op": "∧",
@@ -39,7 +39,7 @@
                         "right": {
                             "left": {
                                 "op": "<",
-                                "left": "topic_level_msg.data",
+                                "left": "topic_level_msg.ros_fields__data",
                                 "right": 20
                             },
                             "op": "∧",
@@ -64,7 +64,7 @@
                         "op": "U",
                         "right": {
                             "op": "∧",
-                            "left": "topic_alarm_msg.data",
+                            "left": "topic_alarm_msg.ros_fields__data",
                             "right": "topic_charge_msg.valid"
                         }
                     }
@@ -90,7 +90,7 @@
                         "right": {
                             "left": {
                                 "op": "=",
-                                "left": "topic_level_msg.data",
+                                "left": "topic_level_msg.ros_fields__data",
                                 "right": 100
                             },
                             "op": "∧",
