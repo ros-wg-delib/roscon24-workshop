@@ -79,9 +79,9 @@ int main(int argc, char** argv)
   factory.registerNodeType<BT::PickObject>("PickObject", params);
   factory.registerNodeType<BT::PlaceObject>("PlaceObject", params);
 
-  // TO_WORKSHOP_USER: add here more rgistration, if you decided to implement your own nodes
+  // TO_WORKSHOP_USER: register here more Nodes, if you decided to implement your own
 
-  // optionally we can display and save the model of the tree
+  // Optionally, we can save the model of the Nodes registered in the factory
   if(save_model)
   {
     std::string xml_models = BT::writeTreeNodesModelXML(factory);
@@ -113,7 +113,7 @@ int main(int argc, char** argv)
   bool state_received = false;
 
   // create a subscriber to /robot/robot_state to update the blackboard
-  auto robot_state_subscriber_ = nh->create_subscription<pyrobosim_msgs::msg::RobotState>(
+  auto robot_state_subscriber = nh->create_subscription<pyrobosim_msgs::msg::RobotState>(
       "/robot/robot_state", 10,
       [global_blackboard, &state_received](const pyrobosim_msgs::msg::RobotState::SharedPtr msg) {
         global_blackboard->set("battery_level", msg->battery_level);
@@ -123,7 +123,7 @@ int main(int argc, char** argv)
         state_received = true;
       });
 
-  // wait for the first message to be received
+  // wait for the first message to be received by robot_state_subscriber
   while(!state_received)
   {
     executor.spin_once(std::chrono::milliseconds(10));
@@ -131,10 +131,11 @@ int main(int argc, char** argv)
 
   // This is the "main loop". Execution is completed once the tick() method returns SUCCESS of FAILURE
   BT::NodeStatus status = BT::NodeStatus::RUNNING;
-  while(status == BT::NodeStatus::RUNNING)
+  while(rclcpp::ok() && status == BT::NodeStatus::RUNNING)
   {
     // tick once the tree
     status = tree.tickOnce();
+    // Spin to update robot_state_subscriber
     executor.spin_once(std::chrono::milliseconds(1));
   }
 
