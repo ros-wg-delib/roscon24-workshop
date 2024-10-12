@@ -7,19 +7,22 @@ source /opt/ros/jazzy/setup.bash
 export PYTHONWARNINGS="ignore:setup.py install is deprecated,ignore:easy_install command is deprecated"
 
 export ROS_WS=/delib_ws
-export WORKSPACE_ROOT=$ROS_WS	# For FlexBE compatibility
-
-function print_ros_variables () {
-        echo -e "ROS Distro: \t" $ROS_DISTRO
-        echo -e "ROS Domain ID: \t" $ROS_DOMAIN_ID
-        echo -e "ROS Workspace: \t" $ROS_WS
-}
-print_ros_variables
+export WORKSPACE_ROOT=${ROS_WS}	# For FlexBE compatibility
 
 # Convenience functions
-alias delib_src='cd $ROS_WS/src'
-alias delib_ws='cd $ROS_WS'
-# TODO(matthias-mayr): This ignored package is still being ported.
+function delib_ws() {
+        cd ${ROS_WS}
+}
+function delib_src() {
+        cd ${ROS_WS}/src
+}
+
+function print_ros_variables () {
+        echo -e "ROS Distro: \t" ${ROS_DISTRO}
+        echo -e "ROS Domain ID: \t" ${ROS_DOMAIN_ID}
+        echo -e "ROS Workspace: \t" ${ROS_WS}
+}
+
 function delib_build() {
         cwd=$(pwd)
         delib_ws
@@ -63,11 +66,11 @@ function qt_soft_render() {
 }
 
 # Automatic build when entering the container
-if [ ! -f $ROS_WS/install/setup.bash ]
+if [ ! -f ${ROS_WS}/install/setup.bash ]
 then
   delib_build
 fi
-source $ROS_WS/install/setup.bash
+source ${ROS_WS}/install/setup.bash
 
 # Execute the command passed into this entrypoint.
 exec "$@"

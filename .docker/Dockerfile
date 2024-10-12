@@ -55,4 +55,6 @@ ENV NO_AT_BRIDGE 1
 # Set up the entrypoint.
 CMD /bin/bash
 COPY .docker/entrypoint.sh /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
 RUN echo "source /entrypoint.sh" >> ~/.bashrc
+RUN echo "print_ros_variables" >> ~/.bashrc

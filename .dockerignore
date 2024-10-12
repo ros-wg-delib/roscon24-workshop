@@ -1,9 +1,13 @@
 .colcon/
 .github/
+media/
 
 .gitignore
 .gitmodules
+.markdownlint-cli2.yaml
+.markdownlint.yaml
 .pre-commit-config.yaml
+clean_build.sh
 
 docker-compose.yaml
 LICENSE
