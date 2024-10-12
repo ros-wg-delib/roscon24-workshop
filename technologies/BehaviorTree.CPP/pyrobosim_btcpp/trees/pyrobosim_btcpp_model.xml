@@ -1,0 +1,40 @@
+<root BTCPP_format="4">
+    <TreeNodesModel>
+        <Action ID="Close">
+            <input_port name="target" type="std::string"/>
+            <input_port name="robotID" type="std::string" default="robot">Robot name</input_port>
+            <input_port name="action_name" type="std::string" default="execute_action">Action server name</input_port>
+        </Action>
+        <Action ID="DetectObject">
+            <input_port name="robotID" type="std::string" default="robot">Robot name</input_port>
+            <input_port name="object" type="std::string"/>
+            <input_port name="action_name" type="std::string" default="execute_action">Action server name</input_port>
+        </Action>
+        <Condition ID="IsBatteryFull">
+            <input_port name="full_threshold" type="double" default="90.000000">Return SUCCESS if {@battery_level} above this value</input_port>
+        </Condition>
+        <Condition ID="IsBatteryLow">
+            <input_port name="low_threshold" type="double" default="20.000000">Return SUCCESS if {@battery_level} below this value</input_port>
+        </Condition>
+        <Action ID="Navigate">
+            <input_port name="target" type="std::string"/>
+            <input_port name="robotID" type="std::string" default="robot">Robot name</input_port>
+            <input_port name="action_name" type="std::string" default="execute_action">Action server name</input_port>
+        </Action>
+        <Action ID="Open">
+            <input_port name="target" type="std::string"/>
+            <input_port name="robotID" type="std::string" default="robot">Robot name</input_port>
+            <input_port name="action_name" type="std::string" default="execute_action">Action server name</input_port>
+        </Action>
+        <Action ID="PickObject">
+            <input_port name="robotID" type="std::string" default="robot">Robot name</input_port>
+            <input_port name="object" type="std::string"/>
+            <input_port name="action_name" type="std::string" default="execute_action">Action server name</input_port>
+        </Action>
+        <Action ID="PlaceObject">
+            <input_port name="robotID" type="std::string" default="robot">Robot name</input_port>
+            <input_port name="object" type="std::string"/>
+            <input_port name="action_name" type="std::string" default="execute_action">Action server name</input_port>
+        </Action>
+    </TreeNodesModel>
+</root>
