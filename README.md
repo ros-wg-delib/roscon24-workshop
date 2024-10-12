@@ -102,3 +102,25 @@ It will ask you for your `sudo` password.
 ```bash
 ./clean_build.sh
 ```
+
+### Attach to the container from multiple consoles
+
+You can attach to the running container with the command `docker attach`:
+
+```bash
+docker attach <name of the container>
+```
+
+The name of the container will start with `roscon24-workshop-base-run-`.
+
+You can use auto-complete (tab) when attaching, or find the exact name using the command `docker ps`.
+
+### Develop inside the container using VSCode
+
+If you want to develop inside the container usinf VSCode, you need yo have the [Docker extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) installed.
+
+Attach to the container as shown in the image below:
+
+![vscode_attach.png](vscode_attach.png)
+
+Once iside the container, open the folder `/delib_ws`.
