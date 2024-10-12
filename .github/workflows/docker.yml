@@ -61,3 +61,4 @@ jobs:
           allowUpdates: true
           name: ${{ env.TAG_NAME }}
           tag: ${{ env.TAG_NAME }}
+          makeLatest: ${{ github.ref == 'refs/heads/main' }}
