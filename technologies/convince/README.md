@@ -3,7 +3,7 @@
 This is an introduction to the tool [AS2FM (Autonomous Systems to Formal Models)](https://convince-project.github.io/AS2FM/index.html) that is part of the [CONVINCE toolchain](https://convince-project.github.io/overview/).
 While there is also a [full documentation](https://convince-project.github.io/AS2FM/index.html), this is a short introductory example.
 
-## Task 1: A basic example
+## Task 1: A battery that is drained but has an alarm
 
 ### Introduction
 
@@ -232,3 +232,5 @@ This means that the alarm is now always on when the battery level is below or eq
 
 You have now successfully modeled a simple system with AS2FM and checked some properties with the model checker.
 You have also learned that the modeling of distributed systems can lead to unexpected behavior and how to fix it.
+
+## Task 2: Charging the battery using a behavior tree

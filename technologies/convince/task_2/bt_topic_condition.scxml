@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml
+    initial="initial"
+    version="1.0"
+    name="TopicCondition"
+    model_src=""
+    xmlns="http://www.w3.org/2005/07/scxml">
+
+    <datamodel>
+        <data id="last_msg" expr="false" type="bool" />
+    </datamodel>
+
+    <ros_topic_subscriber topic="alarm" type="std_msgs/Bool" />
+
+    <!-- Assumption: We get an event when the node is ticked by the BT, named "bt_tick". -->
+    <!-- Assumption: We have to send an event to the BT, that is either "bt_success" or "bt_failure". -->
+
+    <state id="initial">
+        <ros_topic_callback name="alarm" target="initial">
+            <assign location="last_msg" expr="_msg.data" />
+        </ros_topic_callback>
+        <transition event="bt_tick" target="initial">
+            <if cond="last_msg">
+                <send event="bt_success" />
+                <else />
+                <send event="bt_failure" />
+            </if>
+        </transition>
+    </state>
+
+</scxml>

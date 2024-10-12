@@ -1,0 +1,20 @@
+<convince_mc_tc>
+    <mc_parameters>
+        <max_time value="100" unit="s" />
+    </mc_parameters>
+
+    <behavior_tree>
+        <input type="bt.cpp-xml" src="./bt.xml" />
+        <input type="bt-plugin-ros-scxml" src="./bt_topic_condition.scxml" />
+        <input type="bt-plugin-ros-scxml" src="./bt_topic_action.scxml" />
+    </behavior_tree>
+
+    <node_models>
+        <input type="ros-scxml" src="./battery_drainer.scxml" />
+        <input type="ros-scxml" src="./battery_manager.scxml" />
+    </node_models>
+
+    <properties>
+        <input type="jani" src="./battery_properties.jani" />
+    </properties>
+</convince_mc_tc>
