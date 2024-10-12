@@ -70,10 +70,18 @@ Note that this will pull the Docker image and may take a few minutes.
 docker compose run base
 ```
 
+This will start the container and drop you into a bash shell.
+
 Once you're in the container, check that you can launch a simulated world and the PyRoboSim UI appears on your screen.
 
 ```bash
 ros2 run delib_ws_worlds run
+```
+
+You can attach to the running container from a different console, using the command:
+
+```bash
+docker compose run base bash
 ```
 
 ---
@@ -102,18 +110,6 @@ It will ask you for your `sudo` password.
 ```bash
 ./clean_build.sh
 ```
-
-### Attach to the container from multiple consoles
-
-You can attach to the running container with the command `docker attach`:
-
-```bash
-docker attach <name of the container>
-```
-
-The name of the container will start with `roscon24-workshop-base-run-`.
-
-You can use auto-complete (tab) when attaching, or find the exact name using the command `docker ps`.
 
 ### Develop inside the container using VSCode
 
