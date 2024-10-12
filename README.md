@@ -117,10 +117,10 @@ You can use auto-complete (tab) when attaching, or find the exact name using the
 
 ### Develop inside the container using VSCode
 
-If you want to develop inside the container usinf VSCode, you need yo have the [Docker extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) installed.
+If you want to develop inside the container using VSCode, you need yo have the [Docker extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) installed.
 
 Attach to the container as shown in the image below:
 
 ![vscode_attach.png](vscode_attach.png)
 
-Once iside the container, open the folder `/delib_ws`.
+Once inside the container, open the folder `/delib_ws/src`.

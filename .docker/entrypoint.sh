@@ -23,7 +23,7 @@ alias delib_ws='cd $ROS_WS'
 function delib_build() {
         cwd=$(pwd)
         delib_ws
-        colcon build --symlink-install --continue-on-error
+        colcon build --symlink-install --continue-on-error --mixin compile-commands
         cd $cwd
 }
 
