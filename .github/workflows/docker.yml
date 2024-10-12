@@ -60,3 +60,4 @@ jobs:
           commit: ${{ github.sha }}
           allowUpdates: true
           name: ${{ env.TAG_NAME }}
+          tag: ${{ env.TAG_NAME }}
