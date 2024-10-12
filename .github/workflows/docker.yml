@@ -25,23 +25,21 @@ jobs:
         run: |
           docker pull ${{ env.REGISTRY_IMAGE }}:latest
         continue-on-error: true
-      - name: Build and start docker
-        uses: hoverkraft-tech/compose-action@v2.0.1
-        with:
-          compose-file: ./docker-compose.yaml
-          services: base
-          up-flags: --build
-      - name: Test pyrobosim
-        run: docker exec roscon24-workshop-base-1 bash -c "source /delib_ws/install/setup.bash && pytest /delib_ws/src/dependencies/pyrobosim/pyrobosim/test/core"
+      - name: Build Docker image
+        run: |
+          docker compose build
+      - name: Build ROS workspace and run tests
+        run: |
+          docker compose run build_and_test
       - name: Convince tests
         run: |
-          docker exec roscon24-workshop-base-1 diff -r \
+          docker compose run build_and_test diff -r \
             src/dependencies/convince/AS2FM/test/jani_generator/_test_data/ros_example/ \
             src/technologies/convince/task_1_solution/
-          docker exec roscon24-workshop-base-1 diff -r \
+          docker compose run build_and_test diff -r \
             src/dependencies/convince/AS2FM/test/jani_generator/_test_data/ros_example_w_bt/ \
             src/technologies/convince/task_2_solution/
-          docker exec roscon24-workshop-base-1 bash -c "source /delib_ws/install/setup.bash && pytest /delib_ws/src/dependencies/convince/AS2FM/test"
+          docker compose run build_and_test bash -c "source /delib_ws/install/setup.bash && pytest /delib_ws/src/dependencies/convince/AS2FM/test"
       - name: Push to gh registry with sha and branch name
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
