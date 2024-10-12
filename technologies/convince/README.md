@@ -5,11 +5,11 @@ While there is also a [full documentation](https://convince-project.github.io/AS
 
 ## Task 1: A battery that is drained but has an alarm
 
-### Introduction
+### Introduction 1
 
 This is a simple example consisting of a battery that is drained at a fixed rate and the logic to charge it when it is low.
 
-### System description
+### System description 1
 
 The folder `technologies/convince/task_1` contains all the necessary files for this example. In the folder you will find the following files:
 
@@ -228,9 +228,89 @@ Result: 1
 
 This means that the alarm is now always on when the battery level is below or equal to 29.
 
-### Conclusion
+### Conclusion 1
 
 You have now successfully modeled a simple system with AS2FM and checked some properties with the model checker.
 You have also learned that the modeling of distributed systems can lead to unexpected behavior and how to fix it.
 
 ## Task 2: Charging the battery using a behavior tree
+
+### Introduction 2
+
+In this task we keep the battery that is drained and the manager that evaluates the battery level.
+But we add a feature to the drainer that can charge the battery.
+The charging is controlled by a behavior tree.
+
+### System description 2
+
+- `main.xml` - The main file again referencing the other files and defining some global parameters.
+- __`battery_drainer.scxml`__ - The state machine that models the battery which is drained *and can be charged*.
+- __`battery_manager.scxml`__ - Model of the manager that will evaluate the battery level.
+- __`bt.xml`__ - The behavior tree that implements the charging logic.
+- __`bt_topic_action.scxml`__ - The model of the action plugin that allows the behavior tree to trigger ROS actions.
+- __`bt_topic_condition.scxml`__ - The model of the condition plugin that allows the behavior tree to check ROS topics.
+- __`battery_properties.jani`__ - The file defining the properties to be checked by the model checker:
+  - `battery_depleted` - The battery is eventually depleted.
+  - `battery_below_20` - The battery is eventually below 20%.
+  - `battery_alarm_on` - The alarm is eventually on.
+  - `battery_charged` - The battery will always eventually be at 100% again.
+
+You will notice that there are some additional scxml files.
+These implement the plugins that are used in the behavior tree.
+They must communicate with the battery drainer and manager.
+
+### Task 2.1: Running the example
+
+Let's first run the existing example and see if the properties evaluate as expected.
+
+```bash
+cd $ROS_WS/src/technologies/convince/task_2
+as2fm_scxml_to_jani main.xml
+smc_storm --model main.jani --properties-names battery_depleted
+```
+
+This should output:
+
+```txt
+CONVINCE Statistical Model Checker
+Checking model: main.jani
+Property "battery_depleted": Pmin=? [F ((topic_level_msg.ros_fields__data <= 0) & topic_level_msg.valid)];
+Result: 1
+```
+
+This means that the battery will eventually be depleted.
+So we should enable the charging.
+
+### Task 2.2: Enabling the charging
+
+Currently, the battery is not charging, because the condition node that evaluates the alarm is not evaluated correctly.
+If you inspect the `bt_topic_condition.scxml` file, you will see in line 23 that the condition is always false (i.e. we always send the `bt_failure` event).
+But there is a variable in the state machine, called `last_msg`, that holds the last received message.
+So we can replace line 23 by this:
+
+```xml
+<if cond="last_msg">
+    <send event="bt_success" />
+    <else />
+    <send event="bt_failure" />
+</if>
+```
+
+This will send the `bt_success` event if the last message `true` and the `bt_failure` event otherwise.
+
+Now run `as2fm_scxml_to_jani main.xml` and `smc_storm --model main.jani --properties-names battery_charged` again.
+The output should now be:
+
+```txt
+CONVINCE Statistical Model Checker
+Checking model: main.jani
+Property "battery_charged": Pmin=? [true Usteps>=100 ((topic_level_msg.ros_fields__data = 100) & topic_level_msg.valid)];
+Result: 1
+```
+
+This means that the battery will always eventually be at 100% again.
+
+### Conclusion 2
+
+You have now successfully modeled a system that uses a behavior tree to control the charging of a battery.
+This required you to implement a condition node plugin that evaluates the alarm correctly.
