@@ -7,7 +7,7 @@ source /opt/ros/jazzy/setup.bash
 export PYTHONWARNINGS="ignore:setup.py install is deprecated,ignore:easy_install command is deprecated"
 
 export ROS_WS=/delib_ws
-export WORKSPACE_ROOT=${ROS_WS}	# For FlexBE compatibility
+export WORKSPACE_ROOT=${ROS_WS}	 # For FlexBE compatibility
 
 # Convenience functions
 function delib_ws() {
@@ -27,21 +27,21 @@ function delib_build() {
         cwd=$(pwd)
         delib_ws
         colcon build --symlink-install --continue-on-error
-        cd $cwd
+        cd ${cwd}
 }
 
 function delib_build_packages() {
         cwd=$(pwd)
         delib_ws
         colcon build --symlink-install --continue-on-error --packages-select "$@"
-        cd $cwd
+        cd ${cwd}
 }
 
 function delib_build_packages_up_to() {
         cwd=$(pwd)
         delib_ws
         colcon build --symlink-install --continue-on-error --packages-up-to "$@"
-        cd $cwd
+        cd ${cwd}
 }
 
 function delib_clean () {
@@ -55,14 +55,14 @@ function delib_clean () {
         rm -r build/*
         rm -r install/*
         rm -r log/*
-        cd $cwd
+        cd ${cwd}
 }
 
 # Use this to switch to software rendering to avoid
 # conflicts with GPU and docker
 function qt_soft_render() {
         export QT_QUICK_BACKEND=software
-        echo "Using $QT_QUICK_BACKEND for QT rendering"
+        echo "Using ${QT_QUICK_BACKEND} for QT rendering"
 }
 
 # Automatic build when entering the container
