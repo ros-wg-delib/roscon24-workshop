@@ -121,7 +121,7 @@ In lines 22 to 24, you can see:
 </ros_rate_callback>
 ```
 
-This gets is a transitions that gets triggered every time the timer `my_timer` fires.
+This is a transition that gets triggered whenever the timer `my_timer` fires.
 Because it's target is `use_battery`, the state will not change.
 But as you can see, the battery level is decreased by 1 every time the timer fires.
 We need to make sure that the transition is not taken when the battery level is already 0.
