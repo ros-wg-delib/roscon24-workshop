@@ -9,9 +9,8 @@ on:
     - cron: "0 20 * * 0"
 
 env:
-  LOCAL_IMAGE: roscon_delib_ws_2024:main
   REGISTRY_IMAGE: ghcr.io/${{ github.repository_owner }}/roscon_delib_ws_2024
-
+  RAW_BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 jobs:
   build:
     name: Build and push docker
@@ -25,25 +24,27 @@ jobs:
       - name: Pull image for caching
         run: |
           docker pull ${{ env.REGISTRY_IMAGE }}:latest
-          docker tag ${{ env.REGISTRY_IMAGE }}:latest ${{ env.LOCAL_IMAGE }}
         continue-on-error: true
-      - name: Build and start docker
-        uses: hoverkraft-tech/compose-action@v2.0.1
-        with:
-          compose-file: ./docker-compose.yaml
-          services: base
-      # - name: Verifying the container was built
-      #   run: docker exec roscon24-workshop-base-1 colcon test
-      # TODO: We only really want to run test on our problems. I need to write some ...
-      - name: Push to gh registry with sha
+      - name: Build Docker image
+        run: |
+          docker compose build
+      - name: Build ROS workspace and run tests
+        run: |
+          docker compose run build_and_test
+      - name: Push to gh registry with sha and branch name
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
-          docker tag ${{ env.LOCAL_IMAGE }} ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
+          # tag with sha and push
+          docker tag ${{ env.REGISTRY_IMAGE }}:latest ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
           docker push ${{ env.REGISTRY_IMAGE }}:${{ github.sha }}
+          # tag with branch name and push
+          export BRANCH_NAME=$(echo ${{ env.RAW_BRANCH_NAME }} | sed 's/\//-/g')
+          docker tag ${{ env.REGISTRY_IMAGE }}:latest ${{ env.REGISTRY_IMAGE }}:$BRANCH_NAME
+          docker push ${{ env.REGISTRY_IMAGE }}:$BRANCH_NAME
       - name: Push to gh registry with latest if this is main
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
-          docker tag ${{ env.LOCAL_IMAGE }} ${{ env.REGISTRY_IMAGE }}:latest
+          # only from main we actually push to latest
           docker push ${{ env.REGISTRY_IMAGE }}:latest
         if: github.ref == 'refs/heads/main'
       # TODO: Also upload tarball to release in case we need it for the thumbdrive-option at the workshop

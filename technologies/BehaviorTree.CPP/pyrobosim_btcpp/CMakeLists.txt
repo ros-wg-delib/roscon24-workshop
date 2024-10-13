@@ -41,7 +41,10 @@ install(
   DESTINATION lib/${PROJECT_NAME}
 )
 
-install(DIRECTORY include/  DESTINATION include/)
+install(
+  DIRECTORY include/
+  DESTINATION include/
+)
 
 ament_export_dependencies(${THIS_PACKAGE_DEPS})
 ament_export_include_directories(include)
