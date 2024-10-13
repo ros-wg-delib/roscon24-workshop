@@ -55,8 +55,7 @@ Property "battery_depleted": Pmin=? [F ((topic_level_msg.ros_fields__data <= 0) 
 Result: 1
 ```
 
-Which means that the property holds with a probability of `1`.
-This is exactly what we expected.
+This means that the property holds with a probability of `1`, which is exactly what we expected.
 
 Lets's look at the property we get as an output in some more detail:
 
