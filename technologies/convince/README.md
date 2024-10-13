@@ -107,8 +107,7 @@ Property "alarm_on": Pmin=? [(!(topic_level_msg.valid) | (topic_level_msg.ros_fi
 Result: 0
 ```
 
-This means that the property does not hold.
-This means our alarm also does not work as expected.
+This means that the property does not hold, and therefore our alarm does not work as expected.
 
 ### Task 1.3: Make sure that the battery can't drain below 0
 
