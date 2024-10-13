@@ -105,7 +105,7 @@ int main(int argc, char** argv)
   BT::StdCoutLogger console_logger(tree);
   console_logger.enableTransitionToIdle(false);
 
-  BT::Groot2Publisher groot2_publisher(tree);
+  BT::Groot2Publisher groot2_publisher(tree, 5555);
 
   rclcpp::executors::SingleThreadedExecutor executor;
   executor.add_node(nh);
