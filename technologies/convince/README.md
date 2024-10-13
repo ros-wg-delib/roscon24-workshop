@@ -126,10 +126,9 @@ Because its target is `use_battery`, the state will not change.
 But as you can see, the battery level is decreased by 1 every time the timer fires.
 We need to make sure that the transition is not taken when the battery level is already 0.
 
-To do this, we can add a condition to the transition:
+- To do this, we can add a condition to the transition:
 Add the attribute `cond="battery_percent > 0"` to the `<ros_rate_callback>` tag.
-
-Now run `as2fm_scxml_to_jani main.xml` and `smc_storm --model main.jani --properties-names battery_over_depleted` again.
+- Now run `as2fm_scxml_to_jani main.xml` and `smc_storm --model main.jani --properties-names battery_over_depleted` again.
 
 The output should now be:
 
@@ -170,9 +169,10 @@ But it assigns the value of `false` to the variable `battery_alarm`.
 This is not what we want.
 We want to set the alarm to `true` when the battery level is below 30.
 So please change the `expr` attribute to `_msg.data &lt; 30`.
-Note that we need to use `&lt;` instead of `<` because of XML syntax.
-Note also that `_msg` is a variable that is automatically created to hold the content of the received ROS message.
-And the field `data` is the field of the `std_msgs/Int32` message that we are sending.
+
+- Note that we need to use `&lt;` instead of `<` because of XML syntax.
+- Note also that `_msg` is a variable that is automatically created to hold the content of the received ROS message.
+- And the field `data` is the field of the `std_msgs/Int32` message that we are sending.
 
 Now run `as2fm_scxml_to_jani main.xml` and `smc_storm --model main.jani --properties-names alarm_on` again.
 
