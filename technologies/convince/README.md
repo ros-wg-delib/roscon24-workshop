@@ -68,7 +68,7 @@ Here
 - `Pmin=?` means that we are looking for the minimum probability that the property holds.
 - `F` is the temporal operator "finally" in [Linear Temporal Logic (LTL)](https://en.wikipedia.org/wiki/Linear_temporal_logic) , which says the property holds at some point in the future.
 - `((topic_level_msg.ros_fields__data <= 0) & topic_level_msg.valid)` is the logical expression that we are looking for:
-  - `topic_level_msg.ros_fields__data <= 0` means that the battery level is less than or equal to 0. Note that this refers to the ROS topic `level` and it's field `data`.
+  - `topic_level_msg.ros_fields__data <= 0` means that the battery level is less than or equal to 0. Note that this refers to the ROS topic `level` and its field `data`.
   - `topic_level_msg.valid` is something we add to the model to make sure the data has been sent at least once, otherwise we may check against uninitialized data.
 
 ### Task 1.2: Checking other properties
