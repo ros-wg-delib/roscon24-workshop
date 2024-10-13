@@ -294,7 +294,7 @@ So we can replace line 23 by this:
 </if>
 ```
 
-This will send the `bt_success` event if the last message `true` and the `bt_failure` event otherwise.
+This will send the `bt_success` event if the last message was `true`, and the `bt_failure` event otherwise.
 
 Now run `as2fm_scxml_to_jani main.xml` and `smc_storm --model main.jani --properties-names battery_charged` again.
 The output should now be:
