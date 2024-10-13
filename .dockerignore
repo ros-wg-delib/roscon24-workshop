@@ -7,7 +7,7 @@ media/
 .markdownlint-cli2.yaml
 .markdownlint.yaml
 .pre-commit-config.yaml
-clean_build.sh
+clean_environment.sh
 
 docker-compose.yaml
 LICENSE

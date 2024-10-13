@@ -96,9 +96,9 @@ When you are ready to shut down the container, enter the following command:
 docker compose down --remove-orphans
 ```
 
-**NOTE:** If you want to clean up any colcon build artifacts mounted to your host system (in the `.colcon` folder of this repo), you can run the following command.
+**NOTE:** If you want to clean up any containers and colcon build artifacts mounted to your host system (in the `.colcon` folder of this repo), you can run the following command.
 It will ask you for your `sudo` password.
 
 ```bash
-./clean_build.sh
+./clean_environment.sh
 ```
