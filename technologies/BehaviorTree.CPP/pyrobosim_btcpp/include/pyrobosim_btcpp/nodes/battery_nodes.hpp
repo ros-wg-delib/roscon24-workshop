@@ -33,7 +33,7 @@ public:
     }
     if(!getInput("low_threshold", low_threshold))
     {
-      throw RuntimeError("Missing parameter [low_threshold] in IsBatteryLevelLow BT node");
+      throw RuntimeError("Missing parameter [low_threshold] in IsBatteryLow BT node");
     }
     RCLCPP_INFO(logger_, "Battery level: %.1f", battery_level);
     return (battery_level < low_threshold) ? NodeStatus::SUCCESS : NodeStatus::FAILURE;
@@ -71,7 +71,7 @@ public:
     }
     if(!getInput("full_threshold", full_threshold))
     {
-      throw RuntimeError("Missing parameter [full_threshold] in IsBatteryLevelLow BT node");
+      throw RuntimeError("Missing parameter [full_threshold] in IsBatteryFull BT node");
     }
     RCLCPP_INFO(logger_, "Battery level: %.1f", battery_level);
     return (battery_level >= full_threshold) ? NodeStatus::SUCCESS : NodeStatus::FAILURE;

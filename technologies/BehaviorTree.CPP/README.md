@@ -2,7 +2,7 @@
 
 This package provides some ready to use Nodes (i.e. "actions") to be used with **pyrobosim**.
 
-We suggest creating your XML trees in the folder `/delib_ws/src/technologies/BehaviorTree.CPP/pyrobosim_btcpp/trees`
+We suggest creating your XML trees in the folder `technologies/BehaviorTree.CPP/pyrobosim_btcpp/trees`
 
 ## How to compile
 
@@ -44,7 +44,7 @@ The argument `tree` above is the path to the XML file. The path can be either:
 
 - absolute,
 - relative to the folder where the command is executed
-- relative to the package folder, i.e. `/delib_ws/src/technologies/BehaviorTree.CPP/pyrobosim_btcpp`.
+- relative to the package folder, i.e. `technologies/BehaviorTree.CPP/pyrobosim_btcpp`.
 
 ## Action Nodes
 
@@ -71,11 +71,11 @@ Note:
 
 **Exercise**: try using the scripting language instead and the global variable `{@battery_level}` instead! See section below.
 
-## Global Balckboard Values
+## Global Blackboard Values
 
 These values of the blackboard can be accessed by any Tree / Subtree and are updated automatically and available in the **global blackboard**.
 
-For more information about how "global balckboard" works, read [this tutorial](https://www.behaviortree.dev/docs/tutorial-advanced/tutorial_16_global_blackboard).
+For more information about how "global blackboard" works, read [this tutorial](https://www.behaviortree.dev/docs/tutorial-advanced/tutorial_16_global_blackboard).
 
 | Blackboard Key          | Type   |  Description                                              |
 |-------------------------|--------|-----------------------------------------------------------|
@@ -93,7 +93,7 @@ To launch Groot2, run the command:
 ```
 
 The application should start in "Editor Mode" (icon on top-left corner).
-Click on "Load Project/File" and select `/delib_ws/src/technologies/BehaviorTree.CPP/pyrobosim_btcpp/trees/roscon2024.btproj`
+Click on "Load Project/File" and select `technologies/BehaviorTree.CPP/pyrobosim_btcpp/trees/roscon2024.btproj`
 
 After clicking on "MainTree", you should see this:
 
@@ -112,9 +112,9 @@ If you decide to use Subtrees, it is important that you read the
 1. The best way to learn the interface is by trying to double-click, right-click or drag-and-drop stuff :)
 
 2. Remember that the text in the Ports are static strings. You you want to use the **blackboard**,
- use curly braces, as explaine here. [Tutotial 2](https://www.behaviortree.dev/docs/tutorial-basics/tutorial_02_basic_ports)
+ use curly braces, as explained here. [Tutorial 2](https://www.behaviortree.dev/docs/tutorial-basics/tutorial_02_basic_ports)
 
-3. There is a button (left bar, 3rd from bottom) to change the orietantation of the tree.
+3. There is a button (left bar, 3rd from bottom) to change the orientation of the tree.
 
 4. To create a Subtree, right click on a Node and select "Create Subtree here".
 

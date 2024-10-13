@@ -96,7 +96,7 @@ int main(int argc, char** argv)
   // load a tree and execute
   factory.registerBehaviorTreeFromFile(filepath.string());
 
-  // the global blackboard patterns is explaine here:
+  // the global blackboard patterns is explained here:
   // https://www.behaviortree.dev/docs/tutorial-advanced/tutorial_16_global_blackboard
   auto global_blackboard = BT::Blackboard::create();
   BT::Tree tree = factory.createTree("MainTree", BT::Blackboard::create(global_blackboard));
@@ -113,6 +113,8 @@ int main(int argc, char** argv)
   bool state_received = false;
 
   // create a subscriber to /robot/robot_state to update the blackboard
+  // Note that the prefix/namespace used here is "/robot", for the purpose of the
+  // workshop, but this identifier may change in pyrobosim.
   auto robot_state_subscriber = nh->create_subscription<pyrobosim_msgs::msg::RobotState>(
       "/robot/robot_state", 10,
       [global_blackboard, &state_received](const pyrobosim_msgs::msg::RobotState::SharedPtr msg) {
