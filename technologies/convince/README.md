@@ -196,7 +196,7 @@ Pmin=? [(!(topic_level_msg.valid) | (topic_level_msg.ros_fields__data >= 29)) U 
 ```
 
 We now have a new [LTL](https://en.wikipedia.org/wiki/Linear_temporal_logic) operator `U` which means "until".
-So the left side in all states prior to the right side being true.
+This means that, the left side of the expression must be true in all states before the right side becomes true.
 
 - The left side is `(!(topic_level_msg.valid) | (topic_level_msg.ros_fields__data >= 29))` Checking again, that the data has been sent at least once and the battery level is above or equal to 29.
 - The right side is `(topic_alarm_msg.ros_fields__data & topic_alarm_msg.valid)` Checking that the alarm is on.
