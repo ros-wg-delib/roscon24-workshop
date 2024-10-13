@@ -57,7 +57,7 @@ Result: 1
 
 This means that the property holds with a probability of `1`, which is exactly what we expected.
 
-Lets's look at the property we get as an output in some more detail:
+Let's look at the property we get as an output in some more detail:
 
 ```txt
 Pmin=? [F ((topic_level_msg.ros_fields__data <= 0) & topic_level_msg.valid)]
