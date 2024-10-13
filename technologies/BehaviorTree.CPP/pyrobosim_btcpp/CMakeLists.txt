@@ -38,7 +38,15 @@ install(
 
 install(
   TARGETS btcpp_executor
-  DESTINATION DESTINATION lib/${PROJECT_NAME}
+  DESTINATION lib/${PROJECT_NAME}
 )
+
+install(
+  DIRECTORY include/
+  DESTINATION include/
+)
+
+ament_export_dependencies(${THIS_PACKAGE_DEPS})
+ament_export_include_directories(include)
 
 ament_package()
