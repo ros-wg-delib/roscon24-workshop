@@ -13,7 +13,7 @@
                         "right": {
                             "left": {
                                 "op": "≤",
-                                "left": "topic_level_msg.data",
+                                "left": "topic_level_msg.ros_fields__data",
                                 "right": 0
                             },
                             "op": "∧",
@@ -27,7 +27,7 @@
             }
         },
         {
-            "name": "battery_below_20",
+            "name": "battery_over_depleted",
             "expression": {
                 "op": "filter",
                 "fun": "values",
@@ -38,9 +38,9 @@
                         "op": "U",
                         "right": {
                             "left": {
-                                "op": "<",
-                                "left": "topic_level_msg.data",
-                                "right": 20
+                                "op": "≤",
+                                "left": "topic_level_msg.ros_fields__data",
+                                "right": -1
                             },
                             "op": "∧",
                             "right": "topic_level_msg.valid"
@@ -53,48 +53,30 @@
             }
         },
         {
-            "name": "battery_alarm_on",
+            "name": "alarm_on",
             "expression": {
                 "op": "filter",
                 "fun": "values",
                 "values": {
                     "op": "Pmin",
                     "exp": {
-                        "left": true,
                         "op": "U",
-                        "right": {
-                            "op": "∧",
-                            "left": "topic_alarm_msg.data",
-                            "right": "topic_charge_msg.valid"
-                        }
-                    }
-                },
-                "states": {
-                    "op": "initial"
-                }
-            }
-        },
-        {
-            "name": "battery_charged",
-            "expression": {
-                "op": "filter",
-                "fun": "values",
-                "values": {
-                    "op": "Pmin",
-                    "exp": {
-                        "step-bounds": {
-                            "lower": 100
+                        "left": {
+                            "op": "∨",
+                            "left": {
+                                "op": "¬",
+                                "exp": "topic_level_msg.valid"
+                            },
+                            "right": {
+                                "op": "≥",
+                                "left": "topic_level_msg.ros_fields__data",
+                                "right": 29
+                            }
                         },
-                        "left": true,
-                        "op": "U",
                         "right": {
-                            "left": {
-                                "op": "=",
-                                "left": "topic_level_msg.data",
-                                "right": 100
-                            },
                             "op": "∧",
-                            "right": "topic_level_msg.valid"
+                            "left": "topic_alarm_msg.ros_fields__data",
+                            "right": "topic_alarm_msg.valid"
                         }
                     }
                 },

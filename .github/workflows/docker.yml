@@ -21,16 +21,35 @@ jobs:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - name: Pull image for caching
+      - name: Pull latest image for caching
         run: |
           docker pull ${{ env.REGISTRY_IMAGE }}:latest
+        continue-on-error: true
+      - name: Also pull this branch's image for caching
+        run: |
+          export BRANCH_NAME=$(echo ${{ env.RAW_BRANCH_NAME }} | sed 's/\//-/g')
+          docker pull ${{ env.REGISTRY_IMAGE }}:$BRANCH_NAME
         continue-on-error: true
       - name: Build Docker image
         run: |
           docker compose build
-      - name: Build ROS workspace and run tests
+      - name: Build ROS workspace in container
         run: |
-          docker compose run build_and_test
+          docker compose run base bash -c "echo ROS Workspace built"
+          docker compose down --remove-orphans
+      - name: Run tests in container
+        run: |
+          docker compose up test
+      - name: Convince tests
+        run: |
+          docker compose run test diff -r \
+            src/dependencies/convince/AS2FM/test/jani_generator/_test_data/ros_example/ \
+            src/technologies/convince/task_1_solution/
+          docker compose run test diff -r \
+            src/dependencies/convince/AS2FM/test/jani_generator/_test_data/ros_example_w_bt/ \
+            src/technologies/convince/task_2_solution/
+          docker compose run test bash -c "source /delib_ws/install/setup.bash && pytest /delib_ws/src/dependencies/convince/AS2FM/test"
+          docker compose down --remove-orphans
       - name: Push to gh registry with sha and branch name
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
@@ -41,10 +60,24 @@ jobs:
           export BRANCH_NAME=$(echo ${{ env.RAW_BRANCH_NAME }} | sed 's/\//-/g')
           docker tag ${{ env.REGISTRY_IMAGE }}:latest ${{ env.REGISTRY_IMAGE }}:$BRANCH_NAME
           docker push ${{ env.REGISTRY_IMAGE }}:$BRANCH_NAME
+          echo "TAG_NAME=$BRANCH_NAME" >> $GITHUB_ENV
       - name: Push to gh registry with latest if this is main
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
           # only from main we actually push to latest
           docker push ${{ env.REGISTRY_IMAGE }}:latest
+          echo "TAG_NAME=latest" >> $GITHUB_ENV
         if: github.ref == 'refs/heads/main'
-      # TODO: Also upload tarball to release in case we need it for the thumbdrive-option at the workshop
+      - name: Upload tarball to release  # in case we need it for the thumbdrive-option at the workshop
+        run: |
+          docker save ${{ env.REGISTRY_IMAGE }}:${{ env.TAG_NAME }} | gzip > ./roscon_delib_ws_2024.tar.gz
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: './roscon_delib_ws_2024.tar.gz'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit: ${{ github.sha }}
+          allowUpdates: true
+          name: ${{ env.TAG_NAME }}
+          tag: ${{ env.TAG_NAME }}
+          makeLatest: ${{ github.ref == 'refs/heads/main' }}
