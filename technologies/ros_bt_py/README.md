@@ -87,8 +87,3 @@ The `FieldsToMessage` and `MessageToFields` nodes can be used to construct and d
 > BUG: It should also be possible to generate full ROS message types in constants, but unfortunately due to changes to ROS/Python type introspection
 > this is not possible. ROS messages need to be constructed using the `FieldsToMessage` node.
 >
-
-## ToDo's
-
-* [ ] Provide example solution trees for all problems.
-* [ ] Add convenience nodes for pyrobosim interaction.

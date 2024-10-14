@@ -48,8 +48,8 @@ class CheckIfCarriesObject(ServiceForSetType):
             if robot.name == self.inputs["robot_name"]
         ]
         if len(robot_with_matching_name) != 1:
-            self.logerr("Found more then one matching robot!")
-            raise BehaviorTreeException("Found more then one matching robot!")
+            self.logerr("Could not unambiguously find robot!")
+            raise BehaviorTreeException("Could not unambiguously find robot!")
         robot = robot_with_matching_name[0]
         return (
             robot.holding_object

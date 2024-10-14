@@ -807,4 +807,3 @@ public_node_data:
 - node_name: CloseFridge
   data_kind: outputs
   data_key: load_error_msg
-
