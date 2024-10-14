@@ -66,7 +66,7 @@ Pmin=? [F ((topic_level_msg.ros_fields__data <= 0) & topic_level_msg.valid)]
 Here
 
 - `Pmin=?` means that we are looking for the minimum probability that the property holds.
-- `F` is the temporal operator "finally" in [Linear Temporal Logic (LTL)](https://en.wikipedia.org/wiki/Linear_temporal_logic) , which says the property holds at some point in the future.
+- `F` is the temporal operator _"finally"_ in [Linear Temporal Logic (LTL)](https://en.wikipedia.org/wiki/Linear_temporal_logic) (some people also call it _"eventually"_), which says the property holds at some point in the future.
 - `((topic_level_msg.ros_fields__data <= 0) & topic_level_msg.valid)` is the logical expression that we are looking for:
   - `topic_level_msg.ros_fields__data <= 0` means that the battery level is less than or equal to 0. Note that this refers to the ROS topic `level` and its field `data`.
   - `topic_level_msg.valid` is something we add to the model to make sure the data has been sent at least once, otherwise we may check against uninitialized data.
@@ -242,7 +242,7 @@ The charging is controlled by a behavior tree.
 ### System description 2
 
 - `main.xml` - The main file again referencing the other files and defining some global parameters.
-- __`battery_drainer.scxml`__ - The state machine that models the battery which is drained *and can be charged*.
+- __`battery_drainer.scxml`__ - The state machine that models the battery which is drained _and can be charged_.
 - __`battery_manager.scxml`__ - Model of the manager that will evaluate the battery level.
 - __`bt.xml`__ - The behavior tree that implements the charging logic.
 - __`bt_topic_action.scxml`__ - The model of the action plugin that allows the behavior tree to trigger ROS actions.
