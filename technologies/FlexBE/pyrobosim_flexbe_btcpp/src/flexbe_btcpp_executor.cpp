@@ -97,11 +97,11 @@ public:
     robot_state_sub_ = node()->create_subscription<pyrobosim_msgs::msg::RobotState>(
         "/robot/robot_state", 10,
         [global_blackboard](const pyrobosim_msgs::msg::RobotState::SharedPtr msg) {
-        global_blackboard->set("battery_level", msg->battery_level);
-        global_blackboard->set("holding_object", msg->holding_object);
-        global_blackboard->set("last_visited_location", msg->last_visited_location);
-        global_blackboard->set("executing_action", msg->executing_action);
-      });
+          global_blackboard->set("battery_level", msg->battery_level);
+          global_blackboard->set("holding_object", msg->holding_object);
+          global_blackboard->set("last_visited_location", msg->last_visited_location);
+          global_blackboard->set("executing_action", msg->executing_action);
+        });
 
     // Note that the callback above and the execution of the tree accessing the
     // global blackboard happen in two different threads.
