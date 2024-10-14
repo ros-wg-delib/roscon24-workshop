@@ -3,13 +3,16 @@
 // ROS includes
 #include <rclcpp/rclcpp.hpp>
 #include <ament_index_cpp/get_package_share_directory.hpp>
+#include <pyrobosim_msgs/msg/robot_state.hpp>
 
 // BTCPP includes
 #include <behaviortree_cpp/bt_factory.h>
 #include <behaviortree_cpp/loggers/bt_cout_logger.h>
+#include <behaviortree_cpp/loggers/groot2_publisher.h>
 #include <behaviortree_cpp/xml_parsing.h>
 
 // BTCPP nodes in this package
+#include "pyrobosim_btcpp/nodes/battery_nodes.hpp"
 #include "pyrobosim_btcpp/nodes/open_node.hpp"
 #include "pyrobosim_btcpp/nodes/close_node.hpp"
 #include "pyrobosim_btcpp/nodes/detect_object_node.hpp"
@@ -43,18 +46,19 @@ int main(int argc, char** argv)
   auto nh = std::make_shared<rclcpp::Node>("btcpp_executor");
 
   nh->declare_parameter("tree", rclcpp::PARAMETER_STRING);
-  nh->declare_parameter("save-model", false);
+  nh->declare_parameter("save_model_only", false);
 
-  const std::string tree_filename = nh->get_parameter("tree").as_string();
-  const bool save_model = nh->get_parameter("save-model").as_bool();
+  std::string tree_filename;
+  nh->get_parameter("tree", tree_filename);
+  bool save_model = false;
+  nh->get_parameter("save_model_only", save_model);
 
-  if(tree_filename.empty())
+  if(tree_filename.empty() && !save_model)
   {
     RCLCPP_FATAL(nh->get_logger(), "Missing parameter 'tree' with the path to the Behavior Tree "
                                    "XML file");
     return 1;
   }
-  const std::filesystem::path filepath = GetFilePath(tree_filename);
 
   //----------------------------------
   // register all the actions in the factory
@@ -66,6 +70,8 @@ int main(int argc, char** argv)
   params.nh = nh;
   params.default_port_value = "execute_action";
 
+  factory.registerNodeType<BT::IsBatteryLow>("IsBatteryLow", nh->get_logger());
+  factory.registerNodeType<BT::IsBatteryFull>("IsBatteryFull", nh->get_logger());
   factory.registerNodeType<BT::CloseAction>("Close", params);
   factory.registerNodeType<BT::DetectObject>("DetectObject", params);
   factory.registerNodeType<BT::NavigateAction>("Navigate", params);
@@ -73,30 +79,69 @@ int main(int argc, char** argv)
   factory.registerNodeType<BT::PickObject>("PickObject", params);
   factory.registerNodeType<BT::PlaceObject>("PlaceObject", params);
 
-  // TO_WORKSHOP_USER: add here more rgistration, if you decided to implement your own nodes
+  // TO_WORKSHOP_USER: register here more Nodes, if you decided to implement your own
 
-  // optionally we can display and save the model of the tree
+  // Optionally, we can save the model of the Nodes registered in the factory
   if(save_model)
   {
     std::string xml_models = BT::writeTreeNodesModelXML(factory);
-    std::cout << "--------- Node Models ---------:\n" << xml_models << std::endl;
-    std::ofstream of("tree_nodes_model.xml");
+    std::ofstream of("pyrobosim_btcpp_model.xml");
     of << xml_models;
-    std::cout << "\nXML model of the tree saved in tree_nodes_model.xml\n" << std::endl;
+    RCLCPP_INFO(nh->get_logger(), "XML model of the tree saved in pyrobosim_btcpp_model.xml");
+    return 0;
   }
+  const std::filesystem::path filepath = GetFilePath(tree_filename);
 
   //----------------------------------
   // load a tree and execute
-  BT::Tree tree = factory.createTreeFromFile(filepath.string());
+  factory.registerBehaviorTreeFromFile(filepath.string());
+
+  // the global blackboard patterns is explained here:
+  // https://www.behaviortree.dev/docs/tutorial-advanced/tutorial_16_global_blackboard
+  auto global_blackboard = BT::Blackboard::create();
+  BT::Tree tree = factory.createTree("MainTree", BT::Blackboard::create(global_blackboard));
 
   // This will add console messages for each action and condition executed
   BT::StdCoutLogger console_logger(tree);
   console_logger.enableTransitionToIdle(false);
 
-  // This is the "main loop":xecution is completed once the tick() method returns SUCCESS of FAILURE
-  BT::NodeStatus res = tree.tickWhileRunning();
+  BT::Groot2Publisher groot2_publisher(tree, 5555);
 
-  std::cout << "Execution completed. Result: " << BT::toStr(res) << std::endl;
+  rclcpp::executors::SingleThreadedExecutor executor;
+  executor.add_node(nh);
+
+  bool state_received = false;
+
+  // create a subscriber to /robot/robot_state to update the blackboard
+  // Note that the prefix/namespace used here is "/robot", for the purpose of the
+  // workshop, but this identifier may change in pyrobosim.
+  auto robot_state_subscriber = nh->create_subscription<pyrobosim_msgs::msg::RobotState>(
+      "/robot/robot_state", 10,
+      [global_blackboard, &state_received](const pyrobosim_msgs::msg::RobotState::SharedPtr msg) {
+        global_blackboard->set("battery_level", msg->battery_level);
+        global_blackboard->set("holding_object", msg->holding_object);
+        global_blackboard->set("last_visited_location", msg->last_visited_location);
+        global_blackboard->set("executing_action", msg->executing_action);
+        state_received = true;
+      });
+
+  // wait for the first message to be received by robot_state_subscriber
+  while(!state_received)
+  {
+    executor.spin_once(std::chrono::milliseconds(10));
+  }
+
+  // This is the "main loop". Execution is completed once the tick() method returns SUCCESS of FAILURE
+  BT::NodeStatus status = BT::NodeStatus::RUNNING;
+  while(rclcpp::ok() && status == BT::NodeStatus::RUNNING)
+  {
+    // tick once the tree
+    status = tree.tickOnce();
+    // Spin to update robot_state_subscriber
+    executor.spin_once(std::chrono::milliseconds(1));
+  }
+
+  std::cout << "Execution completed. Result: " << BT::toStr(status) << std::endl;
 
   return 0;
 }
