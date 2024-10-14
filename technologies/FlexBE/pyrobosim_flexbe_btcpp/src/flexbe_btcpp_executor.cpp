@@ -54,10 +54,13 @@
 #include <behaviortree_ros2/tree_execution_server.hpp>
 
 // BTCPP nodes used in this package
-#include "pyrobosim_btcpp/nodes/open_node.hpp"
+#include "pyrobosim_btcpp/nodes/battery_nodes.hpp"
 #include "pyrobosim_btcpp/nodes/close_node.hpp"
 #include "pyrobosim_btcpp/nodes/detect_object_node.hpp"
+#include "pyrobosim_btcpp/nodes/execute_task_node.hpp"
+#include "pyrobosim_btcpp/nodes/get_current_location_node.hpp"
 #include "pyrobosim_btcpp/nodes/navigate_node.hpp"
+#include "pyrobosim_btcpp/nodes/open_node.hpp"
 #include "pyrobosim_btcpp/nodes/pick_object_node.hpp"
 #include "pyrobosim_btcpp/nodes/place_object_node.hpp"
 
@@ -90,11 +93,16 @@ public:
   FlexibleBTActionServer(const rclcpp::NodeOptions& options) : TreeExecutionServer(options)
   {
     // here we assume that the battery voltage is published as a std_msgs::msg::Float32
+    auto global_blackboard = globalBlackboard();
     robot_state_sub_ = node()->create_subscription<pyrobosim_msgs::msg::RobotState>(
-        "/robot/robot_state", 10, [this](const pyrobosim_msgs::msg::RobotState::SharedPtr msg) {
-          // Update the global blackboard
-          globalBlackboard()->set("battery_level", msg->battery_level);
-        });
+        "/robot/robot_state", 10,
+        [global_blackboard](const pyrobosim_msgs::msg::RobotState::SharedPtr msg) {
+        global_blackboard->set("battery_level", msg->battery_level);
+        global_blackboard->set("holding_object", msg->holding_object);
+        global_blackboard->set("last_visited_location", msg->last_visited_location);
+        global_blackboard->set("executing_action", msg->executing_action);
+      });
+
     // Note that the callback above and the execution of the tree accessing the
     // global blackboard happen in two different threads.
     // The former runs in the MultiThreadedExecutor, while the latter in the thread created
@@ -159,6 +167,8 @@ public:
 
     factory.registerNodeType<BT::CloseAction>("Close", params);
     factory.registerNodeType<BT::DetectObject>("DetectObject", params);
+    factory.registerNodeType<BT::IsBatteryLow>("IsBatteryLow", this->node()->get_logger());
+    factory.registerNodeType<BT::IsBatteryFull>("IsBatteryFull", this->node()->get_logger());
     factory.registerNodeType<BT::NavigateAction>("Navigate", params);
     factory.registerNodeType<BT::OpenAction>("Open", params);
     factory.registerNodeType<BT::PickObject>("PickObject", params);

@@ -2,6 +2,7 @@
 
   <BehaviorTree ID="NavigationDemoTree">
     <Sequence>
+      <IsBatteryFull full_threshold="90.0"/>
       <Navigate name="ToOffice" target="office"/>
       <Navigate name="ToFridge" target="fridge"/>
       <Navigate name="ToTable" target="table"/>

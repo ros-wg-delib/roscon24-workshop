@@ -10,7 +10,7 @@ Please use the following publication for reference:
 
 ## BehaviorTree.CPP Hybrid Demo
 
-* `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=2`
+* `clear; ros2 run delib_ws_worlds run --ros-args -p problem_number:=1`
 * `clear; ros2 launch flexbe_onboard behavior_onboard.launch.py`
 * `clear; ros2 launch flexbe_webui flexbe_ocs.launch.py headless:=true`
 * `clear; ros2 run flexbe_webui webui_client`
