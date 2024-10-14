@@ -1,0 +1,5 @@
+{
+    "C_Cpp.intelliSenseEngine": "default",
+    "cmake.buildDirectory": "${workspaceFolder}/.colcon/build",
+    "editor.inlayHints.enabled": "off"
+}
