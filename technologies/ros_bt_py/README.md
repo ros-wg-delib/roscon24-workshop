@@ -57,7 +57,7 @@ The WebUI has four distinct sections:
 * The center bottom area is where attributes on a clicked node can be edited.
   ROS message types and builtin python types are automatically completed when a type field is edited.
 >
-> BUG: When updating node attributes and clicking apply, a popup will say that changes are discarded. This a bug and the changes will apply fully as intended.
+> **BUG:** When updating node attributes and clicking apply, a popup will say that changes are discarded. This a bug and the changes will apply fully as intended.
 > This will be fixed with the next GUI update.
 >
 
@@ -84,6 +84,6 @@ Within both nodes options, the endpoint and type must be specified.
 The `FieldsToMessage` and `MessageToFields` nodes can be used to construct and destruct the `Request/Goal` and `Result` messages from these nodes.
 `Constant` nodes can be used to create primitive python datatype constants.
 >
-> BUG: It should also be possible to generate full ROS message types in constants, but unfortunately due to changes to ROS/Python type introspection
-> this is not possible. ROS messages need to be constructed using the `FieldsToMessage` node.
+> **BUG:** It should also be possible to generate full ROS message types in constants, but unfortunately due to changes to ROS/Python type introspection
+> this is not possible. ROS messages need to be constructed using the `FieldsToMessage` or the `MessageFromConstDict` node.
 >
