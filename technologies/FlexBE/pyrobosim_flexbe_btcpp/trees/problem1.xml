@@ -1,0 +1,24 @@
+<root BTCPP_format="4">
+
+  <BehaviorTree ID="Problem1Tree">
+    <Sequence>
+        <Navigate name="ToPantry" target="pantry"/>
+        <IfThenElse>
+            <DetectObject name="DetectSnack" object="snacks0"/>
+            <Sequence name="DetectedTrue">
+                <PickObject name="PickSnack" object="snacks0"/>
+                <Navigate name="ToTableWithSnack" target="table"/>
+                <PlaceObject name="PlaceSnack" object="snacks0"/>
+            </Sequence>
+            <Navigate name="ToTableWithoutSnack" target="table"/>
+        </IfThenElse>
+        <Sequence name="DetectSnackBackToPantry">
+            <PickObject name="PickSnack" object="snacks0"/>
+            <Navigate name="ToPantry" target="pantry"/>
+            <PlaceObject name="PlaceSnack" object="snacks0"/>
+            <Navigate name="ToTable" target="table"/>
+        </Sequence>
+    </Sequence>
+  </BehaviorTree>
+
+</root>
