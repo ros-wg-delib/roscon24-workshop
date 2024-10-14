@@ -33,18 +33,23 @@ jobs:
       - name: Build Docker image
         run: |
           docker compose build
-      - name: Build ROS workspace and run tests
+      - name: Build ROS workspace in container
         run: |
-          docker compose run build_and_test
+          docker compose run base bash -c "echo ROS Workspace built"
+          docker compose down --remove-orphans
+      - name: Run tests in container
+        run: |
+          docker compose up test
       - name: Convince tests
         run: |
-          docker compose run build_and_test diff -r \
+          docker compose run test diff -r \
             src/dependencies/convince/AS2FM/test/jani_generator/_test_data/ros_example/ \
             src/technologies/convince/task_1_solution/
-          docker compose run build_and_test diff -r \
+          docker compose run test diff -r \
             src/dependencies/convince/AS2FM/test/jani_generator/_test_data/ros_example_w_bt/ \
             src/technologies/convince/task_2_solution/
-          docker compose run build_and_test bash -c "source /delib_ws/install/setup.bash && pytest /delib_ws/src/dependencies/convince/AS2FM/test"
+          docker compose run test bash -c "source /delib_ws/install/setup.bash && pytest /delib_ws/src/dependencies/convince/AS2FM/test"
+          docker compose down --remove-orphans
       - name: Push to gh registry with sha and branch name
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin

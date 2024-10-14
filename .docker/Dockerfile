@@ -20,11 +20,6 @@ RUN mkdir -p /delib_ws/src/
 WORKDIR /delib_ws
 
 # Install external dependencies.
-# Groot2 for BehaviorTree.CPP
-RUN curl -o Groot2.AppImage https://s3.us-west-1.amazonaws.com/download.behaviortree.dev/groot2_linux_installer/Groot2-v1.6.1-x86_64.AppImage && \
-    chmod a+x Groot2.AppImage && \
-    groupadd fuse && \
-    usermod -aG fuse root
 # Aggregated Python dependencies
 COPY python-requirements.txt /delib_ws
 RUN pip3 install --break-system-packages -r python-requirements.txt
@@ -33,7 +28,12 @@ RUN source /opt/ros/jazzy/setup.bash && \
     rosdep install --from-paths src -y --ignore-src
 # SkiROS2 dependencies
 RUN src/dependencies/SkiROS2/skiros2/skiros2/scripts/install_fd_task_planner.sh
-# Convince toolchain
+# Groot2 for BehaviorTree.CPP
+RUN curl -o Groot2.AppImage https://s3.us-west-1.amazonaws.com/download.behaviortree.dev/groot2_linux_installer/Groot2-v1.6.1-x86_64.AppImage && \
+    chmod a+x Groot2.AppImage && \
+    groupadd fuse && \
+    usermod -aG fuse root
+# CONVINCE toolchain
 # (smc_storm)
 RUN curl -O -L https://github.com/convince-project/smc_storm/releases/download/0.0.3/smc_storm_executable.tar.gz && \
     tar -xzf smc_storm_executable.tar.gz && \
@@ -55,4 +55,5 @@ ENV NO_AT_BRIDGE 1
 # Set up the entrypoint.
 CMD /bin/bash
 COPY .docker/entrypoint.sh /entrypoint.sh
-RUN echo "source /entrypoint.sh" >> ~/.bashrc
+ENTRYPOINT [ "/entrypoint.sh" ]
+RUN echo "source /entrypoint.sh && print_ros_variables" >> ~/.bashrc

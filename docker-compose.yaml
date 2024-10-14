@@ -52,6 +52,11 @@ services:
 
   # Runs tests
   # TODO: We want to test on workshop problems, but PyRoboSim tests will do for now.
-  build_and_test:
+  test:
     extends: base
-    command: bash -c "source /opt/ros/jazzy/setup.bash && colcon build && source install/setup.bash && python3 -m pytest /delib_ws/src/dependencies/pyrobosim/pyrobosim/test/core"
+    command: >
+      bash -c "
+        python3 -m pytest /delib_ws/src/dependencies/pyrobosim/pyrobosim/test/core &&
+        colcon test --packages-select pyrobosim_ros --event-handlers console_cohesion+
+      "
+    profiles: [test]
