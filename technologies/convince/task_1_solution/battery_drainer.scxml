@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scxml
+    initial="use_battery"
+    version="1.0"
+    name="BatteryDrainer"
+    model_src=""
+    xmlns="http://www.w3.org/2005/07/scxml">
+
+    <datamodel>
+        <data id="battery_percent" expr="100" type="int16" />
+    </datamodel>
+
+    <ros_topic_publisher name="battery_level" topic="level" type="std_msgs/Int32" />
+    <ros_time_rate name="my_timer" rate_hz="1" />
+
+    <state id="use_battery">
+        <onentry>
+            <ros_topic_publish name="battery_level">
+                <field name="data" expr="battery_percent" />
+            </ros_topic_publish>
+        </onentry>
+        <ros_rate_callback name="my_timer" target="use_battery" cond="battery_percent > 0">
+            <assign location="battery_percent" expr="battery_percent - 1" />
+        </ros_rate_callback>
+    </state>
+</scxml>

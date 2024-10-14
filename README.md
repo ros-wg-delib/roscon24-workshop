@@ -70,10 +70,18 @@ Note that this will pull the Docker image and may take a few minutes.
 docker compose run base
 ```
 
+This will start the container and drop you into a bash shell.
+
 Once you're in the container, check that you can launch a simulated world and the PyRoboSim UI appears on your screen.
 
 ```bash
 ros2 run delib_ws_worlds run
+```
+
+You can attach to the running container from a different console, using the command:
+
+```bash
+docker compose run base bash
 ```
 
 ---
@@ -102,3 +110,13 @@ It will ask you for your `sudo` password.
 ```bash
 ./clean_environment.sh
 ```
+
+### Develop inside the container using VSCode
+
+If you want to develop inside the container using VSCode, you need to have the [Docker extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) installed.
+
+Attach to the container as shown in the image below:
+
+![vscode_attach.png](media/vscode_attach.png)
+
+Once inside the container, open the folder `/delib_ws/src`.

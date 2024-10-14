@@ -1,0 +1,107 @@
+{
+    "properties": [
+        {
+            "name": "battery_depleted",
+            "expression": {
+                "op": "filter",
+                "fun": "values",
+                "values": {
+                    "op": "Pmin",
+                    "exp": {
+                        "left": true,
+                        "op": "U",
+                        "right": {
+                            "left": {
+                                "op": "≤",
+                                "left": "topic_level_msg.ros_fields__data",
+                                "right": 0
+                            },
+                            "op": "∧",
+                            "right": "topic_level_msg.valid"
+                        }
+                    }
+                },
+                "states": {
+                    "op": "initial"
+                }
+            }
+        },
+        {
+            "name": "battery_below_20",
+            "expression": {
+                "op": "filter",
+                "fun": "values",
+                "values": {
+                    "op": "Pmin",
+                    "exp": {
+                        "left": true,
+                        "op": "U",
+                        "right": {
+                            "left": {
+                                "op": "<",
+                                "left": "topic_level_msg.ros_fields__data",
+                                "right": 20
+                            },
+                            "op": "∧",
+                            "right": "topic_level_msg.valid"
+                        }
+                    }
+                },
+                "states": {
+                    "op": "initial"
+                }
+            }
+        },
+        {
+            "name": "battery_alarm_on",
+            "expression": {
+                "op": "filter",
+                "fun": "values",
+                "values": {
+                    "op": "Pmin",
+                    "exp": {
+                        "left": true,
+                        "op": "U",
+                        "right": {
+                            "op": "∧",
+                            "left": "topic_alarm_msg.ros_fields__data",
+                            "right": "topic_charge_msg.valid"
+                        }
+                    }
+                },
+                "states": {
+                    "op": "initial"
+                }
+            }
+        },
+        {
+            "name": "battery_charged",
+            "expression": {
+                "op": "filter",
+                "fun": "values",
+                "values": {
+                    "op": "Pmin",
+                    "exp": {
+                        "step-bounds": {
+                            "lower": 100
+                        },
+                        "left": true,
+                        "op": "U",
+                        "right": {
+                            "left": {
+                                "op": "=",
+                                "left": "topic_level_msg.ros_fields__data",
+                                "right": 100
+                            },
+                            "op": "∧",
+                            "right": "topic_level_msg.valid"
+                        }
+                    }
+                },
+                "states": {
+                    "op": "initial"
+                }
+            }
+        }
+    ]
+}

@@ -26,21 +26,21 @@ function print_ros_variables () {
 function delib_build() {
         cwd=$(pwd)
         delib_ws
-        colcon build --symlink-install --continue-on-error
+        colcon build --symlink-install --continue-on-error --mixin compile-commands
         cd ${cwd}
 }
 
 function delib_build_packages() {
         cwd=$(pwd)
         delib_ws
-        colcon build --symlink-install --continue-on-error --packages-select "$@"
+        colcon build --symlink-install --continue-on-error --mixin compile-commands --packages-select "$@"
         cd ${cwd}
 }
 
 function delib_build_packages_up_to() {
         cwd=$(pwd)
         delib_ws
-        colcon build --symlink-install --continue-on-error --packages-up-to "$@"
+        colcon build --symlink-install --continue-on-error --mixin compile-commands --packages-up-to "$@"
         cd ${cwd}
 }
 
