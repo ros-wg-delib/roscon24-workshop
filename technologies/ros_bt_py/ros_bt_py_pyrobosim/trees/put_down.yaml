@@ -1,20 +1,18 @@
-name: ''
+name: put_down.yaml
 path: ''
 root_name: .TempPutDownObjectSequence
 nodes:
   - module: ros_bt_py.nodes.sequence
-    node_class: MemorySequence
+    node_class: Sequence
     version: 0.1.0
     max_children: -1
-    name: .TempPutDownObjectSequence
+    name: PutDownObjectSequence
     child_names:
       - ObjectToPickup
-      - .EnumExeuctionResult
-      - .PlaceTaskAction
+      - EnumExeuctionResult
+      - PutDownTaskAction
       - .SetAttr
-      - .PutDownObject
-      - .PutDownResult
-      - .PutDownSuccessfull?
+      - Retry
     options: []
     inputs: []
     outputs: []
@@ -45,7 +43,7 @@ nodes:
     node_class: EnumFields
     version: 0.1.0
     max_children: 0
-    name: .EnumExeuctionResult
+    name: EnumExeuctionResult
     child_names: []
     options:
       - key: ros_message_type
@@ -85,7 +83,7 @@ nodes:
     node_class: MessageFromConstDict
     version: 0.9.0
     max_children: 0
-    name: .PlaceTaskAction
+    name: PutDownTaskAction
     child_names: []
     options:
       - key: message_type
@@ -127,6 +125,33 @@ nodes:
       - key: new_object
         serialized_value: 'null'
         serialized_type: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.decorators
+    node_class: Retry
+    version: 0.1.0
+    max_children: 1
+    name: Retry
+    child_names:
+      - Sequence
+    options:
+      - key: num_retries
+        serialized_value: '10'
+        serialized_type: '{"py/type": "builtins.int"}'
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: Sequence
+    version: 0.1.0
+    max_children: -1
+    name: Sequence
+    child_names:
+      - .PutDownObject
+      - .PutDownResult
+      - .PutDownSuccessfull?
+    options: []
+    inputs: []
+    outputs: []
     state: SHUTDOWN
   - module: ros_bt_py.ros_nodes.action
     node_class: Action
@@ -204,14 +229,6 @@ nodes:
     state: SHUTDOWN
 data_wirings:
   - source:
-      node_name: .PlaceTaskAction
-      data_kind: outputs
-      data_key: message
-    target:
-      node_name: .SetAttr
-      data_kind: inputs
-      data_key: object
-  - source:
       node_name: .SetAttr
       data_kind: outputs
       data_key: new_object
@@ -236,14 +253,6 @@ data_wirings:
       data_kind: inputs
       data_key: b
   - source:
-      node_name: .EnumExeuctionResult
-      data_kind: outputs
-      data_key: SUCCESS
-    target:
-      node_name: .PutDownSuccessfull?
-      data_kind: inputs
-      data_key: a
-  - source:
       node_name: ObjectToPickup
       data_kind: outputs
       data_key: out
@@ -251,34 +260,50 @@ data_wirings:
       node_name: .SetAttr
       data_kind: inputs
       data_key: attr_value
+  - source:
+      node_name: EnumExeuctionResult
+      data_kind: outputs
+      data_key: SUCCESS
+    target:
+      node_name: .PutDownSuccessfull?
+      data_kind: inputs
+      data_key: a
+  - source:
+      node_name: PutDownTaskAction
+      data_kind: outputs
+      data_key: message
+    target:
+      node_name: .SetAttr
+      data_kind: inputs
+      data_key: object
 tick_frequency_hz: 10
 state: EDITABLE
 public_node_data:
   - node_name: ObjectToPickup
     data_kind: inputs
     data_key: in
-  - node_name: .EnumExeuctionResult
+  - node_name: EnumExeuctionResult
     data_kind: outputs
     data_key: CANCELED
-  - node_name: .EnumExeuctionResult
+  - node_name: EnumExeuctionResult
     data_kind: outputs
     data_key: EXECUTION_FAILURE
-  - node_name: .EnumExeuctionResult
+  - node_name: EnumExeuctionResult
     data_kind: outputs
     data_key: INVALID_ACTION
-  - node_name: .EnumExeuctionResult
+  - node_name: EnumExeuctionResult
     data_kind: outputs
     data_key: PLANNING_FAILURE
-  - node_name: .EnumExeuctionResult
+  - node_name: EnumExeuctionResult
     data_kind: outputs
     data_key: POSTCONDITION_FAILURE
-  - node_name: .EnumExeuctionResult
+  - node_name: EnumExeuctionResult
     data_kind: outputs
     data_key: PRECONDITION_FAILURE
-  - node_name: .EnumExeuctionResult
+  - node_name: EnumExeuctionResult
     data_kind: outputs
     data_key: STATUS__DEFAULT
-  - node_name: .EnumExeuctionResult
+  - node_name: EnumExeuctionResult
     data_kind: outputs
     data_key: UNKNOWN
   - node_name: .PutDownResult

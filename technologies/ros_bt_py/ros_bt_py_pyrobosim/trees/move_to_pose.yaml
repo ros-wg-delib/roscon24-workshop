@@ -1,33 +1,19 @@
-name: ''
+name: move_to_pose.yaml
 path: ''
-root_name: RootSequence
+root_name: MoveToCharger.RootSequence
 nodes:
   - module: ros_bt_py.nodes.sequence
-    node_class: MemorySequence
+    node_class: Sequence
     version: 0.1.0
     max_children: -1
-    name: RootSequence
+    name: MoveToCharger.RootSequence
     child_names:
-      - SetupSequence
-      - PlanPathSequence
-      - FollowPathSequence
-    options: []
-    inputs: []
-    outputs: []
-    state: SHUTDOWN
-  - module: ros_bt_py.nodes.sequence
-    node_class: MemorySequence
-    version: 0.1.0
-    max_children: -1
-    name: SetupSequence
-    child_names:
-      - TargetPoseInput
-      - EnumFields
-      - ZeroFloat
-      - OneFloat
-      - ZeroQuaternion
-      - ZeroPoint
-      - CreateZeroPose
+      - MoveToCharger.TargetPose
+      - MoveToCharger.GetIntialTaskAction
+      - MoveToCharger.SetAttr
+      - FieldsToMessage
+      - TopicPublisher
+      - MoveToCharger.Retry
     options: []
     inputs: []
     outputs: []
@@ -36,14 +22,14 @@ nodes:
     node_class: IOInputOption
     version: 0.1.0
     max_children: 0
-    name: TargetPoseInput
+    name: MoveToCharger.TargetPose
     child_names: []
     options:
       - key: io_type
         serialized_value: '{"py/type": "builtins.str"}'
         serialized_type: '{"py/type": "builtins.type"}'
       - key: default
-        serialized_value: '"kitchen"'
+        serialized_value: '"table"'
         serialized_type: '{"py/type": "builtins.str"}'
     inputs:
       - key: in
@@ -54,11 +40,188 @@ nodes:
         serialized_value: 'null'
         serialized_type: '{"py/type": "builtins.str"}'
     state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.messages_from_dict
+    node_class: MessageFromConstDict
+    version: 0.9.0
+    max_children: 0
+    name: MoveToCharger.GetIntialTaskAction
+    child_names: []
+    options:
+      - key: message_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: dict
+        serialized_value: '{"type": "navigate", "robot": "robot"}'
+        serialized_type: '{"py/type": "builtins.dict"}'
+    inputs: []
+    outputs:
+      - key: message
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.setters
+    node_class: SetAttr
+    version: 0.1.0
+    max_children: 0
+    name: MoveToCharger.SetAttr
+    child_names: []
+    options:
+      - key: object_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: attr_name
+        serialized_value: '"target_location"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: attr_type
+        serialized_value: '{"py/type": "builtins.str"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: object
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+      - key: attr_value
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: new_object
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.message_converters
+    node_class: FieldsToMessage
+    version: 0.1.0
+    max_children: 0
+    name: FieldsToMessage
+    child_names: []
+    options:
+      - key: output_type
+        serialized_value: '{"py/type": "std_msgs.msg._string.String"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: data
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: out
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "std_msgs.msg._string.String"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.topic
+    node_class: TopicPublisher
+    version: 1.0.0
+    max_children: 0
+    name: TopicPublisher
+    child_names: []
+    options:
+      - key: topic_type
+        serialized_value: '{"py/type": "std_msgs.msg._string.String"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: topic_name
+        serialized_value: '"/last_movement_goal"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: reliable
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: transient_local
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: depth
+        serialized_value: '1'
+        serialized_type: '{"py/type": "builtins.int"}'
+    inputs:
+      - key: message
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "std_msgs.msg._string.String"}'
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.decorators
+    node_class: Retry
+    version: 0.1.0
+    max_children: 1
+    name: MoveToCharger.Retry
+    child_names:
+      - MoveToCharger.Sequence
+    options:
+      - key: num_retries
+        serialized_value: '10'
+        serialized_type: '{"py/type": "builtins.int"}'
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: Sequence
+    version: 0.1.0
+    max_children: -1
+    name: MoveToCharger.Sequence
+    child_names:
+      - MoveToCharger.ExecuteNavigateAction
+      - MoveToCharger.GetExecutionResult
+      - MoveToCharger.GetExecutionResultConstants
+      - MoveToCharger.NavigateSuccesful?
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.action
+    node_class: Action
+    version: 0.1.0
+    max_children: 0
+    name: MoveToCharger.ExecuteNavigateAction
+    child_names: []
+    options:
+      - key: action_type
+        serialized_value: >-
+          {"py/type":
+          "pyrobosim_msgs.action._execute_task_action.ExecuteTaskAction"}
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: action_name
+        serialized_value: '"/execute_action"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: wait_for_action_server_seconds
+        serialized_value: '2.0'
+        serialized_type: '{"py/type": "builtins.float"}'
+      - key: timeout_seconds
+        serialized_value: '10.0'
+        serialized_type: '{"py/type": "builtins.float"}'
+      - key: fail_if_not_available
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: action
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+    outputs:
+      - key: result_execution_result
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.message_converters
+    node_class: MessageToFields
+    version: 0.1.0
+    max_children: 0
+    name: MoveToCharger.GetExecutionResult
+    child_names: []
+    options:
+      - key: input_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+    outputs:
+      - key: status
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: message
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
   - module: ros_bt_py.ros_nodes.enum
     node_class: EnumFields
     version: 0.1.0
     max_children: 0
-    name: EnumFields
+    name: MoveToCharger.GetExecutionResultConstants
     child_names: []
     options:
       - key: ros_message_type
@@ -94,281 +257,11 @@ nodes:
         serialized_value: 'null'
         serialized_type: '{"py/type": "builtins.int"}'
     state: SHUTDOWN
-  - module: ros_bt_py.nodes.constant
-    node_class: Constant
-    version: 0.1.0
-    max_children: 0
-    name: ZeroFloat
-    child_names: []
-    options:
-      - key: constant_type
-        serialized_value: '{"py/type": "builtins.float"}'
-        serialized_type: '{"py/type": "builtins.type"}'
-      - key: constant_value
-        serialized_value: '0.0'
-        serialized_type: '{"py/type": "builtins.float"}'
-    inputs: []
-    outputs:
-      - key: constant
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.float"}'
-    state: SHUTDOWN
-  - module: ros_bt_py.nodes.constant
-    node_class: Constant
-    version: 0.1.0
-    max_children: 0
-    name: OneFloat
-    child_names: []
-    options:
-      - key: constant_type
-        serialized_value: '{"py/type": "builtins.float"}'
-        serialized_type: '{"py/type": "builtins.type"}'
-      - key: constant_value
-        serialized_value: '1.0'
-        serialized_type: '{"py/type": "builtins.float"}'
-    inputs: []
-    outputs:
-      - key: constant
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.float"}'
-    state: SHUTDOWN
-  - module: ros_bt_py.ros_nodes.message_converters
-    node_class: FieldsToMessage
-    version: 0.1.0
-    max_children: 0
-    name: ZeroQuaternion
-    child_names: []
-    options:
-      - key: output_type
-        serialized_value: '{"py/type": "geometry_msgs.msg._quaternion.Quaternion"}'
-        serialized_type: '{"py/type": "builtins.type"}'
-    inputs:
-      - key: x
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.float"}'
-      - key: 'y'
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.float"}'
-      - key: z
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.float"}'
-      - key: w
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.float"}'
-    outputs:
-      - key: out
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "geometry_msgs.msg._quaternion.Quaternion"}'
-    state: SHUTDOWN
-  - module: ros_bt_py.ros_nodes.message_converters
-    node_class: FieldsToMessage
-    version: 0.1.0
-    max_children: 0
-    name: ZeroPoint
-    child_names: []
-    options:
-      - key: output_type
-        serialized_value: '{"py/type": "geometry_msgs.msg._point.Point"}'
-        serialized_type: '{"py/type": "builtins.type"}'
-    inputs:
-      - key: x
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.float"}'
-      - key: 'y'
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.float"}'
-      - key: z
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.float"}'
-    outputs:
-      - key: out
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "geometry_msgs.msg._point.Point"}'
-    state: SHUTDOWN
-  - module: ros_bt_py.ros_nodes.message_converters
-    node_class: FieldsToMessage
-    version: 0.1.0
-    max_children: 0
-    name: CreateZeroPose
-    child_names: []
-    options:
-      - key: output_type
-        serialized_value: '{"py/type": "geometry_msgs.msg._pose.Pose"}'
-        serialized_type: '{"py/type": "builtins.type"}'
-    inputs:
-      - key: position
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "geometry_msgs.msg._point.Point"}'
-      - key: orientation
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "geometry_msgs.msg._quaternion.Quaternion"}'
-    outputs:
-      - key: out
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "geometry_msgs.msg._pose.Pose"}'
-    state: SHUTDOWN
-  - module: ros_bt_py.nodes.sequence
-    node_class: MemorySequence
-    version: 0.1.0
-    max_children: -1
-    name: PlanPathSequence
-    child_names:
-      - PlanPathAction
-      - GetPlanPathExecutionResult
-      - PlanPathSuccessul?
-    options: []
-    inputs: []
-    outputs: []
-    state: SHUTDOWN
-  - module: ros_bt_py.ros_nodes.action
-    node_class: Action
-    version: 0.1.0
-    max_children: 0
-    name: PlanPathAction
-    child_names: []
-    options:
-      - key: action_type
-        serialized_value: '{"py/type": "pyrobosim_msgs.action._plan_path.PlanPath"}'
-        serialized_type: '{"py/type": "builtins.type"}'
-      - key: action_name
-        serialized_value: '"/robot/plan_path"'
-        serialized_type: '{"py/type": "builtins.str"}'
-      - key: wait_for_action_server_seconds
-        serialized_value: '2.0'
-        serialized_type: '{"py/type": "builtins.float"}'
-      - key: timeout_seconds
-        serialized_value: '5.0'
-        serialized_type: '{"py/type": "builtins.float"}'
-      - key: fail_if_not_available
-        serialized_value: 'true'
-        serialized_type: '{"py/type": "builtins.bool"}'
-    inputs:
-      - key: target_location
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.str"}'
-      - key: target_pose
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "geometry_msgs.msg._pose.Pose"}'
-    outputs:
-      - key: result_execution_result
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
-      - key: result_path
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "pyrobosim_msgs.msg._path.Path"}'
-    state: SHUTDOWN
-  - module: ros_bt_py.ros_nodes.message_converters
-    node_class: MessageToFields
-    version: 0.1.0
-    max_children: 0
-    name: GetPlanPathExecutionResult
-    child_names: []
-    options:
-      - key: input_type
-        serialized_value: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
-        serialized_type: '{"py/type": "builtins.type"}'
-    inputs:
-      - key: in
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
-    outputs:
-      - key: status
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.int"}'
-      - key: message
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.str"}'
-    state: SHUTDOWN
   - module: ros_bt_py.nodes.compare
     node_class: Compare
     version: 0.1.0
     max_children: 0
-    name: PlanPathSuccessul?
-    child_names: []
-    options:
-      - key: compare_type
-        serialized_value: '{"py/type": "builtins.int"}'
-        serialized_type: '{"py/type": "builtins.type"}'
-    inputs:
-      - key: a
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.int"}'
-      - key: b
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.int"}'
-    outputs: []
-    state: SHUTDOWN
-  - module: ros_bt_py.nodes.sequence
-    node_class: MemorySequence
-    version: 0.1.0
-    max_children: -1
-    name: FollowPathSequence
-    child_names:
-      - FollowPathAction
-      - GetFollowPathExecutionResult
-      - FollowPathSuccessfull?
-    options: []
-    inputs: []
-    outputs: []
-    state: SHUTDOWN
-  - module: ros_bt_py.ros_nodes.action
-    node_class: Action
-    version: 0.1.0
-    max_children: 0
-    name: FollowPathAction
-    child_names: []
-    options:
-      - key: action_type
-        serialized_value: '{"py/type": "pyrobosim_msgs.action._follow_path.FollowPath"}'
-        serialized_type: '{"py/type": "builtins.type"}'
-      - key: action_name
-        serialized_value: '"/robot/follow_path"'
-        serialized_type: '{"py/type": "builtins.str"}'
-      - key: wait_for_action_server_seconds
-        serialized_value: '5.0'
-        serialized_type: '{"py/type": "builtins.float"}'
-      - key: timeout_seconds
-        serialized_value: '30.0'
-        serialized_type: '{"py/type": "builtins.float"}'
-      - key: fail_if_not_available
-        serialized_value: 'true'
-        serialized_type: '{"py/type": "builtins.bool"}'
-    inputs:
-      - key: path
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "pyrobosim_msgs.msg._path.Path"}'
-    outputs:
-      - key: result_execution_result
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
-    state: SHUTDOWN
-  - module: ros_bt_py.ros_nodes.message_converters
-    node_class: MessageToFields
-    version: 0.1.0
-    max_children: 0
-    name: GetFollowPathExecutionResult
-    child_names: []
-    options:
-      - key: input_type
-        serialized_value: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
-        serialized_type: '{"py/type": "builtins.type"}'
-    inputs:
-      - key: in
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
-    outputs:
-      - key: status
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.int"}'
-      - key: message
-        serialized_value: 'null'
-        serialized_type: '{"py/type": "builtins.str"}'
-    state: SHUTDOWN
-  - module: ros_bt_py.nodes.compare
-    node_class: Compare
-    version: 0.1.0
-    max_children: 0
-    name: FollowPathSuccessfull?
+    name: MoveToCharger.NavigateSuccesful?
     child_names: []
     options:
       - key: compare_type
@@ -385,182 +278,99 @@ nodes:
     state: SHUTDOWN
 data_wirings:
   - source:
-      node_name: PlanPathAction
+      node_name: MoveToCharger.GetIntialTaskAction
       data_kind: outputs
-      data_key: result_path
+      data_key: message
     target:
-      node_name: FollowPathAction
+      node_name: MoveToCharger.SetAttr
       data_kind: inputs
-      data_key: path
+      data_key: object
   - source:
-      node_name: EnumFields
+      node_name: MoveToCharger.SetAttr
       data_kind: outputs
-      data_key: SUCCESS
+      data_key: new_object
     target:
-      node_name: PlanPathSuccessul?
+      node_name: MoveToCharger.ExecuteNavigateAction
       data_kind: inputs
-      data_key: b
+      data_key: action
   - source:
-      node_name: PlanPathAction
+      node_name: MoveToCharger.ExecuteNavigateAction
       data_kind: outputs
       data_key: result_execution_result
     target:
-      node_name: GetPlanPathExecutionResult
+      node_name: MoveToCharger.GetExecutionResult
       data_kind: inputs
       data_key: in
   - source:
-      node_name: GetPlanPathExecutionResult
+      node_name: MoveToCharger.GetExecutionResult
       data_kind: outputs
       data_key: status
     target:
-      node_name: PlanPathSuccessul?
+      node_name: MoveToCharger.NavigateSuccesful?
       data_kind: inputs
       data_key: a
   - source:
-      node_name: FollowPathAction
-      data_kind: outputs
-      data_key: result_execution_result
-    target:
-      node_name: GetFollowPathExecutionResult
-      data_kind: inputs
-      data_key: in
-  - source:
-      node_name: GetFollowPathExecutionResult
-      data_kind: outputs
-      data_key: status
-    target:
-      node_name: FollowPathSuccessfull?
-      data_kind: inputs
-      data_key: a
-  - source:
-      node_name: EnumFields
+      node_name: MoveToCharger.GetExecutionResultConstants
       data_kind: outputs
       data_key: SUCCESS
     target:
-      node_name: FollowPathSuccessfull?
+      node_name: MoveToCharger.NavigateSuccesful?
       data_kind: inputs
       data_key: b
   - source:
-      node_name: TargetPoseInput
+      node_name: MoveToCharger.TargetPose
       data_kind: outputs
       data_key: out
     target:
-      node_name: PlanPathAction
+      node_name: MoveToCharger.SetAttr
       data_kind: inputs
-      data_key: target_location
+      data_key: attr_value
   - source:
-      node_name: CreateZeroPose
+      node_name: MoveToCharger.TargetPose
       data_kind: outputs
       data_key: out
     target:
-      node_name: PlanPathAction
+      node_name: FieldsToMessage
       data_kind: inputs
-      data_key: target_pose
+      data_key: data
   - source:
-      node_name: ZeroPoint
+      node_name: FieldsToMessage
       data_kind: outputs
       data_key: out
     target:
-      node_name: CreateZeroPose
+      node_name: TopicPublisher
       data_kind: inputs
-      data_key: position
-  - source:
-      node_name: ZeroQuaternion
-      data_kind: outputs
-      data_key: out
-    target:
-      node_name: CreateZeroPose
-      data_kind: inputs
-      data_key: orientation
-  - source:
-      node_name: OneFloat
-      data_kind: outputs
-      data_key: constant
-    target:
-      node_name: ZeroQuaternion
-      data_kind: inputs
-      data_key: w
-  - source:
-      node_name: ZeroFloat
-      data_kind: outputs
-      data_key: constant
-    target:
-      node_name: ZeroQuaternion
-      data_kind: inputs
-      data_key: x
-  - source:
-      node_name: ZeroFloat
-      data_kind: outputs
-      data_key: constant
-    target:
-      node_name: ZeroQuaternion
-      data_kind: inputs
-      data_key: 'y'
-  - source:
-      node_name: ZeroFloat
-      data_kind: outputs
-      data_key: constant
-    target:
-      node_name: ZeroQuaternion
-      data_kind: inputs
-      data_key: z
-  - source:
-      node_name: ZeroFloat
-      data_kind: outputs
-      data_key: constant
-    target:
-      node_name: ZeroPoint
-      data_kind: inputs
-      data_key: x
-  - source:
-      node_name: ZeroFloat
-      data_kind: outputs
-      data_key: constant
-    target:
-      node_name: ZeroPoint
-      data_kind: inputs
-      data_key: 'y'
-  - source:
-      node_name: ZeroFloat
-      data_kind: outputs
-      data_key: constant
-    target:
-      node_name: ZeroPoint
-      data_kind: inputs
-      data_key: z
+      data_key: message
 tick_frequency_hz: 10
 state: EDITABLE
 public_node_data:
-  - node_name: TargetPoseInput
+  - node_name: MoveToCharger.TargetPose
     data_kind: inputs
     data_key: in
-  - node_name: EnumFields
+  - node_name: MoveToCharger.GetExecutionResult
+    data_kind: outputs
+    data_key: message
+  - node_name: MoveToCharger.GetExecutionResultConstants
     data_kind: outputs
     data_key: CANCELED
-  - node_name: EnumFields
+  - node_name: MoveToCharger.GetExecutionResultConstants
     data_kind: outputs
     data_key: EXECUTION_FAILURE
-  - node_name: EnumFields
+  - node_name: MoveToCharger.GetExecutionResultConstants
     data_kind: outputs
     data_key: INVALID_ACTION
-  - node_name: EnumFields
+  - node_name: MoveToCharger.GetExecutionResultConstants
     data_kind: outputs
     data_key: PLANNING_FAILURE
-  - node_name: EnumFields
+  - node_name: MoveToCharger.GetExecutionResultConstants
     data_kind: outputs
     data_key: POSTCONDITION_FAILURE
-  - node_name: EnumFields
+  - node_name: MoveToCharger.GetExecutionResultConstants
     data_kind: outputs
     data_key: PRECONDITION_FAILURE
-  - node_name: EnumFields
+  - node_name: MoveToCharger.GetExecutionResultConstants
     data_kind: outputs
     data_key: STATUS__DEFAULT
-  - node_name: EnumFields
+  - node_name: MoveToCharger.GetExecutionResultConstants
     data_kind: outputs
     data_key: UNKNOWN
-  - node_name: GetPlanPathExecutionResult
-    data_kind: outputs
-    data_key: message
-  - node_name: GetFollowPathExecutionResult
-    data_kind: outputs
-    data_key: message

@@ -1,18 +1,16 @@
-name: ''
+name: close_door.yaml
 path: ''
-root_name: .CloseDoorSequence
+root_name: CloseDoorSequence
 nodes:
   - module: ros_bt_py.nodes.sequence
-    node_class: MemorySequence
+    node_class: Sequence
     version: 0.1.0
     max_children: -1
     name: CloseDoorSequence
     child_names:
-      - EnumExeuctionResult
+      - EnumExecutionResult
       - CloseDoorTask
-      - CloseDoorAction
-      - GetCloseDoorResult
-      - CloseDoorSuccessfull?
+      - Retry
     options: []
     inputs: []
     outputs: []
@@ -21,7 +19,7 @@ nodes:
     node_class: EnumFields
     version: 0.1.0
     max_children: 0
-    name: EnumExeuctionResult
+    name: EnumExecutionResult
     child_names: []
     options:
       - key: ros_message_type
@@ -75,6 +73,33 @@ nodes:
       - key: message
         serialized_value: 'null'
         serialized_type: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.decorators
+    node_class: Retry
+    version: 0.1.0
+    max_children: 1
+    name: Retry
+    child_names:
+      - Sequence
+    options:
+      - key: num_retries
+        serialized_value: '10'
+        serialized_type: '{"py/type": "builtins.int"}'
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: Sequence
+    version: 0.1.0
+    max_children: -1
+    name: Sequence
+    child_names:
+      - CloseDoorAction
+      - GetCloseDoorResult
+      - CheckCloseDoorSuccessful
+    options: []
+    inputs: []
+    outputs: []
     state: SHUTDOWN
   - module: ros_bt_py.ros_nodes.action
     node_class: Action
@@ -135,7 +160,7 @@ nodes:
     node_class: Compare
     version: 0.1.0
     max_children: 0
-    name: CloseDoorSuccessfull?
+    name: CheckCloseDoorSuccessful
     child_names: []
     options:
       - key: compare_type
@@ -168,11 +193,11 @@ data_wirings:
       data_kind: inputs
       data_key: in
   - source:
-      node_name: EnumExeuctionResult
+      node_name: EnumExecutionResult
       data_kind: outputs
       data_key: SUCCESS
     target:
-      node_name: CloseDoorSuccessfull?
+      node_name: CheckCloseDoorSuccessful
       data_kind: inputs
       data_key: a
   - source:
@@ -180,34 +205,34 @@ data_wirings:
       data_kind: outputs
       data_key: status
     target:
-      node_name: CloseDoorSuccessfull?
+      node_name: CheckCloseDoorSuccessful
       data_kind: inputs
       data_key: b
 tick_frequency_hz: 10
 state: EDITABLE
 public_node_data:
-  - node_name: EnumExeuctionResult
+  - node_name: EnumExecutionResult
     data_kind: outputs
     data_key: CANCELED
-  - node_name: EnumExeuctionResult
+  - node_name: EnumExecutionResult
     data_kind: outputs
     data_key: EXECUTION_FAILURE
-  - node_name: EnumExeuctionResult
+  - node_name: EnumExecutionResult
     data_kind: outputs
     data_key: INVALID_ACTION
-  - node_name: EnumExeuctionResult
+  - node_name: EnumExecutionResult
     data_kind: outputs
     data_key: PLANNING_FAILURE
-  - node_name: EnumExeuctionResult
+  - node_name: EnumExecutionResult
     data_kind: outputs
     data_key: POSTCONDITION_FAILURE
-  - node_name: EnumExeuctionResult
+  - node_name: EnumExecutionResult
     data_kind: outputs
     data_key: PRECONDITION_FAILURE
-  - node_name: EnumExeuctionResult
+  - node_name: EnumExecutionResult
     data_kind: outputs
     data_key: STATUS__DEFAULT
-  - node_name: EnumExeuctionResult
+  - node_name: EnumExecutionResult
     data_kind: outputs
     data_key: UNKNOWN
   - node_name: GetCloseDoorResult

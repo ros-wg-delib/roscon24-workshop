@@ -1,18 +1,16 @@
-name: ''
+name: open_door.yaml
 path: ''
-root_name: .OpenDoorSequence
+root_name: OpenDoorSequence
 nodes:
   - module: ros_bt_py.nodes.sequence
-    node_class: MemorySequence
+    node_class: Sequence
     version: 0.1.0
     max_children: -1
     name: OpenDoorSequence
     child_names:
       - EnumExeuctionResult
       - OpenDoorTask
-      - OpenDoorAction
-      - GetOpenDoorResult
-      - OpenDoorSuccessfull?
+      - Retry
     options: []
     inputs: []
     outputs: []
@@ -75,6 +73,33 @@ nodes:
       - key: message
         serialized_value: 'null'
         serialized_type: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.decorators
+    node_class: Retry
+    version: 0.1.0
+    max_children: 1
+    name: Retry
+    child_names:
+      - Sequence
+    options:
+      - key: num_retries
+        serialized_value: '10'
+        serialized_type: '{"py/type": "builtins.int"}'
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: Sequence
+    version: 0.1.0
+    max_children: -1
+    name: Sequence
+    child_names:
+      - OpenDoorAction
+      - GetOpenDoorResult
+      - OpenDoorSuccessfull?
+    options: []
+    inputs: []
+    outputs: []
     state: SHUTDOWN
   - module: ros_bt_py.ros_nodes.action
     node_class: Action
