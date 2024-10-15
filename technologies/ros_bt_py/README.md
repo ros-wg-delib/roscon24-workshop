@@ -54,6 +54,14 @@ The WebUI has four distinct sections:
   Also the load / save controls for trees is located here.
   Trees can be loaded from ROS packages and from the `.ros` directory.
   Saving is unfortunately only possible in the `.ros` directory.
+  * **Saving a Tree** In the top right corner there is the save button.
+    It allows you to save the current tree in a yaml format to a specified list of storage folders on the system running the `ros_bt_py` ROS node.
+    As this might be a remote system we only index folders specified in the launch file for saving an loading. (By default this is the `/home/$USERNAME/.ros` folder).
+  * **Loading a Tree** Trees can be loaded from two different sources, installed ROS packages and the storage folders as specified in the saving trees section.
+    To load one of the example solution trees you need to click the `Load` button, followed by the `Package` button.
+    In the opened loading dialogue you need to enter the name of the ROS package you want to load a tree from.
+    In this case `ros_bt_py_pyrobosim` and then select the trees folder.
+    Afterwards you can load a tree by clicking on one of the yaml files and pressing the load button.
 * The center bottom area is where attributes on a clicked node can be edited.
   ROS message types and builtin python types are automatically completed when a type field is edited.
 >
@@ -87,3 +95,17 @@ The `FieldsToMessage` and `MessageToFields` nodes can be used to construct and d
 > **BUG:** It should also be possible to generate full ROS message types in constants, but unfortunately due to changes to ROS/Python type introspection
 > this is not possible. ROS messages need to be constructed using the `FieldsToMessage` or the `MessageFromConstDict` node.
 >
+
+## Subtrees
+
+The `subtree` node allows to load a saved tree yaml as a subtree.
+Within the `subtree` node the location of the tree to load must be specified via a URI.
+Similarly to loading a tree in the main editor there are two optioon where a subtree can be loaded from, ROS Packages or storage folder.
+
+* **ROS Package** For a ROS package the URI needs to have the following format: `package://<ROS package name>/...` (where `...` is the filepath of the tree yaml in the packages share folder).
+  E.g. `package://ros_bt_py_pyrobosim/trees/problem_1.yaml`
+* **Storage Folder** For a storage folder the URI has the following format: `file://<path_to_storage_folder>/...`
+  E.g. `file:///home/david/.ros/problem_1.yaml`
+
+When using a subtree node, the `Publish Subtrees` option in the top left can be ticked to get visualizations of the subtrees.
+After ticking the box, the subtree to view can be selected in the `Tree:` dropdown above the editing overview.
