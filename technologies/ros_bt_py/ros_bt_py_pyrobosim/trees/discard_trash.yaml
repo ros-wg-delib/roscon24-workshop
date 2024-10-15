@@ -1,0 +1,706 @@
+name: discard_trash.yaml
+path: ''
+root_name: MemorySequence
+nodes:
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: MemorySequence
+    child_names:
+      - SetupSequence
+      - MemorySequence_2
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: SetupSequence
+    child_names:
+      - TrashLocation
+      - WasteType
+      - DumpsterLocation
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.io
+    node_class: IOInputOption
+    version: 0.1.0
+    max_children: 0
+    name: TrashLocation
+    child_names: []
+    options:
+      - key: io_type
+        serialized_value: '{"py/type": "builtins.str"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: default
+        serialized_value: '"desk"'
+        serialized_type: '{"py/type": "builtins.str"}'
+    inputs:
+      - key: in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: out
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.constant
+    node_class: Constant
+    version: 0.1.0
+    max_children: 0
+    name: WasteType
+    child_names: []
+    options:
+      - key: constant_type
+        serialized_value: '{"py/type": "builtins.str"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: constant_value
+        serialized_value: '"waste"'
+        serialized_type: '{"py/type": "builtins.str"}'
+    inputs: []
+    outputs:
+      - key: constant
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.constant
+    node_class: Constant
+    version: 0.1.0
+    max_children: 0
+    name: DumpsterLocation
+    child_names: []
+    options:
+      - key: constant_type
+        serialized_value: '{"py/type": "builtins.str"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: constant_value
+        serialized_value: '"dumpster"'
+        serialized_type: '{"py/type": "builtins.str"}'
+    inputs: []
+    outputs:
+      - key: constant
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: MemorySequence_2
+    child_names:
+      - Sequence
+      - MoveToDumpster_2
+      - PutDownTrash
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: Sequence
+    version: 0.1.0
+    max_children: -1
+    name: Sequence
+    child_names:
+      - TopicSubscriber
+      - MessageToFields_2
+      - Fallback
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.topic
+    node_class: TopicSubscriber
+    version: 0.1.0
+    max_children: 0
+    name: TopicSubscriber
+    child_names: []
+    options:
+      - key: topic_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._robot_state.RobotState"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: topic_name
+        serialized_value: '"/robot/robot_state"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: reliable
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: transient_local
+        serialized_value: 'false'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: depth
+        serialized_value: '1'
+        serialized_type: '{"py/type": "builtins.int"}'
+    inputs: []
+    outputs:
+      - key: message
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._robot_state.RobotState"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.message_converters
+    node_class: MessageToFields
+    version: 0.1.0
+    max_children: 0
+    name: MessageToFields_2
+    child_names: []
+    options:
+      - key: input_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._robot_state.RobotState"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._robot_state.RobotState"}'
+    outputs:
+      - key: header
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "std_msgs.msg._header.Header"}'
+      - key: name
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: pose
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "geometry_msgs.msg._pose.Pose"}'
+      - key: battery_level
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.float"}'
+      - key: executing_action
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: holding_object
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: manipulated_object
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: last_visited_location
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.fallback
+    node_class: Fallback
+    version: 0.1.0
+    max_children: -1
+    name: Fallback
+    child_names:
+      - IsAlreadyHolding
+      - GetTrashFromLocation
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.compare
+    node_class: CompareConstant
+    version: 0.1.0
+    max_children: 0
+    name: IsAlreadyHolding
+    child_names: []
+    options:
+      - key: compare_type
+        serialized_value: '{"py/type": "builtins.bool"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: expected
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: GetTrashFromLocation
+    child_names:
+      - MoveToTrashLocation
+      - Retry
+      - GetConstListItem
+      - MessageToFields
+      - PickUpTrash
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: MoveToTrashLocation
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/move_to_pose.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: MoveToCharger.TargetPose.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.decorators
+    node_class: Retry
+    version: 0.1.0
+    max_children: 1
+    name: Retry
+    child_names:
+      - DetectObjectsSequence
+    options:
+      - key: num_retries
+        serialized_value: '10'
+        serialized_type: '{"py/type": "builtins.int"}'
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: DetectObjectsSequence
+    child_names:
+      - DetectObjects
+      - GetDetectObjectsResult
+      - EnumExecutionResult
+      - DetectObjectResultSuccessful?
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.action
+    node_class: Action
+    version: 0.1.0
+    max_children: 0
+    name: DetectObjects
+    child_names: []
+    options:
+      - key: action_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.action._detect_objects.DetectObjects"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: action_name
+        serialized_value: '"/robot/detect_objects"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: wait_for_action_server_seconds
+        serialized_value: '1.2'
+        serialized_type: '{"py/type": "builtins.float"}'
+      - key: timeout_seconds
+        serialized_value: '5.0'
+        serialized_type: '{"py/type": "builtins.float"}'
+      - key: fail_if_not_available
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: target_object
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: result_execution_result
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+      - key: result_detected_objects
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.list"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.message_converters
+    node_class: MessageToFields
+    version: 0.1.0
+    max_children: 0
+    name: GetDetectObjectsResult
+    child_names: []
+    options:
+      - key: input_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+    outputs:
+      - key: status
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: message
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.enum
+    node_class: EnumFields
+    version: 0.1.0
+    max_children: 0
+    name: EnumExecutionResult
+    child_names: []
+    options:
+      - key: ros_message_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs: []
+    outputs:
+      - key: CANCELED
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: EXECUTION_FAILURE
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: INVALID_ACTION
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: PLANNING_FAILURE
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: POSTCONDITION_FAILURE
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: PRECONDITION_FAILURE
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: STATUS__DEFAULT
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: SUCCESS
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: UNKNOWN
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.compare
+    node_class: Compare
+    version: 0.1.0
+    max_children: 0
+    name: DetectObjectResultSuccessful?
+    child_names: []
+    options:
+      - key: compare_type
+        serialized_value: '{"py/type": "builtins.int"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: a
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: b
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.getters
+    node_class: GetConstListItem
+    version: 0.1.0
+    max_children: 1
+    name: GetConstListItem
+    child_names: []
+    options:
+      - key: list_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._object_state.ObjectState"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: index
+        serialized_value: '0'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: succeed_on_stale_data
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: list
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.list"}'
+    outputs:
+      - key: item
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._object_state.ObjectState"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.message_converters
+    node_class: MessageToFields
+    version: 0.1.0
+    max_children: 0
+    name: MessageToFields
+    child_names: []
+    options:
+      - key: input_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._object_state.ObjectState"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._object_state.ObjectState"}'
+    outputs:
+      - key: name
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: category
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: parent
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: pose
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "geometry_msgs.msg._pose.Pose"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: PickUpTrash
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/pick_up.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: ObjectToPickUp.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: MoveToDumpster_2
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/move_to_pose.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: MoveToCharger.TargetPose.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: PutDownTrash
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/put_down.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: ObjectToPickup.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+data_wirings:
+  - source:
+      node_name: DetectObjects
+      data_kind: outputs
+      data_key: result_execution_result
+    target:
+      node_name: GetDetectObjectsResult
+      data_kind: inputs
+      data_key: in
+  - source:
+      node_name: DetectObjects
+      data_kind: outputs
+      data_key: result_detected_objects
+    target:
+      node_name: GetConstListItem
+      data_kind: inputs
+      data_key: list
+  - source:
+      node_name: GetConstListItem
+      data_kind: outputs
+      data_key: item
+    target:
+      node_name: MessageToFields
+      data_kind: inputs
+      data_key: in
+  - source:
+      node_name: MessageToFields
+      data_kind: outputs
+      data_key: name
+    target:
+      node_name: PickUpTrash
+      data_kind: inputs
+      data_key: ObjectToPickUp.in
+  - source:
+      node_name: WasteType
+      data_kind: outputs
+      data_key: constant
+    target:
+      node_name: DetectObjects
+      data_kind: inputs
+      data_key: target_object
+  - source:
+      node_name: TrashLocation
+      data_kind: outputs
+      data_key: out
+    target:
+      node_name: MoveToTrashLocation
+      data_kind: inputs
+      data_key: MoveToCharger.TargetPose.in
+  - source:
+      node_name: DumpsterLocation
+      data_kind: outputs
+      data_key: constant
+    target:
+      node_name: MoveToDumpster_2
+      data_kind: inputs
+      data_key: MoveToCharger.TargetPose.in
+  - source:
+      node_name: GetDetectObjectsResult
+      data_kind: outputs
+      data_key: status
+    target:
+      node_name: DetectObjectResultSuccessful?
+      data_kind: inputs
+      data_key: a
+  - source:
+      node_name: EnumExecutionResult
+      data_kind: outputs
+      data_key: SUCCESS
+    target:
+      node_name: DetectObjectResultSuccessful?
+      data_kind: inputs
+      data_key: b
+  - source:
+      node_name: TopicSubscriber
+      data_kind: outputs
+      data_key: message
+    target:
+      node_name: MessageToFields_2
+      data_kind: inputs
+      data_key: in
+  - source:
+      node_name: MessageToFields_2
+      data_kind: outputs
+      data_key: holding_object
+    target:
+      node_name: IsAlreadyHolding
+      data_kind: inputs
+      data_key: in
+  - source:
+      node_name: MessageToFields_2
+      data_kind: outputs
+      data_key: manipulated_object
+    target:
+      node_name: PutDownTrash
+      data_kind: inputs
+      data_key: ObjectToPickup.in
+tick_frequency_hz: 10
+state: EDITABLE
+public_node_data:
+  - node_name: TrashLocation
+    data_kind: inputs
+    data_key: in
+  - node_name: MessageToFields_2
+    data_kind: outputs
+    data_key: header
+  - node_name: MessageToFields_2
+    data_kind: outputs
+    data_key: name
+  - node_name: MessageToFields_2
+    data_kind: outputs
+    data_key: pose
+  - node_name: MessageToFields_2
+    data_kind: outputs
+    data_key: battery_level
+  - node_name: MessageToFields_2
+    data_kind: outputs
+    data_key: executing_action
+  - node_name: MessageToFields_2
+    data_kind: outputs
+    data_key: last_visited_location
+  - node_name: MoveToTrashLocation
+    data_kind: outputs
+    data_key: load_success
+  - node_name: MoveToTrashLocation
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: GetDetectObjectsResult
+    data_kind: outputs
+    data_key: message
+  - node_name: EnumExecutionResult
+    data_kind: outputs
+    data_key: CANCELED
+  - node_name: EnumExecutionResult
+    data_kind: outputs
+    data_key: EXECUTION_FAILURE
+  - node_name: EnumExecutionResult
+    data_kind: outputs
+    data_key: INVALID_ACTION
+  - node_name: EnumExecutionResult
+    data_kind: outputs
+    data_key: PLANNING_FAILURE
+  - node_name: EnumExecutionResult
+    data_kind: outputs
+    data_key: POSTCONDITION_FAILURE
+  - node_name: EnumExecutionResult
+    data_kind: outputs
+    data_key: PRECONDITION_FAILURE
+  - node_name: EnumExecutionResult
+    data_kind: outputs
+    data_key: STATUS__DEFAULT
+  - node_name: EnumExecutionResult
+    data_kind: outputs
+    data_key: UNKNOWN
+  - node_name: MessageToFields
+    data_kind: outputs
+    data_key: category
+  - node_name: MessageToFields
+    data_kind: outputs
+    data_key: parent
+  - node_name: MessageToFields
+    data_kind: outputs
+    data_key: pose
+  - node_name: PickUpTrash
+    data_kind: outputs
+    data_key: load_success
+  - node_name: PickUpTrash
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: MoveToDumpster_2
+    data_kind: outputs
+    data_key: load_success
+  - node_name: MoveToDumpster_2
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: PutDownTrash
+    data_kind: outputs
+    data_key: load_success
+  - node_name: PutDownTrash
+    data_kind: outputs
+    data_key: load_error_msg

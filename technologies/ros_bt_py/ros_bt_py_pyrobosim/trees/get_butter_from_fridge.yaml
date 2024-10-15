@@ -1,0 +1,732 @@
+name: ''
+path: ''
+root_name: RootSequence
+nodes:
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: RootSequence
+    child_names:
+      - SetupSequence
+      - MoveButterSequence
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: SetupSequence
+    child_names:
+      - ExecutionResultConstants
+      - NamesSequence
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.enum
+    node_class: EnumFields
+    version: 0.1.0
+    max_children: 0
+    name: ExecutionResultConstants
+    child_names: []
+    options:
+      - key: ros_message_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs: []
+    outputs:
+      - key: CANCELED
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: EXECUTION_FAILURE
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: INVALID_ACTION
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: PLANNING_FAILURE
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: POSTCONDITION_FAILURE
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: PRECONDITION_FAILURE
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: STATUS__DEFAULT
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: SUCCESS
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: UNKNOWN
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: NamesSequence
+    child_names:
+      - FridgeName
+      - ButterName
+      - TableName
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.constant
+    node_class: Constant
+    version: 0.1.0
+    max_children: 0
+    name: FridgeName
+    child_names: []
+    options:
+      - key: constant_type
+        serialized_value: '{"py/type": "builtins.str"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: constant_value
+        serialized_value: '"fridge"'
+        serialized_type: '{"py/type": "builtins.str"}'
+    inputs: []
+    outputs:
+      - key: constant
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.constant
+    node_class: Constant
+    version: 0.1.0
+    max_children: 0
+    name: ButterName
+    child_names: []
+    options:
+      - key: constant_type
+        serialized_value: '{"py/type": "builtins.str"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: constant_value
+        serialized_value: '"butter"'
+        serialized_type: '{"py/type": "builtins.str"}'
+    inputs: []
+    outputs:
+      - key: constant
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.constant
+    node_class: Constant
+    version: 0.1.0
+    max_children: 0
+    name: TableName
+    child_names: []
+    options:
+      - key: constant_type
+        serialized_value: '{"py/type": "builtins.str"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: constant_value
+        serialized_value: '"table"'
+        serialized_type: '{"py/type": "builtins.str"}'
+    inputs: []
+    outputs:
+      - key: constant
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: MoveButterSequence
+    child_names:
+      - MoveToFridge
+      - OpenFridge
+      - RepeatIfFail_3
+      - MemorySequence
+      - PickupButter
+      - MoveToTable
+      - PutDownButter
+      - MoveToFridge_2
+      - CloseFridge
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: MoveToFridge
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/move_to_pose.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: MoveToCharger.TargetPose.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: OpenFridge
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/open_door.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs: []
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.decorators
+    node_class: RepeatIfFail
+    version: 0.1.0
+    max_children: 1
+    name: RepeatIfFail_3
+    child_names:
+      - DetectButterSequence
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: DetectButterSequence
+    child_names:
+      - DetectButterAction
+      - GetDetectButterResult
+      - DetectButterSuccessful?
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.action
+    node_class: Action
+    version: 0.1.0
+    max_children: 0
+    name: DetectButterAction
+    child_names: []
+    options:
+      - key: action_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.action._detect_objects.DetectObjects"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: action_name
+        serialized_value: '"/robot/detect_objects"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: wait_for_action_server_seconds
+        serialized_value: '2.0'
+        serialized_type: '{"py/type": "builtins.float"}'
+      - key: timeout_seconds
+        serialized_value: '5.0'
+        serialized_type: '{"py/type": "builtins.float"}'
+      - key: fail_if_not_available
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: target_object
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: result_execution_result
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+      - key: result_detected_objects
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.list"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.message_converters
+    node_class: MessageToFields
+    version: 0.1.0
+    max_children: 0
+    name: GetDetectButterResult
+    child_names: []
+    options:
+      - key: input_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+    outputs:
+      - key: status
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: message
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.compare
+    node_class: Compare
+    version: 0.1.0
+    max_children: 0
+    name: DetectButterSuccessful?
+    child_names: []
+    options:
+      - key: compare_type
+        serialized_value: '{"py/type": "builtins.int"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: a
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: b
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: MemorySequence
+    child_names:
+      - Inverter
+      - GetConstListItem
+      - MessageToFields
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.decorators
+    node_class: Inverter
+    version: 0.1.0
+    max_children: 1
+    name: Inverter
+    child_names:
+      - MemorySequence_2
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: MemorySequence_2
+    child_names:
+      - ListLength
+      - LessThanIntConstant
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.list
+    node_class: ListLength
+    version: 0.1.0
+    max_children: 0
+    name: ListLength
+    child_names: []
+    options: []
+    inputs:
+      - key: list
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.list"}'
+    outputs:
+      - key: length
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.compare
+    node_class: LessThanIntConstant
+    version: 0.1.0
+    max_children: 0
+    name: LessThanIntConstant
+    child_names: []
+    options:
+      - key: target
+        serialized_value: '0'
+        serialized_type: '{"py/type": "builtins.int"}'
+    inputs:
+      - key: a
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.getters
+    node_class: GetConstListItem
+    version: 0.1.0
+    max_children: 1
+    name: GetConstListItem
+    child_names: []
+    options:
+      - key: list_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._object_state.ObjectState"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: index
+        serialized_value: '0'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: succeed_on_stale_data
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: list
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.list"}'
+    outputs:
+      - key: item
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._object_state.ObjectState"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.message_converters
+    node_class: MessageToFields
+    version: 0.1.0
+    max_children: 0
+    name: MessageToFields
+    child_names: []
+    options:
+      - key: input_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._object_state.ObjectState"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._object_state.ObjectState"}'
+    outputs:
+      - key: name
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: category
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: parent
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: pose
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "geometry_msgs.msg._pose.Pose"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: PickupButter
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/pick_up.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: ObjectToPickUp.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: MoveToTable
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/move_to_pose.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: MoveToCharger.TargetPose.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: PutDownButter
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/put_down.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: ObjectToPickup.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: MoveToFridge_2
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/move_to_pose.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: MoveToCharger.TargetPose.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: CloseFridge
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/close_door.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs: []
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+data_wirings:
+  - source:
+      node_name: GetDetectButterResult
+      data_kind: outputs
+      data_key: status
+    target:
+      node_name: DetectButterSuccessful?
+      data_kind: inputs
+      data_key: b
+  - source:
+      node_name: ExecutionResultConstants
+      data_kind: outputs
+      data_key: SUCCESS
+    target:
+      node_name: DetectButterSuccessful?
+      data_kind: inputs
+      data_key: a
+  - source:
+      node_name: ButterName
+      data_kind: outputs
+      data_key: constant
+    target:
+      node_name: DetectButterAction
+      data_kind: inputs
+      data_key: target_object
+  - source:
+      node_name: DetectButterAction
+      data_kind: outputs
+      data_key: result_execution_result
+    target:
+      node_name: GetDetectButterResult
+      data_kind: inputs
+      data_key: in
+  - source:
+      node_name: DetectButterAction
+      data_kind: outputs
+      data_key: result_detected_objects
+    target:
+      node_name: GetConstListItem
+      data_kind: inputs
+      data_key: list
+  - source:
+      node_name: DetectButterAction
+      data_kind: outputs
+      data_key: result_detected_objects
+    target:
+      node_name: ListLength
+      data_kind: inputs
+      data_key: list
+  - source:
+      node_name: ListLength
+      data_kind: outputs
+      data_key: length
+    target:
+      node_name: LessThanIntConstant
+      data_kind: inputs
+      data_key: a
+  - source:
+      node_name: GetConstListItem
+      data_kind: outputs
+      data_key: item
+    target:
+      node_name: MessageToFields
+      data_kind: inputs
+      data_key: in
+  - source:
+      node_name: MessageToFields
+      data_kind: outputs
+      data_key: name
+    target:
+      node_name: PickupButter
+      data_kind: inputs
+      data_key: ObjectToPickUp.in
+  - source:
+      node_name: MessageToFields
+      data_kind: outputs
+      data_key: name
+    target:
+      node_name: PutDownButter
+      data_kind: inputs
+      data_key: ObjectToPickup.in
+  - source:
+      node_name: TableName
+      data_kind: outputs
+      data_key: constant
+    target:
+      node_name: MoveToTable
+      data_kind: inputs
+      data_key: MoveToCharger.TargetPose.in
+  - source:
+      node_name: FridgeName
+      data_kind: outputs
+      data_key: constant
+    target:
+      node_name: MoveToFridge_2
+      data_kind: inputs
+      data_key: MoveToCharger.TargetPose.in
+  - source:
+      node_name: FridgeName
+      data_kind: outputs
+      data_key: constant
+    target:
+      node_name: MoveToFridge
+      data_kind: inputs
+      data_key: MoveToCharger.TargetPose.in
+tick_frequency_hz: 10
+state: EDITABLE
+public_node_data:
+  - node_name: ExecutionResultConstants
+    data_kind: outputs
+    data_key: CANCELED
+  - node_name: ExecutionResultConstants
+    data_kind: outputs
+    data_key: EXECUTION_FAILURE
+  - node_name: ExecutionResultConstants
+    data_kind: outputs
+    data_key: INVALID_ACTION
+  - node_name: ExecutionResultConstants
+    data_kind: outputs
+    data_key: PLANNING_FAILURE
+  - node_name: ExecutionResultConstants
+    data_kind: outputs
+    data_key: POSTCONDITION_FAILURE
+  - node_name: ExecutionResultConstants
+    data_kind: outputs
+    data_key: PRECONDITION_FAILURE
+  - node_name: ExecutionResultConstants
+    data_kind: outputs
+    data_key: STATUS__DEFAULT
+  - node_name: ExecutionResultConstants
+    data_kind: outputs
+    data_key: UNKNOWN
+  - node_name: MoveToFridge
+    data_kind: outputs
+    data_key: load_success
+  - node_name: MoveToFridge
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: OpenFridge
+    data_kind: outputs
+    data_key: load_success
+  - node_name: OpenFridge
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: GetDetectButterResult
+    data_kind: outputs
+    data_key: message
+  - node_name: MessageToFields
+    data_kind: outputs
+    data_key: category
+  - node_name: MessageToFields
+    data_kind: outputs
+    data_key: parent
+  - node_name: MessageToFields
+    data_kind: outputs
+    data_key: pose
+  - node_name: PickupButter
+    data_kind: outputs
+    data_key: load_success
+  - node_name: PickupButter
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: MoveToTable
+    data_kind: outputs
+    data_key: load_success
+  - node_name: MoveToTable
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: PutDownButter
+    data_kind: outputs
+    data_key: load_success
+  - node_name: PutDownButter
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: MoveToFridge_2
+    data_kind: outputs
+    data_key: load_success
+  - node_name: MoveToFridge_2
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: CloseFridge
+    data_kind: outputs
+    data_key: load_success
+  - node_name: CloseFridge
+    data_kind: outputs
+    data_key: load_error_msg

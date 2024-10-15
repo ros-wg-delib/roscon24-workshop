@@ -1,0 +1,311 @@
+name: pick_up.yaml
+path: ''
+root_name: PickUpSequence
+nodes:
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: PickUpSequence
+    child_names:
+      - ObjectToPickUp
+      - EnumExeuctionResult
+      - PickUpRequest
+      - SetAttr_2
+      - Retry
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.io
+    node_class: IOInputOption
+    version: 0.1.0
+    max_children: 0
+    name: ObjectToPickUp
+    child_names: []
+    options:
+      - key: io_type
+        serialized_value: '{"py/type": "builtins.str"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: default
+        serialized_value: '"object"'
+        serialized_type: '{"py/type": "builtins.str"}'
+    inputs:
+      - key: in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: out
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.enum
+    node_class: EnumFields
+    version: 0.1.0
+    max_children: 0
+    name: EnumExeuctionResult
+    child_names: []
+    options:
+      - key: ros_message_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs: []
+    outputs:
+      - key: CANCELED
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: EXECUTION_FAILURE
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: INVALID_ACTION
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: PLANNING_FAILURE
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: POSTCONDITION_FAILURE
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: PRECONDITION_FAILURE
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: STATUS__DEFAULT
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: SUCCESS
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: UNKNOWN
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.messages_from_dict
+    node_class: MessageFromConstDict
+    version: 0.9.0
+    max_children: 0
+    name: PickUpRequest
+    child_names: []
+    options:
+      - key: message_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: dict
+        serialized_value: '{"robot": "robot", "type": "pick"}'
+        serialized_type: '{"py/type": "builtins.dict"}'
+    inputs: []
+    outputs:
+      - key: message
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.setters
+    node_class: SetAttr
+    version: 0.1.0
+    max_children: 0
+    name: SetAttr_2
+    child_names: []
+    options:
+      - key: object_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: attr_name
+        serialized_value: '"object"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: attr_type
+        serialized_value: '{"py/type": "builtins.str"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: object
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+      - key: attr_value
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: new_object
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.decorators
+    node_class: Retry
+    version: 0.1.0
+    max_children: 1
+    name: Retry
+    child_names:
+      - Sequence
+    options:
+      - key: num_retries
+        serialized_value: '10'
+        serialized_type: '{"py/type": "builtins.int"}'
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: Sequence
+    version: 0.1.0
+    max_children: -1
+    name: Sequence
+    child_names:
+      - PickUpObject
+      - PickUpResult
+      - PickUpSuccessfull?
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.action
+    node_class: Action
+    version: 0.1.0
+    max_children: 0
+    name: PickUpObject
+    child_names: []
+    options:
+      - key: action_type
+        serialized_value: >-
+          {"py/type":
+          "pyrobosim_msgs.action._execute_task_action.ExecuteTaskAction"}
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: action_name
+        serialized_value: '"/execute_action"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: wait_for_action_server_seconds
+        serialized_value: '2.0'
+        serialized_type: '{"py/type": "builtins.float"}'
+      - key: timeout_seconds
+        serialized_value: '5.0'
+        serialized_type: '{"py/type": "builtins.float"}'
+      - key: fail_if_not_available
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: action
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._task_action.TaskAction"}'
+    outputs:
+      - key: result_execution_result
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.message_converters
+    node_class: MessageToFields
+    version: 0.1.0
+    max_children: 0
+    name: PickUpResult
+    child_names: []
+    options:
+      - key: input_type
+        serialized_value: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "pyrobosim_msgs.msg._execution_result.ExecutionResult"}'
+    outputs:
+      - key: status
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: message
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.compare
+    node_class: Compare
+    version: 0.1.0
+    max_children: 0
+    name: PickUpSuccessfull?
+    child_names: []
+    options:
+      - key: compare_type
+        serialized_value: '{"py/type": "builtins.int"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: a
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+      - key: b
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.int"}'
+    outputs: []
+    state: SHUTDOWN
+data_wirings:
+  - source:
+      node_name: ObjectToPickUp
+      data_kind: outputs
+      data_key: out
+    target:
+      node_name: SetAttr_2
+      data_kind: inputs
+      data_key: attr_value
+  - source:
+      node_name: PickUpRequest
+      data_kind: outputs
+      data_key: message
+    target:
+      node_name: SetAttr_2
+      data_kind: inputs
+      data_key: object
+  - source:
+      node_name: SetAttr_2
+      data_kind: outputs
+      data_key: new_object
+    target:
+      node_name: PickUpObject
+      data_kind: inputs
+      data_key: action
+  - source:
+      node_name: PickUpObject
+      data_kind: outputs
+      data_key: result_execution_result
+    target:
+      node_name: PickUpResult
+      data_kind: inputs
+      data_key: in
+  - source:
+      node_name: EnumExeuctionResult
+      data_kind: outputs
+      data_key: SUCCESS
+    target:
+      node_name: PickUpSuccessfull?
+      data_kind: inputs
+      data_key: a
+  - source:
+      node_name: PickUpResult
+      data_kind: outputs
+      data_key: status
+    target:
+      node_name: PickUpSuccessfull?
+      data_kind: inputs
+      data_key: b
+tick_frequency_hz: 10
+state: EDITABLE
+public_node_data:
+  - node_name: ObjectToPickUp
+    data_kind: inputs
+    data_key: in
+  - node_name: EnumExeuctionResult
+    data_kind: outputs
+    data_key: CANCELED
+  - node_name: EnumExeuctionResult
+    data_kind: outputs
+    data_key: EXECUTION_FAILURE
+  - node_name: EnumExeuctionResult
+    data_kind: outputs
+    data_key: INVALID_ACTION
+  - node_name: EnumExeuctionResult
+    data_kind: outputs
+    data_key: PLANNING_FAILURE
+  - node_name: EnumExeuctionResult
+    data_kind: outputs
+    data_key: POSTCONDITION_FAILURE
+  - node_name: EnumExeuctionResult
+    data_kind: outputs
+    data_key: PRECONDITION_FAILURE
+  - node_name: EnumExeuctionResult
+    data_kind: outputs
+    data_key: STATUS__DEFAULT
+  - node_name: EnumExeuctionResult
+    data_kind: outputs
+    data_key: UNKNOWN
+  - node_name: PickUpResult
+    data_kind: outputs
+    data_key: message

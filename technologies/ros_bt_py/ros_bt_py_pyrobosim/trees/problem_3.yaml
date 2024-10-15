@@ -1,0 +1,76 @@
+name: problem_3.yaml
+path: ''
+root_name: ''
+nodes:
+- module: ros_bt_py.nodes.sequence
+  node_class: MemorySequence
+  version: 0.1.0
+  max_children: -1
+  name: RootSequence
+  child_names:
+  - GetButterFromFridge
+  - GetBreadFromPantry
+  options: []
+  inputs: []
+  outputs: []
+  state: SHUTDOWN
+- module: ros_bt_py.ros_nodes.subtree
+  node_class: Subtree
+  version: 0.2.0
+  max_children: 0
+  name: GetButterFromFridge
+  child_names: []
+  options:
+  - key: subtree_path
+    serialized_value: '"package://ros_bt_py_pyrobosim/trees/get_butter_from_fridge.yaml"'
+    serialized_type: '{"py/type": "builtins.str"}'
+  - key: use_io_nodes
+    serialized_value: 'true'
+    serialized_type: '{"py/type": "builtins.bool"}'
+  inputs: []
+  outputs:
+  - key: load_success
+    serialized_value: 'null'
+    serialized_type: '{"py/type": "builtins.bool"}'
+  - key: load_error_msg
+    serialized_value: 'null'
+    serialized_type: '{"py/type": "builtins.str"}'
+  state: SHUTDOWN
+- module: ros_bt_py.ros_nodes.subtree
+  node_class: Subtree
+  version: 0.2.0
+  max_children: 0
+  name: GetBreadFromPantry
+  child_names: []
+  options:
+  - key: subtree_path
+    serialized_value: '"package://ros_bt_py_pyrobosim/trees/get_bread_from_pantry.yaml"'
+    serialized_type: '{"py/type": "builtins.str"}'
+  - key: use_io_nodes
+    serialized_value: 'true'
+    serialized_type: '{"py/type": "builtins.bool"}'
+  inputs: []
+  outputs:
+  - key: load_success
+    serialized_value: 'null'
+    serialized_type: '{"py/type": "builtins.bool"}'
+  - key: load_error_msg
+    serialized_value: 'null'
+    serialized_type: '{"py/type": "builtins.str"}'
+  state: SHUTDOWN
+data_wirings: []
+tick_frequency_hz: 10.0
+state: IDLE
+public_node_data:
+- node_name: GetButterFromFridge
+  data_kind: outputs
+  data_key: load_success
+- node_name: GetButterFromFridge
+  data_kind: outputs
+  data_key: load_error_msg
+- node_name: GetBreadFromPantry
+  data_kind: outputs
+  data_key: load_success
+- node_name: GetBreadFromPantry
+  data_kind: outputs
+  data_key: load_error_msg

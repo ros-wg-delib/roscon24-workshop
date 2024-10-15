@@ -1,0 +1,317 @@
+name: ''
+path: ''
+root_name: MemorySequence
+nodes:
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: MemorySequence
+    child_names:
+      - SetupSequence
+      - PrepareRoute
+      - IterateList
+      - CloseDumpster
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: SetupSequence
+    child_names:
+      - Dumpster
+      - DiningTrashHallway
+      - CheckIfDumpsterRechable
+      - TrashLocations
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.constant
+    node_class: Constant
+    version: 0.1.0
+    max_children: 0
+    name: Dumpster
+    child_names: []
+    options:
+      - key: constant_type
+        serialized_value: '{"py/type": "builtins.str"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: constant_value
+        serialized_value: '"dumpster"'
+        serialized_type: '{"py/type": "builtins.str"}'
+    inputs: []
+    outputs:
+      - key: constant
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.constant
+    node_class: Constant
+    version: 0.1.0
+    max_children: 0
+    name: DiningTrashHallway
+    child_names: []
+    options:
+      - key: constant_type
+        serialized_value: '{"py/type": "builtins.str"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: constant_value
+        serialized_value: '"hall_dining_trash"'
+        serialized_type: '{"py/type": "builtins.str"}'
+    inputs: []
+    outputs:
+      - key: constant
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: CheckIfDumpsterRechable
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/check_if_reachable.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: TargetLocation.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: Hallway.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.constant
+    node_class: Constant
+    version: 0.1.0
+    max_children: 0
+    name: TrashLocations
+    child_names: []
+    options:
+      - key: constant_type
+        serialized_value: '{"py/type": "builtins.list"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+      - key: constant_value
+        serialized_value: '["bin", "desk"]'
+        serialized_type: '{"py/type": "builtins.list"}'
+    inputs: []
+    outputs:
+      - key: constant
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.list"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.sequence
+    node_class: MemorySequence
+    version: 0.1.0
+    max_children: -1
+    name: PrepareRoute
+    child_names:
+      - MoveToDumpster
+      - OpenDumpster
+    options: []
+    inputs: []
+    outputs: []
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: MoveToDumpster
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/move_to_pose.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: MoveToCharger.TargetPose.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: OpenDumpster
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/open_door.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs: []
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.nodes.list
+    node_class: IterateList
+    version: 0.1.0
+    max_children: 1
+    name: IterateList
+    child_names:
+      - DiscardTrash
+    options:
+      - key: item_type
+        serialized_value: '{"py/type": "builtins.str"}'
+        serialized_type: '{"py/type": "builtins.type"}'
+    inputs:
+      - key: list
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.list"}'
+    outputs:
+      - key: list_item
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: DiscardTrash
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/discard_trash.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs:
+      - key: TrashLocation.in
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+  - module: ros_bt_py.ros_nodes.subtree
+    node_class: Subtree
+    version: 0.2.0
+    max_children: 0
+    name: CloseDumpster
+    child_names: []
+    options:
+      - key: subtree_path
+        serialized_value: '"package://ros_bt_py_pyrobosim/trees/close_door.yaml"'
+        serialized_type: '{"py/type": "builtins.str"}'
+      - key: use_io_nodes
+        serialized_value: 'true'
+        serialized_type: '{"py/type": "builtins.bool"}'
+    inputs: []
+    outputs:
+      - key: load_success
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.bool"}'
+      - key: load_error_msg
+        serialized_value: 'null'
+        serialized_type: '{"py/type": "builtins.str"}'
+    state: SHUTDOWN
+data_wirings:
+  - source:
+      node_name: TrashLocations
+      data_kind: outputs
+      data_key: constant
+    target:
+      node_name: IterateList
+      data_kind: inputs
+      data_key: list
+  - source:
+      node_name: IterateList
+      data_kind: outputs
+      data_key: list_item
+    target:
+      node_name: DiscardTrash
+      data_kind: inputs
+      data_key: TrashLocation.in
+  - source:
+      node_name: Dumpster
+      data_kind: outputs
+      data_key: constant
+    target:
+      node_name: CheckIfDumpsterRechable
+      data_kind: inputs
+      data_key: TargetLocation.in
+  - source:
+      node_name: DiningTrashHallway
+      data_kind: outputs
+      data_key: constant
+    target:
+      node_name: CheckIfDumpsterRechable
+      data_kind: inputs
+      data_key: Hallway.in
+  - source:
+      node_name: Dumpster
+      data_kind: outputs
+      data_key: constant
+    target:
+      node_name: MoveToDumpster
+      data_kind: inputs
+      data_key: MoveToCharger.TargetPose.in
+tick_frequency_hz: 10
+state: EDITABLE
+public_node_data:
+  - node_name: CheckIfDumpsterRechable
+    data_kind: outputs
+    data_key: load_success
+  - node_name: CheckIfDumpsterRechable
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: MoveToDumpster
+    data_kind: outputs
+    data_key: load_success
+  - node_name: MoveToDumpster
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: OpenDumpster
+    data_kind: outputs
+    data_key: load_success
+  - node_name: OpenDumpster
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: DiscardTrash
+    data_kind: outputs
+    data_key: load_success
+  - node_name: DiscardTrash
+    data_kind: outputs
+    data_key: load_error_msg
+  - node_name: CloseDumpster
+    data_kind: outputs
+    data_key: load_success
+  - node_name: CloseDumpster
+    data_kind: outputs
+    data_key: load_error_msg
