@@ -1,0 +1,9 @@
+bt_action_server:
+  ros__parameters:
+    action_name: "flexbe_bt_server" # Optional (defaults to `bt_action_server`)
+    tick_frequency: 100 # Optional (defaults to 100 Hz)
+    groot2_port: 5555 # Optional (defaults to 1667)
+    ros_plugins_timeout: 1000  # Optional (defaults 1000 ms)
+
+    behavior_trees:
+      - pyrobosim_flexbe_btcpp/trees

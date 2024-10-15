@@ -34,41 +34,45 @@ from action_msgs.msg import GoalStatus
 from flexbe_core import EventState, Logger
 from flexbe_core.proxy import ProxyActionClient
 
-from pyrobosim_msgs.action import FollowPath
-from pyrobosim_msgs.msg import ExecutionResult, Path
+from geometry_msgs.msg import Pose
+
+from btcpp_ros2_interfaces.action import ExecuteTree
+from btcpp_ros2_interfaces.msg import NodeStatus
+
+from rclpy.duration import Duration
 
 
-class FollowPathState(EventState):
+class RunBtCppState(EventState):
     """
-    FlexBE state to request following a path for PyRoboSim robot.
+    FlexBE state to request execution of Behavior Tree using BT.cpp system.
 
     Elements defined here for UI
     Parameters
-    -- action_topic        Action topic name (default= 'robot/follow_path')
-    -- server_timeout      Wait for action server timeout in seconds (default = 5s)
+    -- action_topic     Action topic name (default= '/flexbe_bt_server')
+    -- timeout          Total time to wait for bt server in seconds (default = 2s)
 
     Outputs
-    <= done                Successfully reached the goal
-    <= failed              Failed to reach goal
+    <= success          Successfully executed tree
+    <= failure          Tree failure
+    <= invalid          Invalid tree specified
 
     User data
-    ># path       Path     Desired path to follow
-    #> msg        string   Result message
+    ># bt_name       string   Tree name
+    ># bt_payload    string   Payload to pass to BT executor
+    #> msg           string   Result message
     """
 
-    def __init__(self, action_topic='robot/follow_path',
-                 server_timeout=2.0):
+    def __init__(self, action_topic='/flexbe_bt_server',
+                 timeout=2.0):
         # See example_state.py for basic explanations.
-        super().__init__(outcomes=['done', 'failed'],
-                         input_keys=['path'],
+        super().__init__(outcomes=['success', 'failure', 'invalid'],
+                         input_keys=['bt_name', 'bt_payload'],
                          output_keys=['msg'])
 
-        self._goal = None
-
         self._topic = action_topic
-        self._server_timeout_sec = server_timeout
+        self._server_timeout = Duration(seconds=timeout)
 
-        self._client = ProxyActionClient({self._topic: FollowPath},
+        self._client = ProxyActionClient({self._topic: ExecuteTree},
                                          wait_duration=0.0)  # no need to wait here, we'll check on_enter
 
         self._return = None  # Retain return value in case the outcome is blocked by operator
@@ -87,29 +91,29 @@ class FollowPathState(EventState):
         if self._client.has_result(self._topic):
             # Check if the action has been finished
             result = self._client.get_result(self._topic, clear=True)
-            Logger.localinfo(f"  '{self}' : '{self._topic}' returned {status} "
-                             f'result.status={result.execution_result.status}'
-                             f" '{result.execution_result.message}'")
+            userdata.msg = result.return_message  # Output message
             if status == GoalStatus.STATUS_SUCCEEDED:
-                result_status = result.execution_result.status
-                userdata.msg = result.execution_result.message  # Output message
-                if result_status == ExecutionResult.SUCCESS:
-                    self._return = 'done'
+                node_status = result.node_status.status
+                if node_status == NodeStatus.SUCCESS:
+                    Logger.localinfo(f"'{self}' - behavior tree returned success!"
+                                     f" '{result.return_message}'")
+                    self._return = 'success'
                 else:
-                    Logger.localwarn(f"{self} : '{self._topic}' -"
-                                     f" failed during follow ({result_status}) '{userdata.msg}'")
-                    self._return = 'failed'
+                    Logger.localwarn(f"'{self}' : '{self._topic}' - behavior tree "
+                                     f"returned ({node_status}) '{result.return_message}'")
+                    self._return = 'failure'
                 return self._return
-        # Note: Not checking a timeout here it is up to follow capability and/or operator to enforce
-        #       given varying path lengths
+            else:
+                Logger.logwarn(f"{self} : '{self._topic}' - invalid action status '{result.return_message}'")
+                self._return = 'failure'
 
         # Otherwise check for action status change
         if status == GoalStatus.STATUS_CANCELED:
-            Logger.loginfo(f" '{self}' : '{self._topic}' - goal was canceled! ")
-            self._return = 'failed'
+            Logger.loginfo(f" '{self}' : '{self._topic}' - behavior tree was canceled! ")
+            self._return = 'failure'
         elif status == GoalStatus.STATUS_ABORTED:
-            Logger.loginfo(f" '{self}' : '{self._topic}' -  goal was aborted! ")
-            self._return = 'failed'
+            Logger.loginfo(f" '{self}' : '{self._topic}' - behavior tree  was aborted! ")
+            self._return = 'failure'
 
         # If the action has not yet finished, None outcome will be returned and the state stays active.
         return self._return
@@ -120,33 +124,28 @@ class FollowPathState(EventState):
         Logger.localinfo(f"on_enter '{self}' - '{self.path}' ...")
         self._return = None
         userdata.msg = ''
-
-        if 'path' not in userdata:
-            self._return = 'failed'
-            userdata.msg = f"FollowPathState '{self}' requires userdata.path key!"
+        self._client.remove_result(self._topic)  # clear any prior result from action server
+        if 'bt_name' not in userdata:
+            self._return = 'invalid'
+            userdata.msg = f"RunBtCppState '{self}' requires userdata.bt_name key!"
             Logger.localwarn(userdata.msg)
             return
 
+        bt_name  = userdata.bt_name
+        bt_payload = ''
+        if bt_payload in userdata:
+            bt_payload = userdata.bt_payload
+
         # Send the goal.
         try:
-            path = userdata.path
-            if isinstance(path, Path):
-                self._goal = FollowPath.Goal(path=path)
-            else:
-                userdata.msg = f"Invalid goal type '{type(path)}' - must be pyrobosim_msgs/Path!"
-                Logger.localwarn(userdata.msg)
-                self._return = 'failed'
-                return
-            Logger.localinfo(f'Send follow path goal with {len(path.poses)} waypoints ...')
-            # Send goal clears prior results
-            self._client.send_goal(self._topic, self._goal, wait_duration=self._server_timeout_sec)
+            goal = ExecuteTree.Goal(target_tree=bt_name, payload=bt_payload)
+            self._client.send_goal(self._topic, goal, wait_duration=self._server_timeout.nanoseconds * 1e-9)
         except Exception as exc:  # pylint: disable=W0703
             # Since a state failure does not necessarily cause a behavior failure,
             # it is recommended to only print warnings, not errors.
             # Using a linebreak before appending the error log enables the operator to collapse details in the GUI.
             Logger.logwarn(f"Failed to send the '{self}' command:\n  {type(exc)} - {exc}")
-            self._client.remove_result(self._topic)  # clear any prior result from action server
-            self._return = 'failed'
+            self._return = 'invalid'
 
     def on_exit(self, userdata):
         """Call when state is deactivated."""
@@ -159,49 +158,43 @@ class FollowPathState(EventState):
             # Check for action status change (blocking call!)
             is_terminal, status = self._client.verify_action_status(self._topic, 0.1)
             if status == GoalStatus.STATUS_CANCELED:
-                Logger.loginfo(f" '{self}' : '{self._topic}' - request to follow was canceled! ")
+                Logger.loginfo(f" '{self}' : '{self._topic}' - request to run BT was canceled! ")
+                self._return = 'failure'
             else:
                 status_string = self._client.get_status_string(self._topic)
-                Logger.loginfo(f" '{self}' : '{self._topic}' - Requested to cancel an active follow request"
-                               f" ({is_terminal}, '{status_string}').")
-            self._return = 'failed'
+                Logger.loginfo(f" '{self}' : '{self._topic}' - Requested to cancel an active BT '{status_string}'"
+                               f" (terminal={is_terminal})")
+            self._return = 'failure'
 
         # Local message are shown in terminal but not the UI
-        if self._return == 'done':
-            Logger.localinfo('Successfully followed path.')
+        if self._return == 'success':
+            Logger.localinfo('Successfully executed the BT.')
         else:
-            Logger.localwarn('Failed to follow path.')
+            Logger.localwarn('failure to execute the BT.')
         Logger.localinfo(f"on_exit '{self}' - '{self.path}' ...")
-
-        # Choosing to remove in on_enter and retain in proxy for now
-        # Either choice can be valid.
-        # if self._client.has_result(self._topic):
-        #     # remove the old result so we are ready for the next time
-        #     # and don't prematurely return
-        #     self._client.remove_result(self._topic)
 
     def on_pause(self):
         """Execute each time this state is paused."""
         Logger.localinfo(f"on_pause '{self}' - '{self.path}' ...")
         if self._client.is_active(self._topic):
             self._client.cancel(self._topic)
-            Logger.localinfo(f"Cancelling active follow action '{self}' when paused ...")
             # Check for action status change (blocking call!)
             is_terminal, status = self._client.verify_action_status(self._topic, 0.1)
             if status == GoalStatus.STATUS_CANCELED:
-                Logger.loginfo(f" '{self}' : '{self._topic}' - request to follow was canceled! ")
+                Logger.loginfo(f" '{self}' : '{self._topic}' - request to run BT was canceled! ")
+                self._return = 'failure'
             else:
                 status_string = self._client.get_status_string(self._topic)
-                Logger.loginfo(f" '{self}' : '{self._topic}' - Requested to cancel an active follow request"
-                               f" ({is_terminal}, '{status_string}').")
-            self._return = 'failed'
+                Logger.loginfo(f" '{self}' : '{self._topic}' - Requested to cancel an active BT '{status_string}'"
+                               f" (terminal={is_terminal})")
+            self._return = 'failure'
 
     def on_resume(self, userdata):
         """Execute each time this state is resumed."""
         Logger.localinfo(f"on_resume '{self}' - '{self.path}' ...")
         if self._return is None:
-            Logger.localinfo(f"Cannot resume follow action '{self}' - require new plan ...")
-            self._return = 'failed'
+            Logger.localinfo(f"Cannot resume BT '{self}' - require new request ...")
+            self._return = 'failure'
 
     def on_start(self):
         """Call when behavior starts."""

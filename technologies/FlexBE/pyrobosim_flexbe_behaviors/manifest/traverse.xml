@@ -4,7 +4,7 @@
 
     <executable package_path="pyrobosim_flexbe_behaviors.traverse_sm" class="TraverseSM" />
     <tagstring>pyrobosim, delib_ws</tagstring>
-    <author>conner</author>
+    <author>David Conner</author>
     <date>Sun Sep 08 2024</date>
     <description>
         Traverse the world opening doors as required
