@@ -31,6 +31,8 @@ This is known as **task planning**, and you can learn more in [this blog post](h
 
 In this workshop, you will explore task planning in the ROS 2 ecosystem using [SkiROS2](https://github.com/RobotLabLTH/skiros2).
 
+[Start here to solve the workshop problems with SkiROS2 and to additionally explore task planning.](https://github.com/matthias-mayr/skiros2_pyrobosim_lib).
+
 ---
 
 ## Formal Verification and Model Checking
