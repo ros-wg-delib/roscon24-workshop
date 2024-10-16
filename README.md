@@ -80,11 +80,13 @@ Verify that you can launch a simulated world and the PyRoboSim UI appears on you
 ros2 run delib_ws_worlds run
 ```
 
-*After* the initial build completes, you can open new terminals and attach to the running container from a different terminal using the command:
+*After* the initial build completes, you can open new terminals and attach to the currently running container from a different terminal using the command:
 
 ```bash
-docker compose run base bash
+docker compose exec base bash
 ```
+
+> Note: This command must be executed from the `roscon24-workshop` repository folder.
 
 ---
 
