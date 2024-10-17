@@ -57,32 +57,36 @@ docker compose --help
 
 ### Installation
 
-First, clone this repository and its submodules.
+First, open a terminal window and clone this repository and its submodules.
 
 ```bash
 git clone --recurse-submodules https://github.com/ros-wg-delib/roscon24-workshop.git
 ```
 
-Start the Docker container.
-Note that this will pull the Docker image and may take a few minutes.
+Change into the repository folder (`cd roscon24-workshop`) and start the Docker container.
 
 ```bash
 docker compose run base
 ```
 
-This will start the container and drop you into a bash shell.
+> Note that this will initially download the Docker image and may take a few minutes
+> for the download complete and the workspace to build.
 
-Once you're in the container, check that you can launch a simulated world and the PyRoboSim UI appears on your screen.
+After the container build finishes you will be in a bash shell.
+
+Verify that you can launch a simulated world and the PyRoboSim UI appears on your screen.
 
 ```bash
 ros2 run delib_ws_worlds run
 ```
 
-You can attach to the running container from a different console, using the command:
+*After* the initial build completes, you can open new terminals and attach to the currently running container from a different terminal using the command:
 
 ```bash
-docker compose run base bash
+docker compose exec base bash
 ```
+
+> Note: This command must be executed from the `roscon24-workshop` repository folder.
 
 ---
 
@@ -98,7 +102,7 @@ We have created handy aliases that effectively wrap around `colcon build --symli
 * `delib_build_packages_up_to <package>` - Builds all dependencies up to a specific package.
 * `delib_clean` - Cleans up the entire workspace.
 
-When you are ready to shut down the container, enter the following command:
+When you are ready to shut down the container, enter the following command from a terminal on your system:
 
 ```bash
 docker compose down --remove-orphans
