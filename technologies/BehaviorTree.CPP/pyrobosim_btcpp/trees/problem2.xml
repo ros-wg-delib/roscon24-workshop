@@ -3,15 +3,15 @@
   <BehaviorTree ID="MainTree">
     <Sequence>
         <Fallback>
-            <Navigate name="ToTrash" target="dumpster"/>
+            <Navigate name="goto_trash" target="dumpster"/>
             <Sequence>
-                <Navigate name="ToTrash" target="hall_dining_trash"/>
+                <Navigate name="goto_door" target="hall_dining_trash"/>
                 <Open target="hall_dining_trash"/>
-                <Navigate name="ToTrash" target="dumpster"/>
+                <Navigate name="goto_trash_2" target="dumpster"/>
             </Sequence>
         </Fallback>
         <Open target="dumpster"/>
-        <Navigate name="ToTable" target="table"/>
+        <Navigate name="goto_table" target="table"/>
     </Sequence>
   </BehaviorTree>
 
