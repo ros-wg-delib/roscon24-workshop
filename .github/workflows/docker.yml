@@ -74,6 +74,8 @@ jobs:
         run: |
           docker save ${{ env.REGISTRY_IMAGE }}:${{ env.TAG_NAME }} | gzip > ./roscon_delib_ws_2024.tar.gz
       - name: Release
+        # Do not release on PRs from forks.
+        if: ${{ !github.event.pull_request.head.repo.fork }}
         uses: ncipollo/release-action@v1
         with:
           artifacts: './roscon_delib_ws_2024.tar.gz'
