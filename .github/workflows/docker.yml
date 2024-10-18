@@ -50,7 +50,9 @@ jobs:
             src/technologies/convince/task_2_solution/
           docker compose run test bash -c "source /delib_ws/install/setup.bash && pytest /delib_ws/src/dependencies/convince/AS2FM/test"
           docker compose down --remove-orphans
-      - name: Push to gh registry with sha and branch name
+      - name: Push to gh registry with sha and branch
+        # Do not push on PRs from forks.
+        if: ${{ !github.event.pull_request.head.repo.fork }}
         run: |
           echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
           # tag with sha and push
@@ -72,6 +74,8 @@ jobs:
         run: |
           docker save ${{ env.REGISTRY_IMAGE }}:${{ env.TAG_NAME }} | gzip > ./roscon_delib_ws_2024.tar.gz
       - name: Release
+        # Do not release on PRs from forks.
+        if: ${{ !github.event.pull_request.head.repo.fork }}
         uses: ncipollo/release-action@v1
         with:
           artifacts: './roscon_delib_ws_2024.tar.gz'
