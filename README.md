@@ -118,7 +118,7 @@ It will ask you for your `sudo` password.
 ### Develop inside the container using VSCode
 
 If you want to develop inside the container using VSCode, you need to have the [Docker extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) installed.
-To see the option "Attach Visual Studio Code", you also need to download the [Dev Container extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
+To see the option "Attach Visual Studio Code", you also need to download the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 
 Attach to the container as shown in the image below:
 
