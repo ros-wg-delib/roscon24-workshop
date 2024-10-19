@@ -16,6 +16,9 @@
         <Condition ID="IsBatteryLow">
             <input_port name="low_threshold" type="double" default="20.000000">Return SUCCESS if {@battery_level} below this value</input_port>
         </Condition>
+        <Action ID="GetCurrentLocation"/>
+            <output_port name="location" type="std::string"/>
+        </Action>
         <Action ID="Navigate">
             <input_port name="target" type="std::string"/>
             <input_port name="robotID" type="std::string" default="robot">Robot name</input_port>

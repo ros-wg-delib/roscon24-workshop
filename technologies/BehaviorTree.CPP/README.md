@@ -9,7 +9,7 @@ We suggest creating your XML trees in the folder `technologies/BehaviorTree.CPP/
 **Careful**: make sure to run this command in `/delib_ws` folder.
 
 ```bash
-colcon build --symlink-install --packages-select pyrobosim_btcpp
+colcon build --symlink-install --packages-up-to pyrobosim_btcpp
 ```
 
 ## How to run
