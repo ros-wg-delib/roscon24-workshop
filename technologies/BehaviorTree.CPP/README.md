@@ -9,7 +9,7 @@ We suggest creating your XML trees in the folder `technologies/BehaviorTree.CPP/
 **Careful**: make sure to run this command in `/delib_ws` folder.
 
 ```bash
-colcon build --symlink-install --packages-select pyrobosim_btcpp
+colcon build --symlink-install --packages-up-to pyrobosim_btcpp
 ```
 
 ## How to run
@@ -34,7 +34,7 @@ For instance, consider this sample XML in [trees/navigation_demo.xml](pyrobosim_
 
 NOTE: remember that the `name` attribute in the XML is optional and used for debugging only.
 
-You can run the BeahviorTree with the command:
+You can run the BehaviorTree with the command:
 
 ```bash
 ros2 run pyrobosim_btcpp btcpp_executor --ros-args -p tree:=trees/navigation_demo.xml

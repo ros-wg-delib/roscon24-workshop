@@ -1,0 +1,175 @@
+<root BTCPP_format="4">
+
+  <!-- The main tree, which uses the other subtrees. -->
+  <BehaviorTree ID="MainTree">
+    <Sequence>
+      <SubTree ID="OpenDoorToCharger"/>
+      <SubTree ID="PrepareMeal"/>
+      <SubTree ID="TakeOutTrash"/>
+    </Sequence>
+  </BehaviorTree>
+
+  <!-- Open the door to the closet, which contains the charger. -->
+  <BehaviorTree ID="OpenDoorToCharger">
+    <Sequence>
+      <RetryUntilSuccessful num_attempts="10">
+        <Navigate name="ToClosetDoor" target="hall_dining_closet"/>
+      </RetryUntilSuccessful>
+      <RetryUntilSuccessful num_attempts="10">
+        <Open name="OpenClosetDoor" target="hall_dining_closet"/>
+      </RetryUntilSuccessful>
+    </Sequence>
+  </BehaviorTree>
+
+  <!-- Bring the bread and butter to the table, paying attention to battery. -->
+  <BehaviorTree ID="PrepareMeal">
+    <Sequence>
+      <SubTree ID="NavigateRobustly" target="pantry"/>
+      <SubTree ID="OpenRobustly" target="pantry"/>
+      <SubTree ID="PickRobustly" object="bread0"/>
+      <SubTree ID="NavigateRobustly" target="table"/>
+      <SubTree ID="PlaceRobustly" object="bread0"/>
+      <SubTree ID="NavigateRobustly" target="pantry"/>
+      <SubTree ID="CloseRobustly" target="pantry"/>
+      <SubTree ID="NavigateRobustly" target="fridge"/>
+      <SubTree ID="OpenRobustly" target="fridge"/>
+      <SubTree ID="PickRobustly" object="butter0"/>
+      <SubTree ID="NavigateRobustly" target="table"/>
+      <SubTree ID="PlaceRobustly" object="butter0"/>
+      <SubTree ID="NavigateRobustly" target="fridge"/>
+      <SubTree ID="CloseRobustly" target="fridge"/>
+    </Sequence>
+  </BehaviorTree>
+
+
+  <!-- Take the trash to the dumpster, paying attention to battery. -->
+  <BehaviorTree ID="TakeOutTrash">
+    <Sequence>
+      <SubTree ID="NavigateRobustly" target="hall_dining_trash"/>
+      <SubTree ID="OpenRobustly" target="hall_dining_trash"/>
+      <SubTree ID="NavigateRobustly" target="dumpster"/>
+      <SubTree ID="OpenRobustly" target="dumpster"/>
+      <SubTree ID="NavigateRobustly" target="desk"/>
+      <SubTree ID="PickRobustly" object="waste0"/>
+      <SubTree ID="NavigateRobustly" target="dumpster"/>
+      <SubTree ID="PlaceRobustly" object="waste0"/>
+      <SubTree ID="NavigateRobustly" target="bin"/>
+      <SubTree ID="PickRobustly" object="waste1"/>
+      <SubTree ID="NavigateRobustly" target="dumpster"/>
+      <SubTree ID="PlaceRobustly" object="waste1"/>
+      <SubTree ID="CloseRobustly" target="dumpster"/>
+      <SubTree ID="NavigateRobustly" target="dining"/>
+      <SubTree ID="NavigateRobustly" target="hall_dining_trash"/>
+      <SubTree ID="CloseRobustly" target="hall_dining_trash"/>
+    </Sequence>
+  </BehaviorTree>
+
+  <!-- Helper subtrees that perform basic actions,
+  paying attention to both failures and battery usage. -->
+  <BehaviorTree ID="NavigateRobustly">
+    <RetryUntilSuccessful num_attempts="5">
+      <Fallback>
+        <ReactiveSequence>
+          <IsBatteryFull full_threshold="30"/>
+          <RetryUntilSuccessful num_attempts="10">
+            <Navigate name="GoToTarget" target="{target}"/>
+          </RetryUntilSuccessful>
+        </ReactiveSequence>
+        <AlwaysFailure>
+          <RetryUntilSuccessful num_attempts="10">
+            <Navigate name="GoToCharger" target="charger"/>
+          </RetryUntilSuccessful>
+        </AlwaysFailure>
+      </Fallback>
+    </RetryUntilSuccessful>
+  </BehaviorTree>
+
+  <BehaviorTree ID="PickRobustly">
+    <Sequence>
+      <GetCurrentLocation location="{start_location}"/>
+      <RetryUntilSuccessful num_attempts="10">
+        <Sequence>
+          <PickObject name="PickObject" object="{object}"/>
+          <Fallback>
+            <IsBatteryFull full_threshold="30"/>
+            <Sequence>
+              <RetryUntilSuccessful num_attempts="10">
+                <Navigate name="GoToCharger" target="charger"/>
+              </RetryUntilSuccessful>
+              <RetryUntilSuccessful num_attempts="10">
+                <Navigate name="GoBackToStart" target="{start_location}"/>
+              </RetryUntilSuccessful>
+            </Sequence>
+          </Fallback>
+        </Sequence>
+      </RetryUntilSuccessful>
+    </Sequence>
+  </BehaviorTree>
+
+  <BehaviorTree ID="PlaceRobustly">
+    <Sequence>
+      <GetCurrentLocation location="{start_location}"/>
+      <RetryUntilSuccessful num_attempts="10">
+        <Sequence>
+          <PlaceObject name="PlaceObject" object="{object}"/>
+          <Fallback>
+            <IsBatteryFull full_threshold="30"/>
+            <Sequence>
+              <RetryUntilSuccessful num_attempts="10">
+                <Navigate name="GoToCharger" target="charger"/>
+              </RetryUntilSuccessful>
+              <RetryUntilSuccessful num_attempts="10">
+                <Navigate name="GoBackToStart" target="{start_location}"/>
+              </RetryUntilSuccessful>
+            </Sequence>
+          </Fallback>
+        </Sequence>
+      </RetryUntilSuccessful>
+    </Sequence>
+  </BehaviorTree>
+
+  <BehaviorTree ID="OpenRobustly">
+    <Sequence>
+      <GetCurrentLocation location="{start_location}"/>
+      <RetryUntilSuccessful num_attempts="10">
+        <Sequence>
+          <Open name="OpenLocation" target="{target}"/>
+          <Fallback>
+            <IsBatteryFull full_threshold="30"/>
+            <Sequence>
+              <RetryUntilSuccessful num_attempts="10">
+                <Navigate name="GoToCharger" target="charger"/>
+              </RetryUntilSuccessful>
+              <RetryUntilSuccessful num_attempts="10">
+                <Navigate name="GoBackToStart" target="{start_location}"/>
+              </RetryUntilSuccessful>
+            </Sequence>
+          </Fallback>
+        </Sequence>
+      </RetryUntilSuccessful>
+    </Sequence>
+  </BehaviorTree>
+
+  <BehaviorTree ID="CloseRobustly">
+    <Sequence>
+      <GetCurrentLocation location="{start_location}"/>
+      <RetryUntilSuccessful num_attempts="10">
+        <Sequence>
+          <Close name="CloseLocation" target="{target}"/>
+          <Fallback>
+            <IsBatteryFull full_threshold="30"/>
+            <Sequence>
+              <RetryUntilSuccessful num_attempts="10">
+                <Navigate name="GoToCharger" target="charger"/>
+              </RetryUntilSuccessful>
+              <RetryUntilSuccessful num_attempts="10">
+                <Navigate name="GoBackToStart" target="{start_location}"/>
+              </RetryUntilSuccessful>
+            </Sequence>
+          </Fallback>
+        </Sequence>
+      </RetryUntilSuccessful>
+    </Sequence>
+  </BehaviorTree>
+
+</root>

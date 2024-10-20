@@ -13,6 +13,7 @@
 
 // BTCPP nodes in this package
 #include "pyrobosim_btcpp/nodes/battery_nodes.hpp"
+#include "pyrobosim_btcpp/nodes/get_current_location_node.hpp"
 #include "pyrobosim_btcpp/nodes/open_node.hpp"
 #include "pyrobosim_btcpp/nodes/close_node.hpp"
 #include "pyrobosim_btcpp/nodes/detect_object_node.hpp"
@@ -72,6 +73,7 @@ int main(int argc, char** argv)
 
   factory.registerNodeType<BT::IsBatteryLow>("IsBatteryLow", nh->get_logger());
   factory.registerNodeType<BT::IsBatteryFull>("IsBatteryFull", nh->get_logger());
+  factory.registerNodeType<BT::GetCurrentLocation>("GetCurrentLocation", nh->get_logger());
   factory.registerNodeType<BT::CloseAction>("Close", params);
   factory.registerNodeType<BT::DetectObject>("DetectObject", params);
   factory.registerNodeType<BT::NavigateAction>("Navigate", params);

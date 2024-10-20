@@ -1,0 +1,48 @@
+<root BTCPP_format="4">
+
+  <BehaviorTree ID="MainTree">
+    <Sequence>
+      <RetryUntilSuccessful num_attempts="10">
+        <Sequence>
+          <Navigate name="ToPantry" target="pantry"/>
+          <Open name="OpenPantry" target="pantry"/>
+          <PickObject name="PickBread" object="bread0"/>
+        </Sequence>
+      </RetryUntilSuccessful>
+      <RetryUntilSuccessful num_attempts="10">
+        <Sequence>
+          <Navigate name="ToTable" target="table"/>
+          <PlaceObject name="PlaceBread" object="bread0"/>
+        </Sequence>
+      </RetryUntilSuccessful>
+      <RetryUntilSuccessful num_attempts="10">
+        <Sequence>
+          <Navigate name="ToPantry" target="pantry"/>
+          <Close name="ClosePantry" target="pantry"/>
+        </Sequence>
+      </RetryUntilSuccessful>
+
+      <RetryUntilSuccessful num_attempts="10">
+        <Sequence>
+          <Navigate name="ToFridge" target="fridge"/>
+          <Open name="OpenFridge" target="fridge"/>
+          <PickObject name="PickButter" object="butter0"/>
+        </Sequence>
+      </RetryUntilSuccessful>
+      <RetryUntilSuccessful num_attempts="10">
+        <Sequence>
+          <Navigate name="ToTable" target="table"/>
+          <PlaceObject name="PlaceButter" object="butter0"/>
+        </Sequence>
+      </RetryUntilSuccessful>
+      <RetryUntilSuccessful num_attempts="10">
+        <Sequence>
+          <Navigate name="ToFridge" target="fridge"/>
+          <Close name="CloseFridge" target="fridge"/>
+        </Sequence>
+      </RetryUntilSuccessful>
+
+    </Sequence>
+  </BehaviorTree>
+
+</root>

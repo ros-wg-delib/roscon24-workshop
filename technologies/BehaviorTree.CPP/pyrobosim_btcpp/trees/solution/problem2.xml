@@ -1,0 +1,36 @@
+<root BTCPP_format="4">
+
+  <BehaviorTree ID="MainTree">
+    <Sequence>
+      <Sequence>
+          <Fallback>
+              <Navigate name="ToTrash" target="dumpster"/>
+              <Sequence>
+                  <Navigate name="ToTrashRoomDoor" target="hall_dining_trash"/>
+                  <Open target="hall_dining_trash"/>
+                  <Navigate name="ToTrash" target="dumpster"/>
+              </Sequence>
+          </Fallback>
+          <Open target="dumpster"/>
+      </Sequence>
+      <Sequence>
+        <Navigate name="ToDesk" target="desk"/>
+        <PickObject name="PickDeskWaste" object="waste0"/>
+        <Navigate name="ToTrash" target="dumpster"/>
+        <PlaceObject name="PlaceDeskWaste" object="waste0"/>
+      </Sequence>
+      <Sequence>
+        <Navigate name="ToBin" target="bin"/>
+        <PickObject name="PickBinWaste" object="waste1"/>
+        <Navigate name="ToTrash" target="dumpster"/>
+        <PlaceObject name="PlaceBinWaste" object="waste1"/>
+      </Sequence>
+      <Sequence>
+        <Navigate name="ToDining" target="dining"/>
+        <Navigate name="ToTrashRoomDoor" target="hall_dining_trash"/>
+        <Close target="hall_dining_trash"/>
+      </Sequence>
+    </Sequence>
+  </BehaviorTree>
+
+</root>
