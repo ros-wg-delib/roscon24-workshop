@@ -48,14 +48,15 @@ The argument `tree` above is the path to the XML file. The path can be either:
 
 ## Action Nodes
 
-| Action Name  | Description                                 | Input Port                                                                     |
-|--------------|---------------------------------------------|--------------------------------------------------------------------------------|
-| Close        | Close a door or a container                 | - location: name of the location                                               |
-| DetectObject | Return SUCCESS if the object is detected    | - object: name of the object                                                   |
-| Navigate     | Move to a specific location                 | - target: name of the location                                                 |
-| Open         | Open a door or a container                  | - object: name of the object                                                   |
-| PickObject   | Pick an object (you must be in front of it) | - object: name of the object <br>- location: (optional) where the object is        |
-| PlaceObject  | Place an object (you must hold it)          | - object: name of the object <br>- location: (optional) where the object should go |
+| Action Name        | Description                                               | Input Port                            |
+|--------------------|-----------------------------------------------------------|---------------------------------------|
+| Close              | Close a door or a container                               | - location: name of the location      |
+| DetectObject       | Return SUCCESS if the object is detected                  | - object: name of the object          |
+| GetCurrentLocation | Store current location in the output port "location".     |                                       |
+| Navigate           | Move to a specific location                               | - target: name of the location        |
+| Open               | Open a door or a container                                | - object: name of the object          |
+| PickObject         | Pick an object (you must be in front of it)               | - object: name of the object <br>- location: (optional) where the object is        |
+| PlaceObject        | Place an object (you must hold it)                        | - object: name of the object <br>- location: (optional) where the object should go |
 
 Note:
 

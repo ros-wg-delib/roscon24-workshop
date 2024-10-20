@@ -70,6 +70,7 @@ int main(int argc, char** argv)
   BT::RosNodeParams params;
   params.nh = nh;
   params.default_port_value = "execute_action";
+  params.wait_for_server_timeout = std::chrono::seconds(5);
 
   factory.registerNodeType<BT::IsBatteryLow>("IsBatteryLow", nh->get_logger());
   factory.registerNodeType<BT::IsBatteryFull>("IsBatteryFull", nh->get_logger());

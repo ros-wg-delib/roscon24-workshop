@@ -2,34 +2,26 @@
 
   <BehaviorTree ID="MainTree">
     <Sequence>
-      <Sequence>
-          <Fallback>
-              <Navigate name="ToTrash" target="dumpster"/>
-              <Sequence>
-                  <Navigate name="ToTrashRoomDoor" target="hall_dining_trash"/>
-                  <Open target="hall_dining_trash"/>
-                  <Navigate name="ToTrash" target="dumpster"/>
-              </Sequence>
-          </Fallback>
-          <Open target="dumpster"/>
-      </Sequence>
-      <Sequence>
-        <Navigate name="ToDesk" target="desk"/>
-        <PickObject name="PickDeskWaste" object="waste0"/>
+      <Fallback>
         <Navigate name="ToTrash" target="dumpster"/>
-        <PlaceObject name="PlaceDeskWaste" object="waste0"/>
-      </Sequence>
-      <Sequence>
-        <Navigate name="ToBin" target="bin"/>
-        <PickObject name="PickBinWaste" object="waste1"/>
+        <Sequence>
+          <Navigate name="ToTrashRoomDoor" target="hall_dining_trash"/>
+          <Open target="hall_dining_trash"/>
+          <Navigate name="ToTrash" target="dumpster"/>
+        </Sequence>
+      </Fallback>
+      <Open target="dumpster"/>
+      <SubTree ID="DisposeWaste" waste_location="desk" waste="waste0"/>
+      <SubTree ID="DisposeWaste" waste_location="bin" waste="waste1"/>
+    </Sequence>
+  </BehaviorTree>
+
+  <BehaviorTree ID="DisposeWaste">
+    <Sequence>
+        <Navigate name="ToDesk" target="{waste_location}"/>
+        <PickObject name="PickDeskWaste" object="{waste}"/>
         <Navigate name="ToTrash" target="dumpster"/>
-        <PlaceObject name="PlaceBinWaste" object="waste1"/>
-      </Sequence>
-      <Sequence>
-        <Navigate name="ToDining" target="dining"/>
-        <Navigate name="ToTrashRoomDoor" target="hall_dining_trash"/>
-        <Close target="hall_dining_trash"/>
-      </Sequence>
+        <PlaceObject name="PlaceDeskWaste" object="{waste}"/>
     </Sequence>
   </BehaviorTree>
 
