@@ -75,11 +75,14 @@
             <Navigate name="GoToTarget" target="{target}"/>
           </RetryUntilSuccessful>
         </ReactiveSequence>
-        <AlwaysFailure>
+        <Sequence>
           <RetryUntilSuccessful num_attempts="10">
             <Navigate name="GoToCharger" target="charger"/>
           </RetryUntilSuccessful>
-        </AlwaysFailure>
+          <RetryUntilSuccessful num_attempts="10">
+            <Navigate name="GoToTarget" target="{target}"/>
+          </RetryUntilSuccessful>
+        </Sequence>
       </Fallback>
     </RetryUntilSuccessful>
   </BehaviorTree>
