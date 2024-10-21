@@ -125,3 +125,9 @@ Attach to the container as shown in the image below:
 ![vscode_attach.png](media/vscode_attach.png)
 
 Once inside the container, open the folder `/delib_ws/src`.
+
+---
+
+## More information and troubleshooting
+
+Once you are all set up, refer to the [cheatsheet](./CHEATSHEET.md) for more information, including useful commands and troubleshooting steps.
