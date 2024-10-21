@@ -1,7 +1,7 @@
 # Hands-On with ROS 2 Deliberation Technologies
 
-This repository contains materials for the [ROSCon 2024](https://roscon.ros.org/2024/) workshop on ROS 2
-Deliberation Technologies.
+This repository contains materials for the [ROSCon 2024](https://roscon.ros.org/2024/) workshop on ROS 2 Deliberation Technologies.  
+You can find the [slides here](https://drive.google.com/drive/folders/15H6QdkICynKpVlMn2Glz0ynS692LxZH8?usp=drive_link).
 
 Deliberation in robotics refers to the collection of technologies necessary to create highly capable autonomous robots.
 The key idea is the use of *models* of the robot and its environment to enable high-level decision-making for solving complex problems, as well as equipping robots with robust *skill representations* to successfully execute these tasks in the real world.
