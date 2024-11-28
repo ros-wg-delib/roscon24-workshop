@@ -8,25 +8,24 @@ table:
     dims: [1.2, 0.8]
     height: 0.5
   nav_poses:
-    nav_poses:
-      - position:  # above
-          x: 0.0
-          y: 0.65
-        rotation_eul:
-          yaw: -1.57
-      - position:  # below
-          x: 0.0
-          y: -0.65
-        rotation_eul:
-          yaw: 1.57
-      - position:  # left
-          x: -0.85
-          y: 0.0
-      - position:  # right
-          x: 0.85
-          y: 0.0
-        rotation_eul:
-          yaw: 3.14
+    - position:  # above
+        x: 0.0
+        y: 0.65
+      rotation_eul:
+        yaw: -1.57
+    - position:  # below
+        x: 0.0
+        y: -0.65
+      rotation_eul:
+        yaw: 1.57
+    - position:  # left
+        x: -0.85
+        y: 0.0
+    - position:  # right
+        x: 0.85
+        y: 0.0
+      rotation_eul:
+        yaw: 3.14
   locations:
     - name: "tabletop"
       footprint:
@@ -84,24 +83,24 @@ trashcan_small:
     radius: 0.25
     height: 0.5
   nav_poses:
-      - position:  # above
-          x: 0.0
-          y: 0.5
-        rotation_eul:
-          yaw: -1.57
-      - position:  # below
-          x: 0.0
-          y: -0.5
-        rotation_eul:
-          yaw: 1.57
-      - position:  # left
-          x: -0.5
-          y: 0.0
-      - position:  # right
-          x: 0.5
-          y: 0.0
-        rotation_eul:
-          yaw: 3.14
+    - position:  # above
+        x: 0.0
+        y: 0.5
+      rotation_eul:
+        yaw: -1.57
+    - position:  # below
+        x: 0.0
+        y: -0.5
+      rotation_eul:
+        yaw: 1.57
+    - position:  # left
+        x: -0.5
+        y: 0.0
+    - position:  # right
+        x: 0.5
+        y: 0.0
+      rotation_eul:
+        yaw: 3.14
   locations:
     - name: "disposal"
       footprint:
@@ -115,24 +114,24 @@ trashcan_large:
     radius: 0.525
     height: 0.5
   nav_poses:
-      - position:  # above
-          x: 0.0
-          y: 0.75
-        rotation_eul:
-          yaw: -1.57
-      - position:  # below
-          x: 0.0
-          y: -0.75
-        rotation_eul:
-          yaw: 1.57
-      - position:  # left
-          x: -0.75
-          y: 0.0
-      - position:  # right
-          x: 0.75
-          y: 0.0
-        rotation_eul:
-          yaw: 3.14
+    - position:  # above
+        x: 0.0
+        y: 0.75
+      rotation_eul:
+        yaw: -1.57
+    - position:  # below
+        x: 0.0
+        y: -0.75
+      rotation_eul:
+        yaw: 1.57
+    - position:  # left
+        x: -0.75
+        y: 0.0
+    - position:  # right
+        x: 0.75
+        y: 0.0
+      rotation_eul:
+        yaw: 3.14
   locations:
     - name: "disposal"
       footprint:
@@ -154,22 +153,22 @@ charger:
       footprint:
         type: parent
       nav_poses:
-      - position:  # above
-          x: 0.0
-          y: 0.4
-        rotation_eul:
-          yaw: -1.57
-      - position:  # below
-          x: 0.0
-          y: -0.4
-        rotation_eul:
-          yaw: 1.57
-      - position:  # left
-          x: -0.7
-          y: 0.0
-      - position:  # right
-          x: 0.7
-          y: 0.0
-        rotation_eul:
-          yaw: 3.14
+        - position:  # above
+            x: 0.0
+            y: 0.4
+          rotation_eul:
+            yaw: -1.57
+        - position:  # below
+            x: 0.0
+            y: -0.4
+          rotation_eul:
+            yaw: 1.57
+        - position:  # left
+            x: -0.7
+            y: 0.0
+        - position:  # right
+            x: 0.7
+            y: 0.0
+          rotation_eul:
+            yaw: 3.14
   color: [0.4, 0.4, 0]
