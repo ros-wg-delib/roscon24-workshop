@@ -3,6 +3,10 @@
 This repository contains materials for the [ROSCon 2024](https://roscon.ros.org/2024/) workshop on ROS 2 Deliberation Technologies.
 You can find the [slides here](https://drive.google.com/drive/folders/15H6QdkICynKpVlMn2Glz0ynS692LxZH8?usp=drive_link).
 
+__However, it is perfectly usable as a guided tutorial to learn all of the presented technologies at your own pace.__
+
+## Introduction to Robotic Deliberation 
+
 Deliberation in robotics refers to the collection of technologies necessary to create highly capable autonomous robots.
 The key idea is the use of *models* of the robot and its environment to enable high-level decision-making for solving complex problems, as well as equipping robots with robust *skill representations* to successfully execute these tasks in the real world.
 
@@ -115,7 +119,7 @@ It will ask you for your `sudo` password.
 ./clean_environment.sh
 ```
 
-### Develop inside the container using VSCode
+### [optional] Use the Container as a Devcontainer
 
 If you want to develop inside the container using VSCode, you need to have the [Docker extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) installed.
 To see the option "Attach Visual Studio Code", you also need to download the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
@@ -131,3 +135,7 @@ Once inside the container, open the folder `/delib_ws/src`.
 ## More information and troubleshooting
 
 Once you are all set up, refer to the [cheatsheet](./CHEATSHEET.md) for more information, including useful commands and troubleshooting steps.
+
+## Next steps 
+
+If you are done with your setup and verified that everything is working, you continue to learn about the `problems`](./problems/README.md).
