@@ -32,7 +32,7 @@ def create_ros_node():
         "worlds",
         f"world{problem_number}.yaml",
     )
-    world = WorldYamlLoader().from_yaml(world_file)
+    world = WorldYamlLoader().from_file(world_file)
     node.set_world(world)
 
     return node
