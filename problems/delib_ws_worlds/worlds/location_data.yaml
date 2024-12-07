@@ -62,12 +62,12 @@ storage:
   nav_poses:
     - position:  # above
         x: 0.0
-        y: 0.5
+        y: 0.55
       rotation_eul:
         yaw: -1.57
     - position:  # below
         x: 0.0
-        y: -0.5
+        y: -0.55
       rotation_eul:
         yaw: 1.57
   locations:
