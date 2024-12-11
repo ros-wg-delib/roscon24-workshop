@@ -47,10 +47,24 @@ rooms:
         - [-1.6, 1.0]
     # Add navigation poses since the centroid is blocked by the table.
     nav_poses:
-      - [-1.0, 0.0, 0.0, 0.0]  # left
-      - [1.0, 0.0, 0.0, 3.14]  # right
-      - [0.0, 0.8, 0.0, -1.57]  # above
-      - [0.0, -0.8, 0.0, 1.57]  # below
+      - position:  # left
+          x: -1.0
+          y: 0.0
+      - position:  # right
+          x: 1.0
+          y: 0.0
+        rotation_eul:
+          yaw: 3.14
+      - position:  # above
+          x: 0.0
+          y: 0.8
+        rotation_eul:
+          yaw: -1.57
+      - position:  # below
+          x: 0.0
+          y: -0.8
+        rotation_eul:
+          yaw: 1.57
     wall_width: 0.2
     color: [0, 1, 0]
 
@@ -183,41 +197,66 @@ locations:
     - name: table
       parent: dining
       category: table
-      pose: [0.0, 0.15]
+      pose:
+        position:
+          x: 0.0
+          y: 0.15
 
     - name: desk
       parent: office
       category: desk
-      pose: [3.6, -2.3]
+      pose:
+        position:
+          x: 3.6
+          y: -2.3
 
     - name: fridge
       parent: kitchen
       category: storage
-      pose: [-3, -2.65]
+      pose:
+        position:
+          x: -3.0
+          y: -2.65
       is_open: false
 
     - name: pantry
       parent: kitchen
       category: storage
-      pose: [-3.65, -1.5, 0.0, 1.57]
+      pose:
+        position:
+          x: -3.65
+          y: -1.5
+        rotation_eul:
+          yaw: 1.57
       is_open: false
 
     - name: bin
       parent: office
       category: trashcan_small
-      pose: [2.6, -0.85]
+      pose:
+        position:
+          x: 2.6
+          y: -0.85
       is_open: true
 
     - name: dumpster
       parent: trash
       category: trashcan_large
-      pose: [-3.4, 2.4]
+      pose:
+        position:
+          x: -3.4
+          y: 2.4
       is_open: false
 
     - name: charger
       parent: closet
       category: charger
-      pose: [3.5, 2.5, 0, -0.785]
+      pose:
+        position:
+          x: 3.5
+          y: 2.5
+        rotation_eul:
+          yaw: -0.785
       is_charger: true
 
 objects:
