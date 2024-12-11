@@ -5,7 +5,7 @@ You can find the [slides here](https://drive.google.com/drive/folders/15H6QdkICy
 
 __However, it is perfectly usable as a guided tutorial to learn all of the presented technologies at your own pace.__
 
-## Introduction to Robotic Deliberation 
+## Introduction to Robotic Deliberation
 
 Deliberation in robotics refers to the collection of technologies necessary to create highly capable autonomous robots.
 The key idea is the use of *models* of the robot and its environment to enable high-level decision-making for solving complex problems, as well as equipping robots with robust *skill representations* to successfully execute these tasks in the real world.
@@ -49,7 +49,7 @@ You also need to have Docker and Docker Compose installed on your system.
 If you do not have these tools set up:
 
 * Install Docker Engine using [these instructions](https://docs.docker.com/engine/install/ubuntu/).
-  * **IMPORTANT:** Make sure you also go through the [Linux post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/).
+  * __IMPORTANT:__ Make sure you also go through the [Linux post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/).
 * Install Docker Compose using [these instructions](https://docs.docker.com/compose/install/).
 
 Once you are able to run `docker` and `docker compose` commands without `sudo`, you can move on to the installation steps below.
@@ -112,7 +112,7 @@ When you are ready to shut down the container, enter the following command from 
 docker compose down --remove-orphans
 ```
 
-**NOTE:** If you want to clean up any containers and colcon build artifacts mounted to your host system (in the `.colcon` folder of this repo), you can run the following command.
+__NOTE:__ If you want to clean up any containers and colcon build artifacts mounted to your host system (in the `.colcon` folder of this repo), you can run the following command.
 It will ask you for your `sudo` password.
 
 ```bash
@@ -136,6 +136,6 @@ Once inside the container, open the folder `/delib_ws/src`.
 
 Once you are all set up, refer to the [cheatsheet](./CHEATSHEET.md) for more information, including useful commands and troubleshooting steps.
 
-## Next steps 
+## Next steps
 
 If you are done with your setup and verified that everything is working, you continue to learn about the `problems`](./problems/README.md).
