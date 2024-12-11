@@ -1,10 +1,21 @@
 # Problems
 
-This folder contains all the initial files for the workshop.
+## Pre-requisites
+
+In order to run the problems, make sure you did the setup steps in the [main README](../README.md).
+
+## Introduction
+
+This folder contains all the files required to run the demo problems that will be used to try out the different deliberation tools.
 
 This includes the world models in [PyRoboSim](https://github.com/sea-bass/pyrobosim), and some simple Python abstractions for commanding simulated robots and retrieving their state.
 
-During this workshop, you will work through increasingly difficult problems as you become familiar with deliberation tools.
+The problems are designed to increase in complexity.
+While the first problem can be used to familiarize yourself with the problem setup in general, the later problems will require more complex.
+In particular the later problems introduce the concept of battery usage and charging, as well actions that can fail with some probability.
+
+When running the commands below, the PyRoboSim visualization will open up.
+Then you can use the PyRoboSim GUI to interact with the simulation and _play around_ with the problem setups in order to understand them and the actions available to you.
 
 ---
 
@@ -113,3 +124,7 @@ Hallways into the trash room are closed.
 Actions may fail with some probability.
 
 Actions now use up battery, which can be fixed by navigating to the charger.
+
+## Next Steps
+
+After you have tried out the problems, you can move on to the [technologies](../technologies/README.md) folder to learn more about the available deliberation tools.
