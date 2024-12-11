@@ -16,8 +16,6 @@ To learn more about deliberation, refer to [Ingrand and Ghallab (2017)](https://
 
 *Overview diagram of robot deliberation, [Ingrand and Ghallab (2017)](https://hal.science/hal-01137921)*
 
----
-
 ## Technology Overview
 
 In this hands-on workshop, you will get the opportunity to use a few ROS 2 enabled tools designed for robot deliberation.
@@ -30,8 +28,6 @@ Additionally, it can simulate failures and battery usage in the above actions.
 * The [`technologies`](./technologies/README.md) folder contains more detailed information on the deliberation software tools you will use to solve these problems.
 
 ![image](media/pyrobosim_world.png)
-
----
 
 ## Setup
 
@@ -92,8 +88,6 @@ docker compose exec base bash
 
 > Note: This command must be executed from the `roscon24-workshop` repository folder.
 
----
-
 ## Developing in the Container
 
 By default, the whole ROS 2 workspace should have been built on setup.
@@ -129,8 +123,6 @@ Attach to the container as shown in the image below:
 ![vscode_attach.png](media/vscode_attach.png)
 
 Once inside the container, open the folder `/delib_ws/src`.
-
----
 
 ## More information and troubleshooting
 

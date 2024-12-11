@@ -17,8 +17,6 @@ In particular the later problems introduce the concept of battery usage and char
 When running the commands below, the PyRoboSim visualization will open up.
 Then you can use the PyRoboSim GUI to interact with the simulation and _play around_ with the problem setups in order to understand them and the actions available to you.
 
----
-
 ## Problem 1
 
 ```bash
@@ -36,8 +34,6 @@ Snacks in the kitchen pantry.
 * Pick object
 * Place object
 * Move robot
-
----
 
 ## Problem 2
 
@@ -61,8 +57,6 @@ Hallways into the trash room are closed.
     (will fail if door is closed)
 * Open door
 * Close door
-
----
 
 ## Problem 3
 
@@ -89,8 +83,6 @@ Butter is in the fridge, which is closed.
 * Detect objects (optional)
 
 Actions may fail with some probability.
-
----
 
 ## Problem 4
 
