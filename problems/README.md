@@ -12,7 +12,7 @@ This includes the world models in [PyRoboSim](https://github.com/sea-bass/pyrobo
 
 The problems are designed to increase in complexity.
 While the first problem can be used to familiarize yourself with the repository setup in general, the later problems will be more complex.
-In particular the later problems introduce the concept of battery usage and charging, as well actions that can fail with some probability.
+In particular, the later problems introduce the concept of battery usage and charging, as well as actions that can fail with some probability.
 
 When running the commands below, the PyRoboSim visualization will open up.
 Then you can use the PyRoboSim GUI to interact with the simulation and _play around_ with the problem setups in order to understand them and the actions available to you.
