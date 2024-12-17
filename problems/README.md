@@ -11,7 +11,7 @@ This folder contains all the files required to run the demo problems that will b
 This includes the world models in [PyRoboSim](https://github.com/sea-bass/pyrobosim), and some simple Python abstractions for commanding simulated robots and retrieving their state.
 
 The problems are designed to increase in complexity.
-While the first problem can be used to familiarize yourself with the problem setup in general, the later problems will require more complex.
+While the first problem can be used to familiarize yourself with the repository setup in general, the later problems will be more complex.
 In particular the later problems introduce the concept of battery usage and charging, as well actions that can fail with some probability.
 
 When running the commands below, the PyRoboSim visualization will open up.
