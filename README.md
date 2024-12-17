@@ -130,4 +130,4 @@ Once you are all set up, refer to the [cheatsheet](./CHEATSHEET.md) for more inf
 
 ## Next steps
 
-If you are done with your setup and verified that everything is working, you continue to learn about the [`problems`](./problems/README.md).
+If you are done with your setup and verified that everything is working, you can continue to learn about the [`problems`](./problems/README.md).
