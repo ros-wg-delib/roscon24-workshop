@@ -3,7 +3,7 @@
 ## Prerequisites
 
 To work with these tools, you need to have gone through the setup steps in the [root README](../README.md).
-Also, we advise you to have go through the [problems](../problems/README.md) first, as they will serve as examples to apply these technologies to.
+Also, we advise you to go through the [problems](../problems/README.md) first, as they will serve as examples on which to apply these technologies.
 
 ## Introduction
 
