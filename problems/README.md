@@ -2,7 +2,7 @@
 
 ## Pre-requisites
 
-In order to run the problems, make sure you did the setup steps in the [main README](../README.md).
+To run the problems, make sure you did the setup steps in the [main README](../README.md).
 
 ## Introduction
 
