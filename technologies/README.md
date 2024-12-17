@@ -10,7 +10,7 @@ Also, we advise you to go through the [problems](../problems/README.md) first, a
 This folder contains all the technology-specific implementations of ROS 2 Deliberation technologies.
 Here you will find the tools and libraries that you can learn about in this repository.
 
-For a more complete collection of tools and resources for deliberation in ROS2, please refer to the [Awesome Robotic Deliberation](https://github.com/ros-wg-delib/awesome-ros-deliberation) repository.
+For a more complete collection of tools and resources for deliberation in ROS 2, please refer to the [Awesome Robotic Deliberation](https://github.com/ros-wg-delib/awesome-ros-deliberation) repository.
 
 ## Skill Abstractions
 
