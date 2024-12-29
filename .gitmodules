@@ -35,4 +35,4 @@
 [submodule "dependencies/ros2_ros_bt_py"]
 	path = dependencies/ros2_ros_bt_py
 	url = https://github.com/fzi-forschungszentrum-informatik/ros2_ros_bt_py.git
-	branch = dev
+	branch = main
