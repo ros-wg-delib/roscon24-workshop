@@ -10,10 +10,6 @@
 	path = dependencies/SkiROS2/skiros2_std_lib
 	url = https://github.com/RobotlabLTH/skiros2_std_lib
 	branch = ros2
-[submodule "ros2_ros_bt_py"]
-	path = dependencies/ros2_ros_bt_py
-	url = https://github.com/fzi-forschungszentrum-informatik/ros2_ros_bt_py.git
-	branch = dev
 [submodule "skiros2_pyrobosim_lib"]
 	path = technologies/SkiROS2/skiros2_pyrobosim_lib
 	url = https://github.com/matthias-mayr/skiros2_pyrobosim_lib.git
@@ -36,3 +32,7 @@
 [submodule "dependencies/convince/bt_tools"]
 	path = dependencies/convince/bt_tools
 	url = https://github.com/boschresearch/bt_tools.git
+[submodule "dependencies/ros2_ros_bt_py"]
+	path = dependencies/ros2_ros_bt_py
+	url = https://github.com/fzi-forschungszentrum-informatik/ros2_ros_bt_py.git
+	branch = dev
