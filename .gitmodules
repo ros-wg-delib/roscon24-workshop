@@ -14,10 +14,6 @@
 	path = dependencies/ros_bt_py/ros2_ros_bt_py
 	url = https://github.com/fzi-forschungszentrum-informatik/ros2_ros_bt_py.git
 	branch = dev
-[submodule "rosbridge_suite"]
-	path = dependencies/ros_bt_py/rosbridge_suite
-	url = https://github.com/RobotWebTools/rosbridge_suite.git
-	branch = ros2
 [submodule "skiros2_pyrobosim_lib"]
 	path = technologies/SkiROS2/skiros2_pyrobosim_lib
 	url = https://github.com/matthias-mayr/skiros2_pyrobosim_lib.git
