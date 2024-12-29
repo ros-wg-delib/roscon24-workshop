@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>ros_bt_py</name>
+  <version>0.0.1</version>
+  <description>A type-safe Behavior Tree library (until the wheels fall off)</description>
+  <maintainer email="oberacker@fzi.de">David Oberacker</maintainer>
+  <license>BSD-3-Clause</license>
+  <author email="spielbauer@fzi.de">Niklas Spielbauer</author>
+  <author email="exner@fzi.de">Felix Exner</author>
+  <author email="schnell@fzi.de">Tristan Schnell</author>
+  <author email="heppner@fzi.de">Georg Heppner</author>
+
+  <!-- Message dependencies -->
+  <depend>ros_bt_py_interfaces</depend>
+  <depend>std_msgs</depend>
+  <depend>diagnostic_msgs</depend>
+  <test_depend>std_srvs</test_depend>
+  <test_depend>geometry_msgs</test_depend>
+  <test_depend>sensor_msgs</test_depend>
+
+  <!-- ROS dependencies -->
+  <depend>rclpy</depend>
+  <depend>rclpy_message_converter</depend>
+  <depend version_gte="0.3.4">generate_parameter_library_py</depend>
+  <exec_depend>ros2launch</exec_depend>
+  <exec_depend>ros_bt_py_web_gui</exec_depend>
+
+  <!-- Python3 dependencies -->
+  <depend>python3-toml</depend>
+  <depend>python3-typeguard</depend>
+  <depend>python3-jsonpickle</depend>
+  <depend>python3-requests</depend>
+  <depend>python3-simplejson</depend>
+
+  <!-- Documentation dependencies -->
+  <depend>python3-sphinx</depend>
+
+  <!-- Test dependencies -->
+  <test_depend>python3-pytest</test_depend>
+  <test_depend>python3-pytest-cov</test_depend>
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

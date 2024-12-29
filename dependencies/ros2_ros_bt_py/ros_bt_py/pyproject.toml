@@ -1,0 +1,46 @@
+[tool.black]
+py36 = true
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  # The following are specific to Black, you probably don't want those.
+  | blib2to3
+  | tests/data
+)/
+'''
+[tool.coverage.run]
+omit = [
+  "/usr*",
+  "/opt*",
+  "*test/*",
+  "*tests/*",
+  "*.local/*",
+  "*setup.py"
+]
+relative_files=false
+source_pkgs=["ros_bt_py", "ros_bt_py.nodes", "ros_bt_py.ros_nodes"]
+[tool.coverage.paths]
+library = [
+  "ros_bt_py",
+  "**/install/ros_bt_py/lib/*/site-packages/ros_bt_py",
+  "/builds/*/ros_bt_py/ros_bt_py",
+  "/root/target_ws/src/ros_bt_py/ros_bt_py"
+]
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
+testpaths = [
+    "tests",
+]
+minversion = "6.0"
+asyncio_mode="auto"

@@ -1,0 +1,70 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: check-added-large-files
+        exclude: ((trees/)|(html/))
+      - id: check-case-conflict
+      - id: check-merge-conflict
+      - id: check-symlinks
+      - id: check-xml
+        exclude: ((trees/)|(html/))
+      - id: end-of-file-fixer
+        exclude: ((trees/)|(html/)|(testdata/))
+      - id: mixed-line-ending
+      - id: trailing-whitespace
+        exclude: ((trees/)|(html/)|(testdata/))
+      - id: check-shebang-scripts-are-executable
+      - id: check-executables-have-shebangs
+      - id: fix-byte-order-marker  # Forbid UTF-8 byte-order markers
+      - id: no-commit-to-branch
+        args: [--branch, main]
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+  - repo: local
+    hooks:
+    - id: ament_copyright
+      name: ament_copyright
+      description: Check if copyright notice is available in all files.
+      stages: [commit]
+      entry: ament_copyright
+      language: system
+    - id: ament_xmllint
+      name: ament_xmllint
+      description: Static code analysis of xml files.
+      stages: [commit]
+      entry: ament_xmllint
+      language: system
+      files: \.(xml)$
+    - id: ament_flake8
+      name: ament_flake8
+      description: Static code analysis of Python files with flake8.
+      stages: [commit]
+      entry: ament_flake8
+      language: system
+      files: \.(py)$
+      args: ["--config=./.flake8"]
+    - id: ament_pep257
+      name: ament_pep257
+      description: Static code analysis of Python files with pep257.
+      stages: [commit]
+      entry: ament_pep257
+      language: system
+      files: \.(py)$
+    - id: ament_lint_cmake
+      name: ament_lint_cmake
+      description: Check format of CMakeLists.txt files.
+      stages: [commit]
+      entry: ament_lint_cmake
+      language: system
+      files: CMakeLists\.txt$
+  - repo: https://github.com/Lucas-C/pre-commit-hooks
+    rev: v1.5.4
+    hooks:
+    - id: remove-tabs
+      exclude: "html/"
+    - id: forbid-tabs
+      exclude: "html/"

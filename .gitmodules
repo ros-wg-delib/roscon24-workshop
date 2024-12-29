@@ -11,7 +11,7 @@
 	url = https://github.com/RobotlabLTH/skiros2_std_lib
 	branch = ros2
 [submodule "ros2_ros_bt_py"]
-	path = dependencies/ros_bt_py/ros2_ros_bt_py
+	path = dependencies/ros2_ros_bt_py
 	url = https://github.com/fzi-forschungszentrum-informatik/ros2_ros_bt_py.git
 	branch = dev
 [submodule "skiros2_pyrobosim_lib"]
