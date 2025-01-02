@@ -1,8 +1,8 @@
 <root BTCPP_format="4">
     <BehaviorTree>
-        <Sequence>
+        <ReactiveSequence>
             <Condition ID="TopicCondition" name="alarm" />
             <Action ID="TopicAction" name="charge" />
-        </Sequence>
+        </ReactiveSequence>
     </BehaviorTree>
 </root>
