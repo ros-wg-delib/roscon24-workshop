@@ -19,9 +19,9 @@
         <ros_topic_callback name="alarm" target="initial">
             <assign location="last_msg" expr="_msg.data" />
         </ros_topic_callback>
-        <transition event="bt_tick" target="initial">
-            <send event="bt_failure" />
-        </transition>
+        <bt_tick target="initial">
+            <bt_return_status status="FAILURE" />
+        </bt_tick>
     </state>
 
 </scxml>

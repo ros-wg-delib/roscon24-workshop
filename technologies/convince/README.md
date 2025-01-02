@@ -282,19 +282,19 @@ So we should enable the charging.
 ### Task 2.2: Enabling the charging
 
 Currently, the battery is not charging, because the condition node that evaluates the alarm is not evaluated correctly.
-If you inspect the `bt_topic_condition.scxml` file, you will see in line 23 that the condition is always false (i.e. we always send the `bt_failure` event).
+If you inspect the `bt_topic_condition.scxml` file, you will see in line 23 that the condition is always false (i.e. we always return `FAILURE`).
 But there is a variable in the state machine, called `last_msg`, that holds the last received message.
 So we can replace line 23 by this:
 
 ```xml
 <if cond="last_msg">
-    <send event="bt_success" />
+    <bt_return_status status="SUCCESS" />
     <else />
-    <send event="bt_failure" />
+    <bt_return_status status="FAILURE" />
 </if>
 ```
 
-This will send the `bt_success` event if the last message was `true`, and the `bt_failure` event otherwise.
+This will send the `SUCCESS` status if the last message was `true`, and the `FAILURE` event otherwise.
 
 Now run `as2fm_scxml_to_jani main.xml` and `smc_storm --model main.jani --properties-names battery_charged` again.
 The output should now be:
