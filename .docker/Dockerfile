@@ -35,7 +35,7 @@ RUN curl -o Groot2.AppImage https://s3.us-west-1.amazonaws.com/download.behavior
     usermod -aG fuse root
 # CONVINCE toolchain
 # (smc_storm)
-RUN curl -O -L https://github.com/convince-project/smc_storm/releases/download/0.0.3/smc_storm_executable.tar.gz && \
+RUN curl -O -L https://github.com/convince-project/smc_storm/releases/download/0.0.6/smc_storm_executable.tar.gz && \
     tar -xzf smc_storm_executable.tar.gz && \
     ./install.sh --install-dependencies && \
     ln -s /delib_ws/bin/smc_storm /usr/local/bin/smc_storm

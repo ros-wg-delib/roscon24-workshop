@@ -1,6 +1,8 @@
 <convince_mc_tc>
     <mc_parameters>
         <max_time value="100" unit="s" />
+        <bt_tick_rate value="1.0" />
+        <bt_tick_if_not_running value="true" />
     </mc_parameters>
 
     <behavior_tree>
