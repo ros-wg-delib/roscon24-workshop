@@ -3,6 +3,10 @@
 This repository contains materials for the [ROSCon 2024](https://roscon.ros.org/2024/) workshop on ROS 2 Deliberation Technologies.
 You can find the [slides here](https://drive.google.com/drive/folders/15H6QdkICynKpVlMn2Glz0ynS692LxZH8?usp=drive_link).
 
+__However, it is perfectly usable as a guided tutorial to learn all of the presented technologies at your own pace.__
+
+## Introduction to Robotic Deliberation
+
 Deliberation in robotics refers to the collection of technologies necessary to create highly capable autonomous robots.
 The key idea is the use of *models* of the robot and its environment to enable high-level decision-making for solving complex problems, as well as equipping robots with robust *skill representations* to successfully execute these tasks in the real world.
 
@@ -11,8 +15,6 @@ To learn more about deliberation, refer to [Ingrand and Ghallab (2017)](https://
 ![image](media/deliberation_ingrand_ghallab_2017.png)
 
 *Overview diagram of robot deliberation, [Ingrand and Ghallab (2017)](https://hal.science/hal-01137921)*
-
----
 
 ## Technology Overview
 
@@ -26,8 +28,6 @@ Additionally, it can simulate failures and battery usage in the above actions.
 * The [`technologies`](./technologies/README.md) folder contains more detailed information on the deliberation software tools you will use to solve these problems.
 
 ![image](media/pyrobosim_world.png)
-
----
 
 ## Setup
 
@@ -45,7 +45,7 @@ You also need to have Docker and Docker Compose installed on your system.
 If you do not have these tools set up:
 
 * Install Docker Engine using [these instructions](https://docs.docker.com/engine/install/ubuntu/).
-  * **IMPORTANT:** Make sure you also go through the [Linux post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/).
+  * __IMPORTANT:__ Make sure you also go through the [Linux post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/).
 * Install Docker Compose using [these instructions](https://docs.docker.com/compose/install/).
 
 Once you are able to run `docker` and `docker compose` commands without `sudo`, you can move on to the installation steps below.
@@ -88,8 +88,6 @@ docker compose exec base bash
 
 > Note: This command must be executed from the `roscon24-workshop` repository folder.
 
----
-
 ## Developing in the Container
 
 By default, the whole ROS 2 workspace should have been built on setup.
@@ -108,14 +106,14 @@ When you are ready to shut down the container, enter the following command from 
 docker compose down --remove-orphans
 ```
 
-**NOTE:** If you want to clean up any containers and colcon build artifacts mounted to your host system (in the `.colcon` folder of this repo), you can run the following command.
+__NOTE:__ If you want to clean up any containers and colcon build artifacts mounted to your host system (in the `.colcon` folder of this repo), you can run the following command.
 It will ask you for your `sudo` password.
 
 ```bash
 ./clean_environment.sh
 ```
 
-### Develop inside the container using VSCode
+### [optional] Use the Container as a Devcontainer
 
 If you want to develop inside the container using VSCode, you need to have the [Docker extension](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) installed.
 To see the option "Attach Visual Studio Code", you also need to download the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
@@ -126,8 +124,10 @@ Attach to the container as shown in the image below:
 
 Once inside the container, open the folder `/delib_ws/src`.
 
----
-
 ## More information and troubleshooting
 
 Once you are all set up, refer to the [cheatsheet](./CHEATSHEET.md) for more information, including useful commands and troubleshooting steps.
+
+## Next steps
+
+If you are done with your setup and verified that everything is working, you can continue to learn about the [`problems`](./problems/README.md).
